@@ -1,12 +1,12 @@
+#include "../include/mainwindow.h"
 #include <QApplication>
-#include "mainwindow.h"
 
 int main(int argc, char *argv[]) {
-    QApplication app(argc, argv);  // Initialize the Qt application
+  QApplication app(argc, argv); // Initialize the Qt application
 
-    MainWindow game;  // Create an instance of the Minesweeper game
-    game.setWindowTitle("Codenames");  // Set the window title
-    game.show();  // Display the game window
+  MainWindow game; // Create an instance of the Minesweeper game
+  game.setWindowTitle("Codenames"); // Set the window title
+  game.show();                      // Display the game window
 
-    return app.exec();  // Enter the Qt event loop
+  return app.exec(); // Enter the Qt event loop
 }

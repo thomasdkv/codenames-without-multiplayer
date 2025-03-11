@@ -13,8 +13,8 @@ SOURCES += src/mainwindow.cpp \
            src/pregame.cpp \
            src/main.cpp
 
-HEADERS += src/pregame.h \
-           src/mainwindow.h \ 
+HEADERS += include/pregame.h \
+           include/mainwindow.h \ 
 
 # Output Directory
 DESTDIR = $$PWD/bin
