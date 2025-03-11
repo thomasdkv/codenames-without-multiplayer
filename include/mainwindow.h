@@ -21,7 +21,11 @@ private slots:
 private:
     QWidget *centralWidget;
     QVBoxLayout *layout;
-    QPushButton *pushButton;
+
+    QPushButton *localPlayButton;
+    QPushButton *onlinePlayButton;
+    QPushButton *statsButton;
+    
     PreGame *preGameWindow;  // PreGame pointer to the second window
 };
 
