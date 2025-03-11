@@ -4,4 +4,73 @@ Makefile
 main.o
 bin/
 
+# Ignore build directories
+build*/
+bin/
+*.pro.user
+*.pro.user.*
+*.pro.sublime-workspace
+
+# Ignore Qt Creator generated files
+.qtc_clangd/
+.qtc_clangd.user/
+.clangd/
+*.qmake.stash
+*.qmake.cache
+*.qmlc
+*.jsc
+CMakeLists.txt.user
+
+# Ignore compiled binaries and libraries
+*.exe
+*.out
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.o
+*.obj
+
+# Ignore Makefiles and intermediate build files
+Makefile
+Makefile.Debug
+Makefile.Release
+*.moc
+moc_*
+ui_*
+qrc_*
+*.rcc
+
+# Ignore Qt resource files
+*.qrc
+*.qrs
+
+# Ignore editor/IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# Ignore logs and temp files
+*.log
+*.cache
+*.tmp
+*.bak
+*.DS_Store
+Thumbs.db
+
+# Ignore Python virtual environments (if using Qt for Python)
+venv/
+.env/
+
+# Ignore generated documentation
+docs/html/
+docs/latex/
+
+# Ignore custom debug output files
+debug/
+release/
 
