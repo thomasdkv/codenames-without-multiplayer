@@ -1,28 +1,51 @@
 #ifndef PREGAME_H
 #define PREGAME_H
 
-#include <QWidget>
+#include <QHBoxLayout>
 #include <QLabel>
+#include <QLineEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QWidget>
+
+#include "localstart.h"
 
 class PreGame : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-public:
-    explicit PreGame(QWidget *parent = nullptr);
-    ~PreGame();
+ public:
+  explicit PreGame(QWidget* parent = nullptr);
+  ~PreGame();
 
-private slots:
-    void goBackToMain();  // Slot to handle back button click
+  // Getter functions to get the text entered in the textboxes
+  QString getRedTeamSpyMasterNickname() const;
+  QString getRedTeamOperativeNickname() const;
+  QString getBlueTeamSpyMasterNickname() const;
+  QString getBlueTeamOperativeNickname() const;
 
-signals:
-    void backToMainWindow();  // Signal to notify MainWindow to show itself
+ private slots:
+  void goBackToMain();  // Slot to handle back button click
+  void startGame();
 
-private:
-    QLabel *label;
-    QPushButton *backButton;
-    QVBoxLayout *layout;
+ signals:
+  void backToMainWindow();  // Signal to notify MainWindow to show itself
+  void start();
+
+ private:
+  QLabel* label;
+  QPushButton* backButton;
+  QPushButton* startButton;
+
+  QLineEdit* redTeamSpyMasterNickname;
+  QLineEdit* redTeamOperativeNickname;
+  QLineEdit* blueTeamSpyMasterNickname;
+  QLineEdit* blueTeamOperativeNickname;
+
+  QVBoxLayout* layout;
+  QHBoxLayout* teamsLayout;
+  QVBoxLayout* redTeamLayout;
+  QVBoxLayout* blueTeamLayout;
+  QHBoxLayout* buttonsLayout;
 };
 
-#endif // PREGAME_H
+#endif  // PREGAME_H
