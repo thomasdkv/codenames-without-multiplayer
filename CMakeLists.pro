@@ -1,5 +1,5 @@
 # Qt Modules
-QT += core gui widgets # Add required Qt modules
+QT += core gui widgets
 
 CONFIG += c++17
 # CONFIG += release    # Options: debug, release, console, static, shared
@@ -9,12 +9,14 @@ TARGET = Codenames
 TEMPLATE = app
 
 # Source and Header Files
-SOURCES += src/mainwindow.cpp \
+SOURCES += src/main.cpp \
+           src/mainwindow.cpp \
            src/pregame.cpp \
-           src/main.cpp
+           src/localstart.cpp
 
-HEADERS += include/pregame.h \
-           include/mainwindow.h \ 
+HEADERS += include/mainwindow.h \
+           include/pregame.h \
+           include/localstart.h
 
 # Output Directory
 DESTDIR = $$PWD/bin
@@ -23,5 +25,3 @@ DESTDIR = $$PWD/bin
 OBJECTS_DIR = $$PWD/build
 
 INCLUDEPATH += $$PWD/include
-
-
