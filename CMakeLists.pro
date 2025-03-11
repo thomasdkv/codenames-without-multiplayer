@@ -19,6 +19,6 @@ HEADERS += src/pregame.h \
 
 
 # Output Directory
-DESTDIR = $$PWD/
+DESTDIR = $$PWD/bin
 
 
