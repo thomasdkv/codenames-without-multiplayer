@@ -1,5 +1,5 @@
-#include "../include/mainwindow.h"
-#include "../include/pregame.h"
+#include "mainwindow.h"
+#include "pregame.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   // Create central widget and layout

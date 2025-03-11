@@ -22,4 +22,6 @@ DESTDIR = $$PWD/bin
 # Object Directory
 OBJECTS_DIR = $$PWD/build
 
+INCLUDEPATH += $$PWD/include
+
 

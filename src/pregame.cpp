@@ -1,4 +1,4 @@
-#include "../include/pregame.h"
+#include "pregame.h"
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
