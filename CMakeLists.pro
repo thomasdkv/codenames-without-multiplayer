@@ -14,11 +14,12 @@ SOURCES += src/mainwindow.cpp \
            src/main.cpp
 
 HEADERS += src/pregame.h \
-           src/mainwindow.h \
-           
-
+           src/mainwindow.h \ 
 
 # Output Directory
 DESTDIR = $$PWD/bin
+
+# Object Directory
+OBJECTS_DIR = $$PWD/build
 
 
