@@ -2,3 +2,6 @@ codenames.app
 .qmake.stash
 Makefile
 main.o
+bin/
+
+
