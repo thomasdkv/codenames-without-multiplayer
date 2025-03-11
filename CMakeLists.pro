@@ -9,11 +9,15 @@ TARGET = Codenames
 TEMPLATE = app
 
 # Source and Header Files
-SOURCES += main.cpp
+SOURCES += mainwindow.cpp \
+           pregame.cpp \
+           main.cpp
 
-# HEADERS += 
+HEADERS += pregame.h \
+           mainwindow.h \
+           
 
 # FORMS += mainwindow.ui  # If using Qt Designer .ui files
 
-# Output Directory
-DESTDIR = $$PWD/bin
+
+

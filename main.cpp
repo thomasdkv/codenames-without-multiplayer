@@ -1,20 +1,12 @@
 #include <QApplication>
-#include <QMainWindow>
+#include "mainwindow.h"
 
-int main(int argc, char *argv[])
-{
-    // Create the Qt application object
-    QApplication app(argc, argv);
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);  // Initialize the Qt application
 
-    // Create the main window
-    QMainWindow window;
+    MainWindow game;  // Create an instance of the Minesweeper game
+    game.setWindowTitle("Codenames");  // Set the window title
+    game.show();  // Display the game window
 
-    // Set the window title
-    window.setWindowTitle("My Qt Window");
-
-    // Show the window
-    window.show();
-
-    // Start the application event loop
-    return app.exec();
+    return app.exec();  // Enter the Qt event loop
 }
