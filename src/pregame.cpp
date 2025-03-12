@@ -1,13 +1,12 @@
 #include "pregame.h"
-#include <QLabel>
-#include <QPushButton>
-#include <QVBoxLayout>
 
-// Make sure the Q_OBJECT macro is included in the header
-
-PreGame::PreGame(QWidget *parent) : QWidget(parent) {
+PreGame::PreGame(QWidget* parent) : QWidget(parent) {
   // Create pregame window UI elements manually
   layout = new QVBoxLayout(this);
+  teamsLayout = new QHBoxLayout();
+  redTeamLayout = new QVBoxLayout();
+  blueTeamLayout = new QVBoxLayout();
+  buttonsLayout = new QHBoxLayout();
 
   // Create a label
   label = new QLabel("Welcome to PreGame Screen", this);
@@ -15,11 +14,60 @@ PreGame::PreGame(QWidget *parent) : QWidget(parent) {
 
   // Create a button to go back to the main window
   backButton = new QPushButton("Back to Main Window", this);
-  layout->addWidget(backButton);
+  buttonsLayout->addWidget(backButton);
+
+  // Create a button to start game
+  startButton = new QPushButton("Start", this);
+  buttonsLayout->addWidget(startButton);
 
   // Connect back button to a slot
   connect(backButton, &QPushButton::clicked, this, &PreGame::goBackToMain);
 
+  // Connect start button to a slot
+  connect(startButton, &QPushButton::clicked, this, &PreGame::startGame);
+
+  // Add labels for the teams
+  redTeamLayout->addWidget(new QLabel("Red"));
+  redTeamLayout->addWidget(new QLabel("Spy Master"));
+  redTeamSpyMasterNickname = new QLineEdit();
+  redTeamLayout->addWidget(redTeamSpyMasterNickname);
+  redTeamLayout->addWidget(new QLabel("Operative"));
+  redTeamOperativeNickname = new QLineEdit();
+  redTeamLayout->addWidget(redTeamOperativeNickname);
+
+  blueTeamLayout->addWidget(new QLabel("Blue"));
+  blueTeamLayout->addWidget(new QLabel("Spy Master"));
+  blueTeamSpyMasterNickname = new QLineEdit();
+  blueTeamLayout->addWidget(blueTeamSpyMasterNickname);
+  blueTeamLayout->addWidget(new QLabel("Operative"));
+  blueTeamOperativeNickname = new QLineEdit();
+  blueTeamLayout->addWidget(blueTeamOperativeNickname);
+
+  redTeamLayout->setAlignment(Qt::AlignLeft);
+  blueTeamLayout->setAlignment(Qt::AlignRight);
+
+  // Align items within the layouts
+  teamsLayout->addLayout(redTeamLayout);
+  teamsLayout->addLayout(blueTeamLayout);
+
+  // Align redTeamLayout to the left
+  teamsLayout->setAlignment(redTeamLayout, Qt::AlignLeft);
+
+  // Align blueTeamLayout to the right
+  teamsLayout->setAlignment(blueTeamLayout, Qt::AlignRight);
+
+  // Set the alignment of teamsLayout in the main layout (center it)
+  layout->addLayout(teamsLayout);
+  layout->setAlignment(teamsLayout, Qt::AlignCenter);
+
+  // Set the alignment of buttonsLayout in the main layout (center it)
+  layout->addLayout(buttonsLayout);
+  layout->setAlignment(buttonsLayout, Qt::AlignCenter);
+
+  // Set the alignment of the buttons within the buttonsLayout to the center
+  buttonsLayout->setAlignment(Qt::AlignCenter);
+
+  // Set the layout of the window
   setLayout(layout);
 }
 
@@ -29,5 +77,43 @@ PreGame::~PreGame() {
 
 void PreGame::goBackToMain() {
   this->hide();
-  emit backToMainWindow(); // Emit signal to notify MainWindow to show itself
+  emit backToMainWindow();  // Emit signal to notify MainWindow to show itself
+}
+
+void PreGame::startGame() {
+  // Get the text from the textboxes
+  QString redSpyMaster = getRedTeamSpyMasterNickname();
+  QString redOperative = getRedTeamOperativeNickname();
+  QString blueSpyMaster = getBlueTeamSpyMasterNickname();
+  QString blueOperative = getBlueTeamOperativeNickname();
+
+  this->hide();
+  emit start();
+
+  LocalStart* localStartScreen = new LocalStart();
+
+  // Pass the data to the new screen using a setter or constructor
+  localStartScreen->setRedTeamSpyMaster(redSpyMaster);
+  localStartScreen->setRedTeamOperative(redOperative);
+  localStartScreen->setBlueTeamSpyMaster(blueSpyMaster);
+  localStartScreen->setBlueTeamOperative(blueOperative);
+
+  localStartScreen->show();
+}
+
+// Getter functions to return the text from the textboxes
+QString PreGame::getRedTeamSpyMasterNickname() const {
+  return redTeamSpyMasterNickname->text();
+}
+
+QString PreGame::getRedTeamOperativeNickname() const {
+  return redTeamOperativeNickname->text();
+}
+
+QString PreGame::getBlueTeamSpyMasterNickname() const {
+  return blueTeamSpyMasterNickname->text();
+}
+
+QString PreGame::getBlueTeamOperativeNickname() const {
+  return blueTeamOperativeNickname->text();
 }
