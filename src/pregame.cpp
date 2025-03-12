@@ -1,6 +1,8 @@
 #include "pregame.h"
 
 PreGame::PreGame(QWidget* parent) : QWidget(parent) {
+  this->setFixedSize(1000, 600);
+
   // Create pregame window UI elements manually
   layout = new QVBoxLayout(this);
   teamsLayout = new QHBoxLayout();
