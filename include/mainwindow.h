@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <QLabel>
 #include <QVBoxLayout>
 
 class PreGame;  // Forward declaration of PreGame class
@@ -21,7 +22,13 @@ private slots:
 private:
     QWidget *centralWidget;
     QVBoxLayout *layout;
-    QPushButton *pushButton;
+
+    QLabel *titleLabel;
+
+    QPushButton *localPlayButton;
+    QPushButton *onlinePlayButton;
+    QPushButton *statsButton;
+
     PreGame *preGameWindow;  // PreGame pointer to the second window
 };
 

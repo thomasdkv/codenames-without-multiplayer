@@ -25,3 +25,5 @@ DESTDIR = $$PWD/bin
 OBJECTS_DIR = $$PWD/build
 
 INCLUDEPATH += $$PWD/include
+
+RESOURCES += src/resources.qrc
