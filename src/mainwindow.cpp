@@ -1,12 +1,26 @@
 #include "mainwindow.h"
 #include "pregame.h"
 #include <QGraphicsDropShadowEffect>
+#include <QPixmap>
+#include <QPalette>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
     // Create central widget and layout
     centralWidget = new QWidget(this);
     layout = new QVBoxLayout(centralWidget);
+
+    this->setStyleSheet(
+        "background-image: url(:/images/menu-background.png);"
+        "background-position: center;"
+    );
+
+    // Ensure centralWidget has a solid background
+    centralWidget->setStyleSheet(
+        "QWidget {"
+        "   background: transparent;"  // Make the central widget transparent
+        "}"
+    );
 
     // Title label
     titleLabel = new QLabel("C++Names", centralWidget);
@@ -51,27 +65,21 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Button Styling
     QString buttonStyles = "QPushButton {"
-        "   background-color: #412AD5;"  // Button background color
-        "   color: white;"               // Text color
-        "   border-radius: 5px;"         // Rounded corners
-        "   border: 2px solid #412AD5;"  // Border
-        "   padding: 5px;"               // Padding
+        "   background-color:rgb(65, 42, 213);" 
+        "   color: white;"
+        "   border-radius: 5px;" 
+        "   border: 2px solid #412AD5;"
+        "   padding: 5px;" 
         "   font-weight: bold;"
         "   font-size: 20px;"
         "}"
         "QPushButton:hover {"
-        "   background-color:rgb(54, 35, 177);" // Hover background color
-        "}"
-        "QPushButton:pressed {"
-        "   background-color: rgb(54, 35, 177);"  // Pressed background color
+        "   background-color: rgb(54, 35, 177);" // Hover background color
         "}";
 
     localPlayButton->setStyleSheet(buttonStyles);
     onlinePlayButton->setStyleSheet(buttonStyles);
     statsButton->setStyleSheet(buttonStyles);
-
-    // Add a shadow effect to buttons
-
 
     // Create the PreGame window
     preGameWindow = new PreGame();
