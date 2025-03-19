@@ -44,7 +44,6 @@ qrc_*
 *.rcc
 
 # Ignore Qt resource files
-*.qrc
 *.qrs
 
 # Ignore editor/IDE files
