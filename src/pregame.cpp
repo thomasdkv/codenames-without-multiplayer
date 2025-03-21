@@ -1,4 +1,5 @@
 #include "pregame.h"
+#include <QDebug>
 
 PreGame::PreGame(QWidget* parent) : QWidget(parent) {
   this->setFixedSize(1000, 600);
@@ -99,8 +100,22 @@ void PreGame::startGame() {
   localStartScreen->setRedTeamOperative(redOperative);
   localStartScreen->setBlueTeamSpyMaster(blueSpyMaster);
   localStartScreen->setBlueTeamOperative(blueOperative);
-
   localStartScreen->show();
+
+  // Add the game board transition
+  GameBoard* gameBoard = new GameBoard(redSpyMaster, redOperative, blueSpyMaster, blueOperative);
+
+  bool connected = connect(localStartScreen, &LocalStart::proceedToGame, gameBoard, &GameBoard::show);
+  
+  qDebug() << "Connection to GameBoard successful:" << connected;
+
+  connect(localStartScreen, &LocalStart::backToPreGame, this, &PreGame::showPreGame);
+  
+}
+
+void PreGame::showPreGame() {
+  qDebug() << "Returning to PreGame screen";
+  this->show();
 }
 
 // Getter functions to return the text from the textboxes

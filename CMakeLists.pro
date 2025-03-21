@@ -12,11 +12,13 @@ TEMPLATE = app
 SOURCES += src/main.cpp \
            src/mainwindow.cpp \
            src/pregame.cpp \
-           src/localstart.cpp
+           src/localstart.cpp \
+           src/gameboard.cpp
 
 HEADERS += include/mainwindow.h \
            include/pregame.h \
-           include/localstart.h
+           include/localstart.h \
+           include/gameboard.h
 
 # Output Directory
 DESTDIR = $$PWD/bin
@@ -26,4 +28,4 @@ OBJECTS_DIR = $$PWD/build
 
 INCLUDEPATH += $$PWD/include
 
-RESOURCES += src/resources.qrc
+RESOURCES += resources.qrc

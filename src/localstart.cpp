@@ -1,4 +1,5 @@
 #include "localstart.h"
+#include <QDebug>
 
 LocalStart::LocalStart(QWidget* parent) : QWidget(parent) {
   setWindowTitle("Local Start Screen");
@@ -17,8 +18,28 @@ LocalStart::LocalStart(QWidget* parent) : QWidget(parent) {
   layout->addWidget(blueSpyMasterLabel);
   layout->addWidget(blueOperativeLabel);
 
+  proceedButton = new QPushButton("Proceed", this);
+  layout->addWidget(proceedButton);
+  connect(proceedButton, &QPushButton::clicked, this, &LocalStart::onProceedClicked);
+
+  backButton = new QPushButton("Back to PreGame", this);
+  layout->addWidget(backButton);
+  connect(backButton, &QPushButton::clicked, this, &LocalStart::onBackClicked);
+
   setLayout(layout);
-  resize(300, 200);
+  resize(1000, 600);
+}
+
+void LocalStart::onProceedClicked() {
+  qDebug() << "Proceed to Game clicked";
+  emit proceedToGame();
+  close();
+}
+
+void LocalStart::onBackClicked() {
+  qDebug() << "Back to PreGame clicked";
+  emit backToPreGame();
+  close();
 }
 
 void LocalStart::setRedTeamSpyMaster(const QString& name) {

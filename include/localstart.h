@@ -21,11 +21,21 @@ class LocalStart : public QWidget {
   void setBlueTeamSpyMaster(const QString& name);
   void setBlueTeamOperative(const QString& name);
 
+ signals: 
+  void backToPreGame();
+  void proceedToGame();
+
+ private slots:
+  void onProceedClicked();
+  void onBackClicked();
+
  private:
   QLabel* redSpyMasterLabel;
   QLabel* redOperativeLabel;
   QLabel* blueSpyMasterLabel;
   QLabel* blueOperativeLabel;
+  QPushButton* proceedButton;
+  QPushButton* backButton;
 };
 
 #endif  // LOCALSTART_H

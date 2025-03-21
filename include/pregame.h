@@ -9,6 +9,7 @@
 #include <QWidget>
 
 #include "localstart.h"
+#include "gameboard.h"
 
 class PreGame : public QWidget {
   Q_OBJECT
@@ -26,6 +27,7 @@ class PreGame : public QWidget {
  private slots:
   void goBackToMain();  // Slot to handle back button click
   void startGame();
+  void showPreGame();
 
  signals:
   void backToMainWindow();  // Signal to notify MainWindow to show itself
