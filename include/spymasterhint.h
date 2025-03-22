@@ -20,6 +20,7 @@ class SpymasterHint : public QWidget {
 
  private slots:
   void submitHint();
+  void updateButtonClickable();
 
  private:
   QLineEdit* hintLineEdit;
