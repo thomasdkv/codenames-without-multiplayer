@@ -58,7 +58,8 @@ void SpymasterHint::submitHint() {
     int number = numberSpinBox->value();
     emit hintSubmitted(hint, number);
     hintLineEdit->clear();
-    numberSpinBox->setSpecialValueText("∞");
+    numberSpinBox->clear();
+    numberSpinBox->setValue(1);
 }
 
 // Update the button clickable state based on the hint text
