@@ -139,4 +139,27 @@ void GameBoard::setupUI() {
     
     mainLayout->addLayout(gridLayout);
     setLayout(mainLayout);
+
+    // Display the current hint (initially empty) above the grid
+    currentHint = new QLabel("Current hint: ");
+    currentHint->setAlignment(Qt::AlignCenter);
+    currentHint->setStyleSheet("font-weight: bold; font-size: 20px; color: black; ");
+    mainLayout->insertWidget(2, currentHint);
+
+    // Implement the Spymaster hint widget and connect the hintSubmitted signal to displayHint slot
+    spymasterHint = new SpymasterHint(this);
+    mainLayout->addWidget(spymasterHint);
+    connect(spymasterHint, &SpymasterHint::hintSubmitted, this, &GameBoard::displayHint);
+}
+
+void GameBoard::displayHint(const QString& hint, int number) {
+    qDebug() << "Received hint:" << hint << "for" << number << "corresponding words";
+
+    // Update the coreesponding number for the hint, if it is 0, display "∞"
+    if (number == 0) {
+        correspondingNumber = "∞";
+    } else {
+        correspondingNumber = QString::number(number);
+    }
+    currentHint->setText("Current hint: " + hint + " (" + correspondingNumber + ")"); // Update the hint
 }

@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QStringList>
 #include <QPushButton>
+#include "spymasterhint.h"
 
 class GameBoard : public QWidget {
     Q_OBJECT
@@ -18,6 +19,7 @@ public:
 
 public slots:
     void show();
+    void displayHint(const QString& hint, int number);
 
 private:
     void loadWordsFromFile();
@@ -51,6 +53,10 @@ private:
     
     QLabel* redTeamLabel;
     QLabel* blueTeamLabel;
+
+    SpymasterHint* spymasterHint;
+    QLabel* currentHint;
+    QString correspondingNumber;
 };
 
 #endif // GAMEBOARD_H

@@ -13,12 +13,14 @@ SOURCES += src/main.cpp \
            src/mainwindow.cpp \
            src/pregame.cpp \
            src/localstart.cpp \
-           src/gameboard.cpp
+           src/gameboard.cpp \ 
+           src/spymasterhint.cpp
 
 HEADERS += include/mainwindow.h \
            include/pregame.h \
            include/localstart.h \
-           include/gameboard.h
+           include/gameboard.h \
+           include/spymasterhint.h
 
 # Output Directory
 DESTDIR = $$PWD/bin
