@@ -21,6 +21,12 @@ SpymasterHint::SpymasterHint(QWidget* parent) : QWidget(parent) {
     numberSpinBox->setSpecialValueText("∞"); // Special value for unlimited guesses
     numberSpinBox->setFixedSize(75, 40);
 
+    // Set up the SpinBox to only allow one digit input
+    QLineEdit* lineEditor = numberSpinBox->findChild<QLineEdit*>();
+    if (lineEditor) {
+        lineEditor->setMaxLength(1);
+    }
+
     // Create a button to submit the hint
     giveClueButton = new QPushButton("Give Clue", this);
     giveClueButton->setFixedSize(135, 40);
