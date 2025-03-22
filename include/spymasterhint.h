@@ -5,7 +5,7 @@
 #include <QLineEdit>
 #include <QSpinBox>
 #include <QPushButton>
-#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 class SpymasterHint : public QWidget {
   Q_OBJECT
