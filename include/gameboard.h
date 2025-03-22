@@ -56,7 +56,7 @@ private:
 
     SpymasterHint* spymasterHint;
     QLabel* currentHint;
-    QLabel* correspondingNumber;
+    QString correspondingNumber;
 };
 
 #endif // GAMEBOARD_H
