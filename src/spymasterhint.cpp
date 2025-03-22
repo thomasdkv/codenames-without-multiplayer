@@ -32,7 +32,7 @@ void SpymasterHint::submitHint() {
     QString hint = hintLineEdit->text();
     int number = numberSpinBox->value();
     if (hint.isEmpty()) {
-        layout()->addWidget(new QLabel("Please enter a hint"));
+        QMessageBox::warning(this, "Missing Hint", "Please enter a hint");
         return;
     } else {
         emit hintSubmitted(hint, number);
