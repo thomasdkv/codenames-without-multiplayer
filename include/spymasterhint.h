@@ -6,7 +6,7 @@
 #include <QSpinBox>
 #include <QPushButton>
 #include <QHBoxLayout>
-#include <QLabel>
+#include <QMessageBox>
 
 class SpymasterHint : public QWidget {
   Q_OBJECT
