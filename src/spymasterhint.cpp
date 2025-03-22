@@ -24,7 +24,22 @@ SpymasterHint::SpymasterHint(QWidget* parent) : QWidget(parent) {
     connect(giveClueButton, &QPushButton::clicked, this, &SpymasterHint::submitHint);
 
     // Store the widgets in the class
-    hintLineEdit = enterClue;
+    hintLineEdit = enterClue; 
     numberSpinBox = enterNumber;
     giveClueButton = giveClueButton;
+}
+
+SpymasterHint::~SpymasterHint() {
+    // Let Qt handle widget deletion
+}
+
+void SpymasterHint::submitHint() {
+    QString hint = hintLineEdit->text();
+    int number = numberSpinBox->value();
+    if (hint.isEmpty()) {
+        layout()->addWidget(new QLabel("Please enter a hint"));
+        return;
+    } else {
+        emit hintSubmitted(hint, number);
+    }
 }
