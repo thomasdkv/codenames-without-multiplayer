@@ -154,11 +154,6 @@ void GameBoard::setupUI() {
 
 void GameBoard::displayHint(const QString& hint, int number) {
     qDebug() << "Received hint:" << hint << "for" << number << "corresponding words";
- 
-    // Remove the previous hint
-    if (currentHint) {
-        delete currentHint;
-    }
 
     // Update the coreesponding number for the hint, if it is 0, display "∞"
     if (number == 0) {
