@@ -2,5 +2,6 @@
 <RCC version="1.0">
     <qresource>
         <file>resources/wordlist-eng.txt</file>
+        <file>images/menu-background.png</file>
     </qresource>
 </RCC>
