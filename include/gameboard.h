@@ -25,6 +25,7 @@ private:
     void loadWordsFromFile();
     void generateGameGrid();
     void setupUI();
+    void nextTurn();
 
     enum CardType {
         RED_TEAM,
@@ -33,12 +34,20 @@ private:
         ASSASSIN
     };
 
+    enum Turn {
+        RED_SPY,
+        RED_OP,
+        BLUE_SPY,
+        BLUE_OP
+    };
+
     struct Card {
         QString word;
         CardType type;
         bool revealed;
     };
 
+    int currentTurn;
     QString redSpyMasterName;
     QString redOperativeName;
     QString blueSpyMasterName;
@@ -53,6 +62,7 @@ private:
     
     QLabel* redTeamLabel;
     QLabel* blueTeamLabel;
+    QLabel* currentTurnLabel;
 
     SpymasterHint* spymasterHint;
     QLabel* currentHint;

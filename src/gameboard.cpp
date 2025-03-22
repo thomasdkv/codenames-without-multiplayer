@@ -105,9 +105,12 @@ void GameBoard::setupUI() {
                             ", Operative: " + redOperativeName);
     blueTeamLabel = new QLabel("Blue Team - Spymaster: " + blueSpyMasterName + 
                              ", Operative: " + blueOperativeName);
-    
+    currentTurnLabel = new QLabel("Current Turn: " + redSpyMasterName);
+        
     mainLayout->addWidget(redTeamLabel);
     mainLayout->addWidget(blueTeamLabel);
+    mainLayout->addWidget(currentTurnLabel);
+
 
     // Grid setup
     gridLayout = new QGridLayout();
@@ -162,4 +165,34 @@ void GameBoard::displayHint(const QString& hint, int number) {
         correspondingNumber = QString::number(number);
     }
     currentHint->setText("Current hint: " + hint + " (" + correspondingNumber + ")"); // Update the hint
+
+    nextTurn();
 }
+
+void GameBoard::nextTurn() {
+    // Switch to the next player's turn
+    currentTurn = (currentTurn + 1) % 4;
+
+    // Hide Board for next player
+    for (int i = 0; i < GRID_SIZE; ++i) {
+        for (int j = 0; j < GRID_SIZE; ++j) {
+                cards[i][j]->setStyleSheet("background-color: #f0f0f0; color: black");
+        }
+    }
+
+    // Update the team labels
+    if(currentTurn == RED_SPY) {
+        currentTurnLabel->setText("Current Turn: " + redSpyMasterName);
+    }
+    else if(currentTurn == RED_OP) {
+        currentTurnLabel->setText("Current Turn: " + redOperativeName);
+    }
+    else if(currentTurn == BLUE_SPY) {
+        currentTurnLabel->setText("Current Turn: " + blueSpyMasterName);
+    }
+    else if(currentTurn == BLUE_OP) {
+        currentTurnLabel->setText("Current Turn: " + blueOperativeName);
+    }
+
+}
+
