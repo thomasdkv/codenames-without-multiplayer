@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QStringList>
 #include <QPushButton>
+#include "spymasterhint.h"
 
 class GameBoard : public QWidget {
     Q_OBJECT
@@ -51,6 +52,10 @@ private:
     
     QLabel* redTeamLabel;
     QLabel* blueTeamLabel;
+
+    SpymasterHint* spymasterHint;
+    QLabel* currentHint;
+    int correspondingNumber;
 };
 
 #endif // GAMEBOARD_H
