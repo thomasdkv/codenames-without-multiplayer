@@ -139,4 +139,9 @@ void GameBoard::setupUI() {
     
     mainLayout->addLayout(gridLayout);
     setLayout(mainLayout);
+
+    // Implement the Spymaster hint widget
+    spymasterHint = new SpymasterHint(this);
+    mainLayout->addWidget(spymasterHint);
+    connect(spymasterHint, &SpymasterHint::hintSubmitted, this, &GameBoard::displayHint);
 }
