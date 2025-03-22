@@ -13,6 +13,10 @@ SpymasterHint::SpymasterHint(QWidget* parent) : QWidget(parent) {
     numberSpinBox->setSpecialValueText("∞"); // Special value for unlimited guesses
 
     QPushButton* giveClueButton = new QPushButton("Give Clue", this);
+    giveClueButton->setFixedSize(200, 100);
+    giveClueButton->setStyleSheet("font-size: 16px;");
+    giveClueButton->setStyleSheet("background-color:rgb(54, 182, 58); color: black;");
+    giveClueButton->setEnabled(false);
 
     // Add the widgets to the layout
     layout->addWidget(hintLineEdit);
@@ -37,4 +41,9 @@ void SpymasterHint::submitHint() {
     } else {
         emit hintSubmitted(hint, number);
     }
+}
+
+void SpymasterHint::updateButtonClickable() {
+    giveClueButton->setEnabled(!hintLineEdit->text().isEmpty());
+    giveClueButton->setCursor(Qt::PointingHandCursor);
 }
