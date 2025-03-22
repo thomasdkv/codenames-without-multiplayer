@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QMessageBox>
+#include <QRegularExpressionMatchIterator>
 
 class SpymasterHint : public QWidget {
   Q_OBJECT
@@ -21,11 +22,13 @@ class SpymasterHint : public QWidget {
  private slots:
   void submitHint();
   void updateButtonClickable();
+  void textToUppercase(const QString& text);
 
  private:
   QLineEdit* hintLineEdit;
   QSpinBox* numberSpinBox;
   QPushButton* giveClueButton;
+  QRegularExpressionMatchIterator* textValidator;
 };
 
 
