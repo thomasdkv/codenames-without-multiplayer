@@ -3,7 +3,8 @@ codenames.app
 Makefile
 main.o
 bin/
-
+bin/*
+Codenames
 # Ignore build directories
 build*/
 bin/
