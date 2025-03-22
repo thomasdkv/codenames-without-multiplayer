@@ -19,6 +19,7 @@ public:
 
 public slots:
     void show();
+    void displayHint(const QString& hint, int number);
 
 private:
     void loadWordsFromFile();
