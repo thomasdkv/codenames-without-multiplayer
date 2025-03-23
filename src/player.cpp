@@ -4,8 +4,7 @@
 Player::Player(const QString& name, const ROLE& role, const TEAM& team)
     : name(name), role(role), team(team), wins(0) {}  // Initialize wins to 0
 
-// No dynamic memory, default destructor is sufficient
-Player::~Player() = default;
+Player::~Player() {};
 
 // Setters
 void Player::setName(const QString& newName) {

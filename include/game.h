@@ -15,7 +15,7 @@ class Game {
 
  public:
   // Constructor
-  explicit Game() = default;
+  explicit Game();
 
   // Getters
   QList<Player> getPlayers() const;
