@@ -21,13 +21,9 @@ signals:
 
 private slots:
     void submitGuess();
-    void updateButtonClickable();
-    void textToUppercase(const QString& text);
 
 private:
-    QLineEdit* guessLineEdit;
     QPushButton* submitGuessButton;
-    QRegularExpressionValidator* textValidator;
 };
 
 #endif // OPERATORGUESS_H
