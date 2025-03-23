@@ -8,6 +8,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
+#include "game.h"
 #include "gameboard.h"
 
 class PreGame : public QWidget {
@@ -33,6 +34,8 @@ class PreGame : public QWidget {
   void start();
 
  private:
+  Game* game;
+
   QLabel* label;
   QPushButton* backButton;
   QPushButton* startButton;
