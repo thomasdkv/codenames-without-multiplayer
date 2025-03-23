@@ -25,7 +25,7 @@ class Player {
     void setTeam(const TEAM& team);
     TEAM getTeam() const;
 
-    void setWin(const int& win);
+    void setWin(const int& wins);
     int getWin() const;
 };
 

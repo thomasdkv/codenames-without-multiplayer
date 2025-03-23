@@ -20,6 +20,10 @@ void Player::setTeam(const TEAM& newTeam) {
     team = newTeam;
 }
 
+void Player::setWin(const int& wins) {
+  this->wins = wins;
+}
+
 // Getters
 QString Player::getName() const {
     return name;
@@ -31,4 +35,8 @@ ROLE Player::getRole() const {
 
 TEAM Player::getTeam() const {
     return team;
+}
+
+int Player::getWin() const {
+  return wins;
 }
