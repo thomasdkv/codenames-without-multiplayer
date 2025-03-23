@@ -197,7 +197,6 @@ void GameBoard::onCardClicked(int row, int col) {
 
 void GameBoard::displayHint(const QString& hint, int number) {
     qDebug() << "Received hint:" << hint << "for" << number << "corresponding words";
-
     // Update the coreesponding number for the hint, if it is 0, display "∞"
     if (number == 0) {
         correspondingNumber = "∞";
@@ -230,6 +229,7 @@ void GameBoard::nextTurn() {
     }
     // Reveal the board for spymaster
     if(currentTurn == RED_SPY || currentTurn == BLUE_SPY) {
+        currentHint->setText("Current hint: "); // Clear the hint
         for (int i = 0; i < GRID_SIZE; ++i) {
             for (int j = 0; j < GRID_SIZE; ++j) {
                 cards[i][j]->setEnabled(false);
