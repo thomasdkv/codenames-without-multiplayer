@@ -23,3 +23,11 @@ Transition::Transition (QWidget* parent) : QWidget(parent) {
 
     connect(continueButton, &QPushButton::clicked, this, &Transition::continueClicked);  
 }
+
+Transition::~Transition() {
+    // Deconstructor for the Transition class, does nothing
+}
+
+void Transition::setMessage(const QString& message) {
+    messageLabel->setText(message);
+}
