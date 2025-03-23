@@ -169,6 +169,7 @@ void GameBoard::setupUI() {
 void GameBoard::displayGuess() {
     nextTurn();
 }
+
 void GameBoard::onCardClicked(int row, int col) {
     if (gameGrid[row][col].revealed) {
         return;
