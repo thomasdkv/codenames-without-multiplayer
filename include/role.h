@@ -3,7 +3,7 @@
 
 enum class ROLE {
   SPYMASTER,
-  OPERATOR
+  OPERATIVE
 };
 
 #endif
