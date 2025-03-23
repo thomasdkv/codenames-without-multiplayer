@@ -164,6 +164,13 @@ void GameBoard::setupUI() {
     mainLayout->addWidget(operatorGuess);
     operatorGuess->setVisible(false);
     connect(operatorGuess, &OperatorGuess::guessSubmitted, this, &GameBoard::displayGuess);
+
+    // Implement the transition widget
+    transition = new Transition(this);
+    transition->setFixedSize(400, 200);
+    mainLayout->addWidget(transition);
+    transition->hide();
+    connect(transition, &Transition::continueClicked, this, &GameBoard::nextTurn);
 }
 
 void GameBoard::displayGuess() {
