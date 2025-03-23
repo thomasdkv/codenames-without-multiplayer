@@ -7,6 +7,7 @@
 #include <QStringList>
 #include <QPushButton>
 #include "spymasterhint.h"
+#include "operatorguess.h"
 
 class GameBoard : public QWidget {
     Q_OBJECT
@@ -20,12 +21,14 @@ public:
 public slots:
     void show();
     void displayHint(const QString& hint, int number);
+    void displayGuess();
 
 private:
     void loadWordsFromFile();
     void generateGameGrid();
     void setupUI();
     void nextTurn();
+    void onCardClicked(int row, int col);
 
     enum CardType {
         RED_TEAM,
@@ -65,6 +68,7 @@ private:
     QLabel* currentTurnLabel;
 
     SpymasterHint* spymasterHint;
+    OperatorGuess* operatorGuess;
     QLabel* currentHint;
     QString correspondingNumber;
 };

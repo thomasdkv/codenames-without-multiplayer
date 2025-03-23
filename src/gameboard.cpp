@@ -125,10 +125,10 @@ void GameBoard::setupUI() {
             // In a real game, this would be hidden from operatives
             switch (gameGrid[i][j].type) {
                 case RED_TEAM:
-                    cards[i][j]->setStyleSheet("background-color: #ff9999;");
+                    cards[i][j]->setStyleSheet("background-color: #ff9999; color: black");
                     break;
                 case BLUE_TEAM:
-                    cards[i][j]->setStyleSheet("background-color: #9999ff;");
+                    cards[i][j]->setStyleSheet("background-color: #9999ff; color: black");
                     break;
                 case NEUTRAL:
                     cards[i][j]->setStyleSheet("background-color: #f0f0f0; color: black");
@@ -137,6 +137,11 @@ void GameBoard::setupUI() {
                     cards[i][j]->setStyleSheet("background-color: #333333; color: white;");
                     break;
             }
+            cards[i][j]->setEnabled(false);
+            // Connect the button's clicked signal to a lambda or a slot
+            connect(cards[i][j], &QPushButton::clicked, this, [=]() {
+            onCardClicked(i, j);
+        });
         }
     }
     
@@ -153,6 +158,41 @@ void GameBoard::setupUI() {
     spymasterHint = new SpymasterHint(this);
     mainLayout->addWidget(spymasterHint);
     connect(spymasterHint, &SpymasterHint::hintSubmitted, this, &GameBoard::displayHint);
+
+    // Implement Operator guess (start hidden)
+    operatorGuess = new OperatorGuess(this);
+    mainLayout->addWidget(operatorGuess);
+    operatorGuess->setVisible(false);
+    connect(operatorGuess, &OperatorGuess::guessSubmitted, this, &GameBoard::displayGuess);
+}
+
+void GameBoard::displayGuess() {
+    nextTurn();
+}
+void GameBoard::onCardClicked(int row, int col) {
+    if (gameGrid[row][col].revealed) {
+        return;
+    }
+    gameGrid[row][col].revealed = true;
+    cards[row][col]->setText("");
+    cards[row][col]->setEnabled(false);
+    if(currentTurn == RED_OP && gameGrid[row][col].type == RED_TEAM || currentTurn == BLUE_OP && gameGrid[row][col].type == BLUE_TEAM) {
+        switch (gameGrid[row][col].type) {
+            case RED_TEAM:
+                cards[row][col]->setStyleSheet("background-color: #ff9999; color: black");
+                break;
+            case BLUE_TEAM:
+                cards[row][col]->setStyleSheet("background-color: #9999ff; color: black");
+                break;
+        }
+        cards[row][col]->setEnabled(false);
+    }
+    else {
+        nextTurn();
+    }
+
+
+    
 }
 
 void GameBoard::displayHint(const QString& hint, int number) {
@@ -174,11 +214,47 @@ void GameBoard::nextTurn() {
     currentTurn = (currentTurn + 1) % 4;
 
     // Hide Board for next player
-    for (int i = 0; i < GRID_SIZE; ++i) {
-        for (int j = 0; j < GRID_SIZE; ++j) {
-                cards[i][j]->setStyleSheet("background-color: #f0f0f0; color: black");
+    if(currentTurn == RED_OP || currentTurn == BLUE_OP) {
+        for (int i = 0; i < GRID_SIZE; ++i) {
+            for (int j = 0; j < GRID_SIZE; ++j) {
+                if(gameGrid[i][j].revealed == false) {
+                    cards[i][j]->setEnabled(true);
+                    cards[i][j]->setStyleSheet("background-color: #f0f0f0; color: black");
+                }
+            }
         }
+        // Remove spymaster widget
+        spymasterHint->hide();
+        operatorGuess->setVisible(true);
+
     }
+    // Reveal the board for spymaster
+    if(currentTurn == RED_SPY || currentTurn == BLUE_SPY) {
+        for (int i = 0; i < GRID_SIZE; ++i) {
+            for (int j = 0; j < GRID_SIZE; ++j) {
+                cards[i][j]->setEnabled(false);
+                switch (gameGrid[i][j].type) {
+                    case RED_TEAM:
+                        cards[i][j]->setStyleSheet("background-color: #ff9999; color: black");
+                        break;
+                    case BLUE_TEAM:
+                        cards[i][j]->setStyleSheet("background-color: #9999ff; color: black");
+                        break;
+                    case NEUTRAL:
+                        cards[i][j]->setStyleSheet("background-color: #f0f0f0; color: black");
+                        break;
+                    case ASSASSIN:
+                        cards[i][j]->setStyleSheet("background-color: #333333; color: white;");
+                        break;
+                }            
+            }
+        }
+        // Show spymaster widget
+        spymasterHint->show();
+        operatorGuess->setVisible(false);
+    }
+
+   
 
     // Update the team labels
     if(currentTurn == RED_SPY) {
