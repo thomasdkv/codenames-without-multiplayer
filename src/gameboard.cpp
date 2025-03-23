@@ -220,6 +220,27 @@ void GameBoard::nextTurn() {
     // Switch to the next player's turn
     currentTurn = (currentTurn + 1) % 4;
 
+    // Determine the next spymaster
+    QString nextSpymasterTurn;
+    if (currentTurn == RED_OP) {
+        nextSpymasterTurn = blueSpyMasterName;
+    } else if (currentTurn == BLUE_OP) {
+        nextSpymasterTurn = redSpyMasterName;
+    }
+
+    // Display the transition widget
+    transition->setMessage("Pass the device to " + nextSpymasterTurn);
+    transition->show();
+
+    // Disable all elements until the continue button is clicked
+    for (int i = 0; i < GRID_SIZE; ++i) {
+        for (int j = 0; j < GRID_SIZE; ++j) {
+            cards[i][j]->setEnabled(false);
+        }
+    }
+    spymasterHint->hide();
+    operatorGuess->setVisible(false);
+
     // Hide Board for next player
     if(currentTurn == RED_OP || currentTurn == BLUE_OP) {
         for (int i = 0; i < GRID_SIZE; ++i) {
@@ -280,3 +301,7 @@ void GameBoard::nextTurn() {
 
 }
 
+void GameBoard::onContinueClicked() {
+    transition->hide();
+    nextTurn();
+}
