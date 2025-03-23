@@ -14,7 +14,7 @@ class Player {
   
   public:
     explicit Player(const QString& name, const ROLE& role, const TEAM& team);
-    ~Player() = default;
+    ~Player();
 
     void setName(const QString& newName);
     QString getName() const;
