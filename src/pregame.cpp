@@ -93,23 +93,13 @@ void PreGame::startGame() {
   this->hide();
   emit start();
 
-  LocalStart* localStartScreen = new LocalStart();
-
-  // Pass the data to the new screen using a setter or constructor
-  localStartScreen->setRedTeamSpyMaster(redSpyMaster);
-  localStartScreen->setRedTeamOperative(redOperative);
-  localStartScreen->setBlueTeamSpyMaster(blueSpyMaster);
-  localStartScreen->setBlueTeamOperative(blueOperative);
-  localStartScreen->show();
-
+ 
   // Add the game board transition
   GameBoard* gameBoard = new GameBoard(redSpyMaster, redOperative, blueSpyMaster, blueOperative);
+  gameBoard->show();
 
-  bool connected = connect(localStartScreen, &LocalStart::proceedToGame, gameBoard, &GameBoard::show);
   
-  qDebug() << "Connection to GameBoard successful:" << connected;
-
-  connect(localStartScreen, &LocalStart::backToPreGame, this, &PreGame::showPreGame);
+  qDebug() << "Connection to GameBoard successful";
   
 }
 

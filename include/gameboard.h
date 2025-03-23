@@ -60,6 +60,8 @@ private:
     Card gameGrid[GRID_SIZE][GRID_SIZE];
     QStringList wordList;
     
+
+    
     QGridLayout* gridLayout;
     QPushButton* cards[GRID_SIZE][GRID_SIZE];
     

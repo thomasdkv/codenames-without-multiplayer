@@ -8,7 +8,6 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include "localstart.h"
 #include "gameboard.h"
 
 class PreGame : public QWidget {
