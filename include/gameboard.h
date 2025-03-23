@@ -30,6 +30,7 @@ private:
     void setupUI();
     void nextTurn();
     void onCardClicked(int row, int col);
+    void onContinueClicked();
 
     enum CardType {
         RED_TEAM,
