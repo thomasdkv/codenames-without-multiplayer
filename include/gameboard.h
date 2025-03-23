@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include "spymasterhint.h"
 #include "operatorguess.h"
+#include "transition.h"
 
 class GameBoard : public QWidget {
     Q_OBJECT
@@ -73,6 +74,8 @@ private:
     OperatorGuess* operatorGuess;
     QLabel* currentHint;
     QString correspondingNumber;
+
+    Transition* transition;
 };
 
 #endif // GAMEBOARD_H
