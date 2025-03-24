@@ -173,6 +173,7 @@ void GameBoard::setupUI() {
 
 void GameBoard::displayGuess() {
     nextTurn();
+    showTransition();
 }
 
 void GameBoard::onCardClicked(int row, int col) {
@@ -301,6 +302,7 @@ void GameBoard::onContinueClicked() {
 }
 
 void GameBoard::showTransition() {
+    // Determine the next player's turn and name
     int nextPlayerTurn = (currentTurn + 1) % 4;
     QString nextSpymasterName;
 
@@ -309,6 +311,7 @@ void GameBoard::showTransition() {
         nextPlayerTurn = (nextPlayerTurn + 1) % 4;
     }
 
+    // Set the next spymaster's name
     if (nextPlayerTurn == RED_SPY) {
         nextSpymasterName = blueSpyMasterName;
     } else if (nextPlayerTurn == BLUE_SPY) {
@@ -327,7 +330,7 @@ void GameBoard::showTransition() {
     spymasterHint->setEnabled(false);
     operatorGuess->setEnabled(false);
 
-    currentTurn = (nextPlayerTurn + 1) % 4;
+    currentTurn = (nextPlayerTurn + 1) % 4; // Skip the next spymaster and go to the next operative
 
     transition->setMessage("Please pass the device to " + nextSpymasterName);
     transition->show();
