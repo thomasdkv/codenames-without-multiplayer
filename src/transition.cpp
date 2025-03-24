@@ -10,8 +10,8 @@ Transition::Transition (QWidget* parent) : QWidget(parent) {
     continueButton->setFixedSize(180, 40);
     continueButton->setStyleSheet(
         "QPushButton { font-weight: bold; font-size: 16px; color: white; border-radius: 15px; "
-        "background-color: rgb(226, 226, 226); }"
-        "QPushButton:hover { background-color: rgb(238, 238, 238); }");
+        "background-color:rgb(65, 42, 213); }"
+        "QPushButton:hover { background-color: rgb(54, 35, 177); }");
     continueButton->setEnabled(true);
     continueButton->setCursor(Qt::PointingHandCursor);
 
