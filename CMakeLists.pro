@@ -16,7 +16,8 @@ SOURCES += src/main.cpp \
            src/spymasterhint.cpp \
            src/operatorguess.cpp \
            src/player.cpp \
-           src/game.cpp
+           src/game.cpp \
+           src/transition.cpp
 
 HEADERS += include/mainwindow.h \
            include/pregame.h \
@@ -26,7 +27,8 @@ HEADERS += include/mainwindow.h \
            include/role.h \
            include/team.h \
            include/player.h \
-           include/game.h
+           include/game.h \
+           include/transition.h
 
 # Output Directory
 DESTDIR = $$PWD/bin
