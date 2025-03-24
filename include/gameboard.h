@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QStringList>
 #include <QPushButton>
+#include <QStackedLayout>
 #include "spymasterhint.h"
 #include "operatorguess.h"
 #include "transition.h"
@@ -31,6 +32,7 @@ private:
     void nextTurn();
     void onCardClicked(int row, int col);
     void onContinueClicked();
+    void showTransition();
 
     enum CardType {
         RED_TEAM,
