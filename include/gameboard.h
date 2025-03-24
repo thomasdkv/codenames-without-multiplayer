@@ -6,8 +6,10 @@
 #include <QLabel>
 #include <QStringList>
 #include <QPushButton>
+#include <QStackedLayout>
 #include "spymasterhint.h"
 #include "operatorguess.h"
+#include "transition.h"
 
 class GameBoard : public QWidget {
     Q_OBJECT
@@ -29,6 +31,8 @@ private:
     void setupUI();
     void nextTurn();
     void onCardClicked(int row, int col);
+    void onContinueClicked();
+    void showTransition();
 
     enum CardType {
         RED_TEAM,
@@ -73,6 +77,8 @@ private:
     OperatorGuess* operatorGuess;
     QLabel* currentHint;
     QString correspondingNumber;
+
+    Transition* transition;
 };
 
 #endif // GAMEBOARD_H

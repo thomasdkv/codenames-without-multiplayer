@@ -15,7 +15,7 @@ GameBoard::GameBoard(const QString& redSpyMaster, const QString& redOperative,
       blueOperativeName(blueOperative) {
     
     setWindowTitle("Codenames - Game Board");
-    setFixedSize(800, 600);
+    setFixedSize(1000, 800);
     
     loadWordsFromFile();
     generateGameGrid();
@@ -111,6 +111,11 @@ void GameBoard::setupUI() {
     mainLayout->addWidget(blueTeamLabel);
     mainLayout->addWidget(currentTurnLabel);
 
+    // Display the current hint (initially empty) above the grid
+    currentHint = new QLabel("Current hint: ");
+    currentHint->setAlignment(Qt::AlignCenter);
+    currentHint->setStyleSheet("font-weight: bold; font-size: 20px; color: black; ");
+    mainLayout->insertWidget(2, currentHint);
 
     // Grid setup
     gridLayout = new QGridLayout();
@@ -140,20 +145,20 @@ void GameBoard::setupUI() {
             cards[i][j]->setEnabled(false);
             // Connect the button's clicked signal to a lambda or a slot
             connect(cards[i][j], &QPushButton::clicked, this, [=]() {
-            onCardClicked(i, j);
-        });
+                onCardClicked(i, j);
+            });
         }
     }
-    
     mainLayout->addLayout(gridLayout);
     setLayout(mainLayout);
 
-    // Display the current hint (initially empty) above the grid
-    currentHint = new QLabel("Current hint: ");
-    currentHint->setAlignment(Qt::AlignCenter);
-    currentHint->setStyleSheet("font-weight: bold; font-size: 20px; color: black; ");
-    mainLayout->insertWidget(2, currentHint);
-
+    // Implement the transition widget
+    transition = new Transition(this);
+    transition->setFixedSize(400, 200);
+    transition->hide();
+    mainLayout->addWidget(transition);
+    connect(transition, &Transition::continueClicked, this, &GameBoard::onContinueClicked);
+    
     // Implement the Spymaster hint widget and connect the hintSubmitted signal to displayHint slot
     spymasterHint = new SpymasterHint(this);
     mainLayout->addWidget(spymasterHint);
@@ -168,7 +173,9 @@ void GameBoard::setupUI() {
 
 void GameBoard::displayGuess() {
     nextTurn();
+    showTransition();
 }
+
 void GameBoard::onCardClicked(int row, int col) {
     if (gameGrid[row][col].revealed) {
         return;
@@ -191,13 +198,18 @@ void GameBoard::onCardClicked(int row, int col) {
         nextTurn();
     }
 
+    // Check if the card clicked is a correct card
+    bool correctCard = (currentTurn == RED_OP && gameGrid[row][col].type == RED_TEAM) || 
+                       (currentTurn == BLUE_OP && gameGrid[row][col].type == BLUE_TEAM);
 
-    
+    // If the card clicked is not a correct card, show the transition widget
+    if (!correctCard) {
+        showTransition();
+    }
 }
 
 void GameBoard::displayHint(const QString& hint, int number) {
     qDebug() << "Received hint:" << hint << "for" << number << "corresponding words";
-
     // Update the coreesponding number for the hint, if it is 0, display "∞"
     if (number == 0) {
         correspondingNumber = "∞";
@@ -214,7 +226,7 @@ void GameBoard::nextTurn() {
     currentTurn = (currentTurn + 1) % 4;
 
     // Hide Board for next player
-    if(currentTurn == RED_OP || currentTurn == BLUE_OP) {
+    if (currentTurn == RED_OP || currentTurn == BLUE_OP) {
         for (int i = 0; i < GRID_SIZE; ++i) {
             for (int j = 0; j < GRID_SIZE; ++j) {
                 if(gameGrid[i][j].revealed == false) {
@@ -226,10 +238,11 @@ void GameBoard::nextTurn() {
         // Remove spymaster widget
         spymasterHint->hide();
         operatorGuess->setVisible(true);
-
     }
+
     // Reveal the board for spymaster
-    if(currentTurn == RED_SPY || currentTurn == BLUE_SPY) {
+    if (currentTurn == RED_SPY || currentTurn == BLUE_SPY) {
+        currentHint->setText("Current hint: "); // Clear the hint
         for (int i = 0; i < GRID_SIZE; ++i) {
             for (int j = 0; j < GRID_SIZE; ++j) {
                 cards[i][j]->setEnabled(false);
@@ -254,8 +267,6 @@ void GameBoard::nextTurn() {
         operatorGuess->setVisible(false);
     }
 
-   
-
     // Update the team labels
     if(currentTurn == RED_SPY) {
         currentTurnLabel->setText("Current Turn: " + redSpyMasterName);
@@ -272,3 +283,55 @@ void GameBoard::nextTurn() {
 
 }
 
+void GameBoard::onContinueClicked() {
+    transition->hide();
+    spymasterHint->setEnabled(true);
+    operatorGuess->setEnabled(true);
+
+    if (currentTurn == RED_OP || currentTurn == BLUE_OP) {
+        for (int i = 0; i < GRID_SIZE; ++i) {
+            for (int j = 0; j < GRID_SIZE; ++j) {
+                if (!gameGrid[i][j].revealed) {
+                    cards[i][j]->setStyleSheet("background-color: #f0f0f0; color: black");
+                    cards[i][j]->setEnabled(true);
+                } 
+            }
+        }
+    }
+    nextTurn();
+}
+
+void GameBoard::showTransition() {
+    // Determine the next player's turn and name
+    int nextPlayerTurn = (currentTurn + 1) % 4;
+    QString nextSpymasterName;
+
+    // Skip to the next spymaster
+    while (nextPlayerTurn != RED_SPY && nextPlayerTurn != BLUE_SPY) {
+        nextPlayerTurn = (nextPlayerTurn + 1) % 4;
+    }
+
+    // Set the next spymaster's name
+    if (nextPlayerTurn == RED_SPY) {
+        nextSpymasterName = blueSpyMasterName;
+    } else if (nextPlayerTurn == BLUE_SPY) {
+        nextSpymasterName = redSpyMasterName;
+    }
+
+    // Disable all elements 
+    for (int i = 0; i < GRID_SIZE; ++i) {
+        for (int j = 0; j < GRID_SIZE; ++j) {
+            cards[i][j]->setEnabled(false);
+            if(gameGrid[i][j].revealed == false) {
+                cards[i][j]->setStyleSheet("background-color: #f0f0f0; color: black");
+            }
+        }
+    }
+    spymasterHint->setEnabled(false);
+    operatorGuess->setEnabled(false);
+
+    currentTurn = (nextPlayerTurn + 1) % 4; // Skip the next spymaster and go to the next operative
+
+    transition->setMessage("Please pass the device to " + nextSpymasterName);
+    transition->show();
+}
