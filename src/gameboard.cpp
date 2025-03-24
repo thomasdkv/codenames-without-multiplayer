@@ -291,11 +291,13 @@ void GameBoard::onContinueClicked() {
         for (int i = 0; i < GRID_SIZE; ++i) {
             for (int j = 0; j < GRID_SIZE; ++j) {
                 if (!gameGrid[i][j].revealed) {
+                    cards[i][j]->setStyleSheet("background-color: #f0f0f0; color: black");
                     cards[i][j]->setEnabled(true);
-                }
+                } 
             }
         }
     }
+    nextTurn();
 }
 
 void GameBoard::showTransition() {
@@ -317,10 +319,15 @@ void GameBoard::showTransition() {
     for (int i = 0; i < GRID_SIZE; ++i) {
         for (int j = 0; j < GRID_SIZE; ++j) {
             cards[i][j]->setEnabled(false);
+            if(gameGrid[i][j].revealed == false) {
+                cards[i][j]->setStyleSheet("background-color: #f0f0f0; color: black");
+            }
         }
     }
     spymasterHint->setEnabled(false);
     operatorGuess->setEnabled(false);
+
+    currentTurn = (nextPlayerTurn + 1) % 4;
 
     transition->setMessage("Please pass the device to " + nextSpymasterName);
     transition->show();
