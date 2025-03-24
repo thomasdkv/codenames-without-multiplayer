@@ -2,9 +2,9 @@
 
 Transition::Transition (QWidget* parent) : QWidget(parent) {
     QVBoxLayout* layout = new QVBoxLayout(this);
-    messageLabel = new QLabel("P", this);
+    messageLabel = new QLabel(this);
     messageLabel->setAlignment(Qt::AlignCenter);
-    messageLabel->setStyleSheet("font-size: 24px; font-weight: bold;");
+    messageLabel->setStyleSheet("font-size: 20px; font-weight: bold;");
 
     continueButton = new QPushButton("Continue", this);
     continueButton->setFixedSize(180, 40);
