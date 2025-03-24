@@ -2,12 +2,14 @@
 
 To Run:
 
-qmake
-make clean
+qmake\
+make clean\
 make
 
-Mac:
-open bin/Codenames.app
+Mac in terminal:
+open bin/Codenames.app \
+or
+./bin/Codenames.app/Contents/MacOS/Codenames
 
 Linux
 ./bin/Codenames
