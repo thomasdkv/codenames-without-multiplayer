@@ -183,13 +183,16 @@ void GameBoard::onCardClicked(int row, int col) {
     gameGrid[row][col].revealed = true;
     cards[row][col]->setText("");
     cards[row][col]->setEnabled(false);
-    if(currentTurn == RED_OP && gameGrid[row][col].type == RED_TEAM || currentTurn == BLUE_OP && gameGrid[row][col].type == BLUE_TEAM) {
+    if( (currentTurn == RED_OP && gameGrid[row][col].type == RED_TEAM) || (currentTurn == BLUE_OP && gameGrid[row][col].type == BLUE_TEAM)) {
         switch (gameGrid[row][col].type) {
             case RED_TEAM:
                 cards[row][col]->setStyleSheet("background-color: #ff9999; color: black");
                 break;
             case BLUE_TEAM:
                 cards[row][col]->setStyleSheet("background-color: #9999ff; color: black");
+                break;
+            case NEUTRAL:
+            case ASSASSIN:
                 break;
         }
         cards[row][col]->setEnabled(false);
