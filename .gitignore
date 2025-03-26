@@ -5,6 +5,8 @@ main.o
 bin/
 bin/*
 Codenames
+resources/profile.json
+
 # Ignore build directories
 build*/
 bin/
