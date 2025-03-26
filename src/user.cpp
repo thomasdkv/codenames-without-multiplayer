@@ -98,18 +98,51 @@ void User::saveJsonFile(const QString& username,
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
 
+  QJsonObject jsonObject;
+
+  // Read existing JSON data (if any)
+  if (file.exists()) {
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+      qDebug() << "Failed to open" << absolutePath << "for reading.";
+      jsonContentLabel->setText("Error: Could not read profile.json");
+      return;
+    }
+
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+    if (doc.isObject()) {
+      jsonObject = doc.object();  // Load existing data
+    }
+  }
+
+  // Check if user exists and preserve "wins" value
+  int wins = 0;
+  if (jsonObject.contains(username)) {
+    QJsonObject existingUser = jsonObject[username].toObject();
+    if (existingUser.contains("wins")) {
+      wins = existingUser["wins"].toInt();  // Preserve existing wins count
+    }
+  }
+
+  // Create/Update user information
+  QJsonObject userObject;
+  userObject["user_name"] = username;
+  userObject["hashed-password"] = hashedPassword;
+  userObject["wins"] = wins;  // Keep previous wins
+
+  jsonObject[username] = userObject;  // Store user under their username key
+
+  // Write updated JSON data
   if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
     qDebug() << "Failed to write to" << absolutePath;
     jsonContentLabel->setText("Error: Could not write to profile.json");
     return;
   }
-  QJsonObject jsonObject;
-  jsonObject["user_name"] = username;
-  jsonObject["hashed-password"] = hashedPassword;
-  jsonObject["wins"] = 0;
 
-  QJsonDocument doc(jsonObject);
-  file.write(doc.toJson());
+  QJsonDocument newDoc(jsonObject);
+  file.write(newDoc.toJson());
   file.close();
 }
 
@@ -142,7 +175,7 @@ void User::handleLogin() {
   file.close();
 
   qDebug() << "Raw JSON data:"
-           << jsonData;  // Print the raw content of the file for debugging
+           << jsonData;  // Print the raw content for debugging
 
   QJsonDocument doc = QJsonDocument::fromJson(jsonData);
   if (!doc.isObject()) {
@@ -152,14 +185,21 @@ void User::handleLogin() {
   }
 
   QJsonObject jsonObject = doc.object();
-  QString storedUsername = jsonObject["user_name"].toString();
-  QString storedHashedPassword = jsonObject["hashed-password"].toString();
+  QString enteredUsername = usernameInput->text().trimmed();
+  QString enteredPassword = passwordInput->text().trimmed();
+
+  if (!jsonObject.contains(enteredUsername)) {
+    jsonContentLabel->setText("Login failed. User not found.");
+    qDebug() << "User not found: " << enteredUsername;
+    return;
+  }
+
+  QJsonObject userObject = jsonObject[enteredUsername].toObject();
+  QString storedUsername = userObject["user_name"].toString();
+  QString storedHashedPassword = userObject["hashed-password"].toString();
 
   qDebug() << "Stored Username: " << storedUsername;
   qDebug() << "Stored Hashed Password: " << storedHashedPassword;
-
-  QString enteredUsername = usernameInput->text().trimmed();
-  QString enteredPassword = passwordInput->text().trimmed();
 
   if (enteredUsername == storedUsername &&
       verifyPassword(enteredPassword, storedHashedPassword)) {
@@ -170,4 +210,175 @@ void User::handleLogin() {
     jsonContentLabel->setText("Login failed. Check credentials.");
     qDebug() << "Login failed for user: " << enteredUsername;
   }
+}
+
+int User::getWins(const QString& username) {
+  QFile file("resources/profile.json");
+  QDir dir = QFileInfo(file).absoluteDir();
+  QString absolutePath = dir.filePath(file.fileName());
+
+  if (!file.exists()) {
+    qDebug() << "Error: profile.json does not exist.";
+    jsonContentLabel->setText("Error: No user data found.");
+    return -1;  // Indicates error
+  }
+
+  // Read existing JSON data
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    qDebug() << "Failed to open" << absolutePath << "for reading.";
+    jsonContentLabel->setText("Error: Could not read profile.json");
+    return -1;
+  }
+
+  QByteArray jsonData = file.readAll();
+  file.close();
+
+  QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+  if (!doc.isObject()) {
+    qDebug() << "Invalid JSON format.";
+    jsonContentLabel->setText("Error: Invalid profile format.");
+    return -1;
+  }
+
+  QJsonObject jsonObject = doc.object();
+
+  // Check if user exists
+  if (!jsonObject.contains(username)) {
+    qDebug() << "User not found:" << username;
+    jsonContentLabel->setText("Error: User does not exist.");
+    return -1;
+  }
+
+  // Get wins count
+  QJsonObject userObject = jsonObject[username].toObject();
+  int wins = userObject.contains("wins") ? userObject["wins"].toInt() : 0;
+
+  qDebug() << "Retrieved wins for user:" << username << "| Wins count:" << wins;
+  return wins;
+}
+
+void User::updateWins(const QString& username, const int& newWins) {
+  QFile file("resources/profile.json");
+  QDir dir = QFileInfo(file).absoluteDir();
+  QString absolutePath = dir.filePath(file.fileName());
+
+  if (!file.exists()) {
+    qDebug() << "Error: profile.json does not exist.";
+    jsonContentLabel->setText("Error: No user data found.");
+    return;
+  }
+
+  // Read existing JSON data
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    qDebug() << "Failed to open" << absolutePath << "for reading.";
+    jsonContentLabel->setText("Error: Could not read profile.json");
+    return;
+  }
+
+  QByteArray jsonData = file.readAll();
+  file.close();
+
+  QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+  if (!doc.isObject()) {
+    qDebug() << "Invalid JSON format.";
+    jsonContentLabel->setText("Error: Invalid profile format.");
+    return;
+  }
+
+  QJsonObject jsonObject = doc.object();
+
+  // Check if user exists
+  if (!jsonObject.contains(username)) {
+    qDebug() << "User not found:" << username;
+    jsonContentLabel->setText("Error: User does not exist.");
+    return;
+  }
+
+  // Update wins count
+  QJsonObject userObject = jsonObject[username].toObject();
+  // int wins = userObject.contains("wins") ? userObject["wins"].toInt() : 0;
+  userObject["wins"] = newWins;
+
+  jsonObject[username] = userObject;  // Update the user in JSON
+
+  // Write updated JSON data
+  if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    qDebug() << "Failed to write to" << absolutePath;
+    jsonContentLabel->setText("Error: Could not write to profile.json");
+    return;
+  }
+
+  QJsonDocument newDoc(jsonObject);
+  file.write(newDoc.toJson());
+  file.close();
+
+  qDebug() << "Updated wins for user:" << username
+           << "| New wins count:" << userObject["wins"].toInt();
+  jsonContentLabel->setText("Win count updated for " + username);
+}
+
+void User::renameUser(const QString& oldUsername, const QString& newUsername) {
+  QFile file("resources/profile.json");
+  QDir dir = QFileInfo(file).absoluteDir();
+  QString absolutePath = dir.filePath(file.fileName());
+
+  if (!file.exists()) {
+    qDebug() << "Error: profile.json does not exist.";
+    jsonContentLabel->setText("Error: No user data found.");
+    return;
+  }
+
+  // Read existing JSON data
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    qDebug() << "Failed to open" << absolutePath << "for reading.";
+    jsonContentLabel->setText("Error: Could not read profile.json");
+    return;
+  }
+
+  QByteArray jsonData = file.readAll();
+  file.close();
+
+  QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+  if (!doc.isObject()) {
+    qDebug() << "Invalid JSON format.";
+    jsonContentLabel->setText("Error: Invalid profile format.");
+    return;
+  }
+
+  QJsonObject jsonObject = doc.object();
+
+  // Check if the old username exists
+  if (!jsonObject.contains(oldUsername)) {
+    qDebug() << "User not found:" << oldUsername;
+    jsonContentLabel->setText("Error: User does not exist.");
+    return;
+  }
+
+  // Check if the new username already exists
+  if (jsonObject.contains(newUsername)) {
+    qDebug() << "New username already exists:" << newUsername;
+    jsonContentLabel->setText("Error: Username already taken.");
+    return;
+  }
+
+  // Rename the user: Move data from old username to new username
+  QJsonObject userObject = jsonObject[oldUsername].toObject();
+  userObject["user_name"] = newUsername;  // Update stored username field
+
+  jsonObject.remove(oldUsername);        // Remove old entry
+  jsonObject[newUsername] = userObject;  // Insert under new username
+
+  // Write updated JSON data
+  if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    qDebug() << "Failed to write to" << absolutePath;
+    jsonContentLabel->setText("Error: Could not write to profile.json");
+    return;
+  }
+
+  QJsonDocument newDoc(jsonObject);
+  file.write(newDoc.toJson());
+  file.close();
+
+  qDebug() << "User renamed from" << oldUsername << "to" << newUsername;
+  jsonContentLabel->setText("Username successfully changed.");
 }

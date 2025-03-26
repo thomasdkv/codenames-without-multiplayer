@@ -23,6 +23,11 @@ class User : public QWidget {
 
   ~User();
 
+  void updateWins(const QString& username, const int& newWins);
+  int getWins(const QString& username);
+
+  void renameUser(const QString& oldUsername, const QString& newUsername);
+
  private slots:
   void handleLogin();   // Handles user login
   void handleSignUp();  // Handles user registration
