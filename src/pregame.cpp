@@ -4,6 +4,7 @@ PreGame::PreGame(QWidget* parent) : QWidget(parent) {
   this->setFixedSize(1000, 600);
 
   game = new Game();
+  users = User::instance();
 
   // Create pregame window UI elements manually
   layout = new QVBoxLayout(this);
@@ -95,6 +96,11 @@ void PreGame::startGame() {
   game->addPlayer(Player(redOperative, ROLE::OPERATIVE, TEAM::RED));
   game->addPlayer(Player(blueSpyMaster, ROLE::SPYMASTER, TEAM::BLUE));
   game->addPlayer(Player(blueOperative, ROLE::OPERATIVE, TEAM::BLUE));
+
+  users->signUp(redSpyMaster);
+  users->signUp(redOperative);
+  users->signUp(blueSpyMaster);
+  users->signUp(blueOperative);
 
   this->hide();
   emit start();
