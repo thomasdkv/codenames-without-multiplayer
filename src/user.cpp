@@ -19,15 +19,15 @@ User::User(QWidget* parent) : QWidget(parent) {
   usernameInput = new QLineEdit(this);
   usernameInput->setPlaceholderText("Enter Username");
 
-  passwordInput = new QLineEdit(this);
-  passwordInput->setPlaceholderText("Enter Password");
-  passwordInput->setEchoMode(QLineEdit::Password);
+  // passwordInput = new QLineEdit(this);
+  // passwordInput->setPlaceholderText("Enter Password");
+  // passwordInput->setEchoMode(QLineEdit::Password);
 
   loginButton = new QPushButton("Login", this);
   signUpButton = new QPushButton("Sign Up", this);
 
   layout->addWidget(usernameInput);
-  layout->addWidget(passwordInput);
+  // layout->addWidget(passwordInput);
   layout->addWidget(loginButton);
   layout->addWidget(signUpButton);
 
@@ -68,8 +68,7 @@ void User::loadJsonFile() {
   }
 
   QJsonObject jsonObject = doc.object();
-  if (!jsonObject.contains("user_name") ||
-      !jsonObject.contains("hashed-password")) {
+  if (!jsonObject.contains("user_name")) {
     jsonContentLabel->setText("Profile incomplete. Please sign up.");
     return;
   }
@@ -78,22 +77,21 @@ void User::loadJsonFile() {
 }
 
 // Hashing function with salt
-QString User::hashPassword(const QString& password) {
-  QByteArray saltedPassword = (password + SALT).toUtf8();
-  QByteArray hashed =
-      QCryptographicHash::hash(saltedPassword, QCryptographicHash::Sha256);
-  return hashed.toHex();
-}
+// QString User::hashPassword(const QString& password) {
+//   QByteArray saltedPassword = (password + SALT).toUtf8();
+//   QByteArray hashed =
+//       QCryptographicHash::hash(saltedPassword, QCryptographicHash::Sha256);
+//   return hashed.toHex();
+// }
 
 // Verify hashed password
-bool User::verifyPassword(const QString& inputPassword,
-                          const QString& storedHash) {
-  return hashPassword(inputPassword) == storedHash;
-}
+// bool User::verifyPassword(const QString& inputPassword,
+//                           const QString& storedHash) {
+//   return hashPassword(inputPassword) == storedHash;
+// }
 
 // Save JSON data
-void User::saveJsonFile(const QString& username,
-                        const QString& hashedPassword) {
+void User::saveJsonFile(const QString& username) {
   QFile file("resources/profile.json");
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -129,7 +127,7 @@ void User::saveJsonFile(const QString& username,
   // Create/Update user information
   QJsonObject userObject;
   userObject["user_name"] = username;
-  userObject["hashed-password"] = hashedPassword;
+  // userObject["hashed-password"] = hashedPassword;
   userObject["wins"] = wins;  // Keep previous wins
 
   jsonObject[username] = userObject;  // Store user under their username key
@@ -149,15 +147,15 @@ void User::saveJsonFile(const QString& username,
 // Handle user sign-up
 void User::handleSignUp() {
   QString username = usernameInput->text().trimmed();
-  QString password = passwordInput->text().trimmed();
+  // QString password = passwordInput->text().trimmed();
 
-  if (username.isEmpty() || password.isEmpty()) {
+  if (username.isEmpty()) {
     jsonContentLabel->setText("Username and password cannot be empty.");
     return;
   }
 
-  QString hashedPassword = hashPassword(password);
-  saveJsonFile(username, hashedPassword);
+  // QString hashedPassword = hashPassword(password);
+  saveJsonFile(username);
 
   jsonContentLabel->setText("Account created. Please log in.");
 }
@@ -186,7 +184,7 @@ void User::handleLogin() {
 
   QJsonObject jsonObject = doc.object();
   QString enteredUsername = usernameInput->text().trimmed();
-  QString enteredPassword = passwordInput->text().trimmed();
+  // QString enteredPassword = passwordInput->text().trimmed();
 
   if (!jsonObject.contains(enteredUsername)) {
     jsonContentLabel->setText("Login failed. User not found.");
@@ -196,13 +194,12 @@ void User::handleLogin() {
 
   QJsonObject userObject = jsonObject[enteredUsername].toObject();
   QString storedUsername = userObject["user_name"].toString();
-  QString storedHashedPassword = userObject["hashed-password"].toString();
+  // QString storedHashedPassword = userObject["hashed-password"].toString();
 
   qDebug() << "Stored Username: " << storedUsername;
-  qDebug() << "Stored Hashed Password: " << storedHashedPassword;
+  // qDebug() << "Stored Hashed Password: " << storedHashedPassword;
 
-  if (enteredUsername == storedUsername &&
-      verifyPassword(enteredPassword, storedHashedPassword)) {
+  if (enteredUsername == storedUsername) {
     jsonContentLabel->setText("Login successful. Welcome, " + storedUsername +
                               "!");
     qDebug() << "User logged in: " << storedUsername;

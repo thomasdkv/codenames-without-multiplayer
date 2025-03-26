@@ -1,16 +1,17 @@
 {
+    "abc": {
+        "user_name": "abc",
+        "wins": 0
+    },
     "alex": {
-        "hashed-password": "fb4470fcb241e5479f08282dd096f404d6a2636bc8eb326d1e5ab1536c5bd406",
         "user_name": "alex",
         "wins": 2
     },
     "okay": {
-        "hashed-password": "2d50a685b980abcd793c40d579688e07c0f70d7f7c20f10dbb31160c166306f0",
         "user_name": "okay",
         "wins": 0
     },
     "thomas2": {
-        "hashed-password": "0fcc50e23717bc5e051ae0695a975b0fa30a3e5f3301263d9bc81628b4d41614",
         "user_name": "thomas2",
         "wins": 2
     }

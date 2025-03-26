@@ -37,16 +37,16 @@ class User : public QWidget {
 
   QLabel* jsonContentLabel;  // Label to display JSON content
   QLineEdit* usernameInput;
-  QLineEdit* passwordInput;
+  // QLineEdit* passwordInput;
   QPushButton* loginButton;
   QPushButton* signUpButton;
 
   const QString SALT = "Ashton Hall";
 
   void loadJsonFile();  // Function to load JSON data
-  void saveJsonFile(const QString& username, const QString& hashedPassword);
-  QString hashPassword(const QString& password);
-  bool verifyPassword(const QString& inputPassword, const QString& storedHash);
+  void saveJsonFile(const QString& username);
+  // QString hashPassword(const QString& password);
+  // bool verifyPassword(const QString& inputPassword, const QString& storedHash);
 };
 
 #endif  // USER_H
