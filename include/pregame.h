@@ -1,6 +1,7 @@
 #ifndef PREGAME_H
 #define PREGAME_H
 
+#include <QDebug>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
