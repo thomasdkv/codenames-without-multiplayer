@@ -23,6 +23,8 @@ class User : public QWidget {
 
   ~User();
 
+  void signUp(QString& username);
+
   void updateWins(const QString& username, const int& newWins);
   int getWins(const QString& username);
 
@@ -34,6 +36,8 @@ class User : public QWidget {
 
  private:
   explicit User(QWidget* parent = nullptr);
+
+  QString jsonFilePath = "resources/profile.json";
 
   QLabel* jsonContentLabel;  // Label to display JSON content
   QLineEdit* usernameInput;

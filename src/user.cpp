@@ -42,7 +42,7 @@ User::User(QWidget* parent) : QWidget(parent) {
 User::~User() {}
 
 void User::loadJsonFile() {
-  QFile file("resources/profile.json");
+  QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
 
@@ -92,7 +92,7 @@ void User::loadJsonFile() {
 
 // Save JSON data
 void User::saveJsonFile(const QString& username) {
-  QFile file("resources/profile.json");
+  QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
 
@@ -160,8 +160,12 @@ void User::handleSignUp() {
   jsonContentLabel->setText("Account created. Please log in.");
 }
 
+void User::signUp(QString& username) {
+  saveJsonFile(username);
+}
+
 void User::handleLogin() {
-  QFile file("resources/profile.json");  // Use the relative path
+  QFile file(jsonFilePath);  // Use the relative path
 
   if (!file.open(QIODevice::ReadOnly)) {
     jsonContentLabel->setText("Error: Could not open profile.json");
@@ -210,7 +214,7 @@ void User::handleLogin() {
 }
 
 int User::getWins(const QString& username) {
-  QFile file("resources/profile.json");
+  QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
 
@@ -255,7 +259,7 @@ int User::getWins(const QString& username) {
 }
 
 void User::updateWins(const QString& username, const int& newWins) {
-  QFile file("resources/profile.json");
+  QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
 
@@ -315,7 +319,7 @@ void User::updateWins(const QString& username, const int& newWins) {
 }
 
 void User::renameUser(const QString& oldUsername, const QString& newUsername) {
-  QFile file("resources/profile.json");
+  QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
 

@@ -11,6 +11,7 @@
 
 #include "game.h"
 #include "gameboard.h"
+#include "user.h"
 
 class PreGame : public QWidget {
   Q_OBJECT
@@ -36,6 +37,8 @@ class PreGame : public QWidget {
 
  private:
   Game* game;
+
+  User *users;
 
   QLabel* label;
   QPushButton* backButton;
