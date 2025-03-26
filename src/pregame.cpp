@@ -1,5 +1,4 @@
 #include "pregame.h"
-#include <QDebug>
 
 PreGame::PreGame(QWidget* parent) : QWidget(parent) {
   this->setFixedSize(1000, 600);
@@ -100,14 +99,12 @@ void PreGame::startGame() {
   this->hide();
   emit start();
 
- 
   // Add the game board transition
-  GameBoard* gameBoard = new GameBoard(redSpyMaster, redOperative, blueSpyMaster, blueOperative);
+  GameBoard* gameBoard =
+      new GameBoard(redSpyMaster, redOperative, blueSpyMaster, blueOperative);
   gameBoard->show();
 
-  
   qDebug() << "Connection to GameBoard successful";
-  
 }
 
 void PreGame::showPreGame() {
