@@ -118,11 +118,20 @@ void GameBoard::setupUI() {
     redScoreLabel = new QLabel("Red Cards Remaining: " + QString::number(redCardsRemaining));
     blueScoreLabel = new QLabel("Blue Cards remaining: " + QString::number(blueCardsRemaining));
 
-    mainLayout->addWidget(redScoreLabel);
-    mainLayout->addWidget(blueScoreLabel);
-    
-    mainLayout->addWidget(redTeamLabel);
-    mainLayout->addWidget(blueTeamLabel);
+    // Create a horizontal layout for score labels to place them side by side
+    QHBoxLayout* scoreLayout = new QHBoxLayout();
+    scoreLayout->addWidget(redScoreLabel);
+    scoreLayout->addStretch();
+    scoreLayout->addWidget(blueScoreLabel);
+    mainLayout->addLayout(scoreLayout);
+
+    // Create a horizontal layout for team labels to place them side by side
+    QHBoxLayout* teamLayout = new QHBoxLayout();
+    teamLayout->addWidget(redTeamLabel);
+    teamLayout->addStretch();
+    teamLayout->addWidget(blueTeamLabel);
+    mainLayout->addLayout(teamLayout);
+
     mainLayout->addWidget(currentTurnLabel);
 
     // Display the current hint (initially empty) above the grid
