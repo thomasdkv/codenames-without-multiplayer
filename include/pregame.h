@@ -30,6 +30,7 @@ class PreGame : public QWidget {
   void goBackToMain();  // Slot to handle back button click
   void startGame();
   void showPreGame();
+  void handleGameEnd();
 
  signals:
   void backToMainWindow();  // Signal to notify MainWindow to show itself
@@ -54,6 +55,8 @@ class PreGame : public QWidget {
   QVBoxLayout* redTeamLayout;
   QVBoxLayout* blueTeamLayout;
   QHBoxLayout* buttonsLayout;
+
+  GameBoard* gameBoard;
 };
 
 #endif  // PREGAME_H

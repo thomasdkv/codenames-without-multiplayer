@@ -20,6 +20,9 @@ public:
                       QWidget* parent = nullptr);
     ~GameBoard();
 
+signals:
+    void gameEnded();
+
 public slots:
     void show();
     void displayHint(const QString& hint, int number);
@@ -33,6 +36,10 @@ private:
     void onCardClicked(int row, int col);
     void onContinueClicked();
     void showTransition();
+
+    void updateScores();
+    void checkGameEnd();
+    void endGame(const QString& message);
 
     enum CardType {
         RED_TEAM,
@@ -79,6 +86,12 @@ private:
     QString correspondingNumber;
 
     Transition* transition;
+
+    int redCardsRemaining;
+    int blueCardsRemaining;
+
+    QLabel* redScoreLabel;
+    QLabel* blueScoreLabel;
 };
 
 #endif // GAMEBOARD_H

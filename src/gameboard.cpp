@@ -4,6 +4,7 @@
 #include <QRandomGenerator>
 #include <QVBoxLayout>
 #include <QDebug>
+#include <QMessageBox>
 
 GameBoard::GameBoard(const QString& redSpyMaster, const QString& redOperative,
                     const QString& blueSpyMaster, const QString& blueOperative,
@@ -12,7 +13,11 @@ GameBoard::GameBoard(const QString& redSpyMaster, const QString& redOperative,
       redSpyMasterName(redSpyMaster),
       redOperativeName(redOperative),
       blueSpyMasterName(blueSpyMaster),
-      blueOperativeName(blueOperative) {
+      blueOperativeName(blueOperative), 
+      
+      redCardsRemaining(0),
+      blueCardsRemaining(0)
+{
     
     setWindowTitle("Codenames - Game Board");
     setFixedSize(1000, 800);
@@ -73,6 +78,9 @@ void GameBoard::generateGameGrid() {
     int assassinCards = 1;
     int neutralCards = 7;
 
+    redCardsRemaining = redCards;
+    blueCardsRemaining = blueCards;
+
     QList<CardType> cardTypes;
     for (int i = 0; i < redCards; ++i) cardTypes.append(RED_TEAM);
     for (int i = 0; i < blueCards; ++i) cardTypes.append(BLUE_TEAM);
@@ -107,6 +115,12 @@ void GameBoard::setupUI() {
                              ", Operative: " + blueOperativeName);
     currentTurnLabel = new QLabel("Current Turn: " + redSpyMasterName);
         
+    redScoreLabel = new QLabel("Red Cards Remaining: " + QString::number(redCardsRemaining));
+    blueScoreLabel = new QLabel("Blue Cards remaining: " + QString::number(blueCardsRemaining));
+
+    mainLayout->addWidget(redScoreLabel);
+    mainLayout->addWidget(blueScoreLabel);
+    
     mainLayout->addWidget(redTeamLabel);
     mainLayout->addWidget(blueTeamLabel);
     mainLayout->addWidget(currentTurnLabel);
@@ -180,34 +194,54 @@ void GameBoard::onCardClicked(int row, int col) {
     if (gameGrid[row][col].revealed) {
         return;
     }
+
+    // Mark the card as revealed and disable it
     gameGrid[row][col].revealed = true;
-    cards[row][col]->setText("");
+    cards[row][col]->setText("");  // Clear the text to show the card is revealed
     cards[row][col]->setEnabled(false);
-    if( (currentTurn == RED_OP && gameGrid[row][col].type == RED_TEAM) || (currentTurn == BLUE_OP && gameGrid[row][col].type == BLUE_TEAM)) {
-        switch (gameGrid[row][col].type) {
-            case RED_TEAM:
-                cards[row][col]->setStyleSheet("background-color: #ff9999; color: black");
-                break;
-            case BLUE_TEAM:
-                cards[row][col]->setStyleSheet("background-color: #9999ff; color: black");
-                break;
-            case NEUTRAL:
-            case ASSASSIN:
-                break;
-        }
-        cards[row][col]->setEnabled(false);
-    }
-    else {
-        nextTurn();
+
+    // Always reveal the card's true color, regardless of whether it's correct
+    switch (gameGrid[row][col].type) {
+        case RED_TEAM:
+            cards[row][col]->setStyleSheet("background-color: #ff9999; color: black");
+            break;
+        case BLUE_TEAM:
+            cards[row][col]->setStyleSheet("background-color: #9999ff; color: black");
+            break;
+        case NEUTRAL:
+            cards[row][col]->setStyleSheet("background-color: #f0f0f0; color: black");
+            break;
+        case ASSASSIN:
+            cards[row][col]->setStyleSheet("background-color: #333333; color: white");
+            break;
     }
 
-    // Check if the card clicked is a correct card
+    // Update scores 
+    if (gameGrid[row][col].type == RED_TEAM) {
+        redCardsRemaining--;
+        updateScores();
+        qDebug() << "Red team card selected. Red cards remaining:" << redCardsRemaining;
+    } else if (gameGrid[row][col].type == BLUE_TEAM) {
+        blueCardsRemaining--;
+        updateScores();
+        qDebug() << "Blue team card selected. Blue cards remaining:" << blueCardsRemaining;
+    }
+
     bool correctCard = (currentTurn == RED_OP && gameGrid[row][col].type == RED_TEAM) || 
                        (currentTurn == BLUE_OP && gameGrid[row][col].type == BLUE_TEAM);
 
-    // If the card clicked is not a correct card, show the transition widget
+    checkGameEnd();
+
+    // Show the transition widget
     if (!correctCard) {
-        showTransition();
+        qDebug() << "Wrong card selected by" << (currentTurn == RED_OP ? "Red team" : "Blue team")
+                 << "- Card type:" << gameGrid[row][col].type;
+        for (int i = 0; i < GRID_SIZE; ++i) {
+            for (int j = 0; j < GRID_SIZE; ++j) {
+                cards[i][j]->setEnabled(false);
+            }
+        }
+        showTransition();  
     }
 }
 
@@ -232,9 +266,12 @@ void GameBoard::nextTurn() {
     if (currentTurn == RED_OP || currentTurn == BLUE_OP) {
         for (int i = 0; i < GRID_SIZE; ++i) {
             for (int j = 0; j < GRID_SIZE; ++j) {
-                if(gameGrid[i][j].revealed == false) {
+                if (!gameGrid[i][j].revealed) {
                     cards[i][j]->setEnabled(true);
                     cards[i][j]->setStyleSheet("background-color: #f0f0f0; color: black");
+                } 
+                else {
+                    cards[i][j]->setEnabled(false);  // Ensure revealed cards stay disabled
                 }
             }
         }
@@ -288,20 +325,43 @@ void GameBoard::nextTurn() {
 
 void GameBoard::onContinueClicked() {
     transition->hide();
-    spymasterHint->setEnabled(true);
-    operatorGuess->setEnabled(true);
 
-    if (currentTurn == RED_OP || currentTurn == BLUE_OP) {
+    if (currentTurn == RED_SPY || currentTurn == BLUE_SPY) {
+        currentHint->setText("Current hint: ");
         for (int i = 0; i < GRID_SIZE; ++i) {
             for (int j = 0; j < GRID_SIZE; ++j) {
-                if (!gameGrid[i][j].revealed) {
-                    cards[i][j]->setStyleSheet("background-color: #f0f0f0; color: black");
-                    cards[i][j]->setEnabled(true);
-                } 
+                cards[i][j]->setEnabled(false);
+                switch (gameGrid[i][j].type) {
+                    case RED_TEAM:
+                        cards[i][j]->setStyleSheet("background-color: #ff9999; color: black");
+                        break;
+                    case BLUE_TEAM:
+                        cards[i][j]->setStyleSheet("background-color: #9999ff; color: black");
+                        break;
+                    case NEUTRAL:
+                        cards[i][j]->setStyleSheet("background-color: #f0f0f0; color: black");
+                        break;
+                    case ASSASSIN:
+                        cards[i][j]->setStyleSheet("background-color: #333333; color: white");
+                        break;
+                }            
             }
         }
+        spymasterHint->setEnabled(true);
+        spymasterHint->show();
+        operatorGuess->setEnabled(false);
+        operatorGuess->setVisible(false);
+        qDebug() << "Spymaster turn - Cards disabled, showing hint widget";
     }
-    nextTurn();
+
+    // Update the current turn label
+    if (currentTurn == RED_SPY) {
+        currentTurnLabel->setText("Current Turn: " + redSpyMasterName);
+    } else if (currentTurn == BLUE_SPY) {
+        currentTurnLabel->setText("Current Turn: " + blueSpyMasterName);
+    }
+
+    qDebug() << "Continue clicked, spymaster turn set up. Current turn:" << currentTurn;
 }
 
 void GameBoard::showTransition() {
@@ -316,9 +376,9 @@ void GameBoard::showTransition() {
 
     // Set the next spymaster's name
     if (nextPlayerTurn == RED_SPY) {
-        nextSpymasterName = blueSpyMasterName;
-    } else if (nextPlayerTurn == BLUE_SPY) {
         nextSpymasterName = redSpyMasterName;
+    } else if (nextPlayerTurn == BLUE_SPY) {
+        nextSpymasterName = blueSpyMasterName;
     }
 
     // Disable all elements 
@@ -333,8 +393,64 @@ void GameBoard::showTransition() {
     spymasterHint->setEnabled(false);
     operatorGuess->setEnabled(false);
 
-    currentTurn = (nextPlayerTurn + 1) % 4; // Skip the next spymaster and go to the next operative
+    currentTurn = nextPlayerTurn; 
 
     transition->setMessage("Please pass the device to " + nextSpymasterName);
     transition->show();
+
+    qDebug() << "Transitioning to next spymaster:" << nextSpymasterName;
+}
+
+void GameBoard::updateScores() {
+    redScoreLabel->setText("Red Cards Remaining: " + QString::number(redCardsRemaining));
+    blueScoreLabel->setText("Blue Cards Remaining: " + QString::number(blueCardsRemaining));
+}
+
+void GameBoard::checkGameEnd() {
+    if (redCardsRemaining == 0) {
+        endGame("Red Team Wins!");
+        return;
+    }
+    if (blueCardsRemaining == 0) {
+        endGame("Blue Team Wins!");
+        return;
+    }
+
+    for (int i = 0; i < GRID_SIZE; ++i) {
+        for (int j = 0; j < GRID_SIZE; ++j) {
+            if (gameGrid[i][j].revealed && gameGrid[i][j].type == ASSASSIN) {
+                if (currentTurn == RED_OP) {
+                    endGame("Blue Team Wins! Red Team hit the Assassin card.");
+                } else if (currentTurn == BLUE_OP) {
+                    endGame("Red Team Wins! Blue Team hit the Assassin card.");
+                }
+                return;
+            }
+        }
+    }
+}
+
+void GameBoard::endGame(const QString& message) {
+    // Disable all elements
+    for (int i = 0; i < GRID_SIZE; ++i) {
+        for (int j = 0; j < GRID_SIZE; ++j) {
+            cards[i][j]->setEnabled(false);
+        }
+    }
+    spymasterHint->setEnabled(false);
+    operatorGuess->setEnabled(false);
+    transition->hide();
+
+    // Show a pop-up with the game result and an "OK" button
+    QMessageBox endGameBox;
+    endGameBox.setWindowTitle("Game Over");
+    endGameBox.setText(message);
+    endGameBox.setStandardButtons(QMessageBox::Ok);
+    endGameBox.setDefaultButton(QMessageBox::Ok);
+    endGameBox.exec();
+
+    // Emit the gameEnded signal to notify PreGame to return to the main menu
+    emit gameEnded();
+
+    this->close();
 }

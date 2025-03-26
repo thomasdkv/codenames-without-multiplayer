@@ -1,6 +1,6 @@
 #include "pregame.h"
 
-PreGame::PreGame(QWidget* parent) : QWidget(parent) {
+PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
   this->setFixedSize(1000, 600);
 
   game = new Game();
@@ -78,6 +78,8 @@ PreGame::PreGame(QWidget* parent) : QWidget(parent) {
 
 PreGame::~PreGame() {
   // Let Qt handle widget deletion
+  // changed so that qt is no longer responsible for deleting the widgets.
+  delete game;
 }
 
 void PreGame::goBackToMain() {
@@ -106,9 +108,10 @@ void PreGame::startGame() {
   emit start();
 
   // Add the game board transition
-  GameBoard* gameBoard =
-      new GameBoard(redSpyMaster, redOperative, blueSpyMaster, blueOperative);
+  gameBoard = new GameBoard(redSpyMaster, redOperative, blueSpyMaster, blueOperative);
   gameBoard->show();
+
+  connect(gameBoard, &GameBoard::gameEnded, this, &PreGame::handleGameEnd);
 
   qDebug() << "Connection to GameBoard successful";
 }
@@ -116,6 +119,10 @@ void PreGame::startGame() {
 void PreGame::showPreGame() {
   qDebug() << "Returning to PreGame screen";
   this->show();
+}
+
+void PreGame::handleGameEnd() {
+  emit backToMainWindow();
 }
 
 // Getter functions to return the text from the textboxes
