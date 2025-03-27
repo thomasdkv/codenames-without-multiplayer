@@ -220,20 +220,12 @@ void GameBoard::setupUI() {
     // Add the game vertical layout to the main horizontal layout
     mainHorizontalLayout->addLayout(gameVerticalLayout);
 
-    // Create and add chat box to the right
-    if (currentTurn == RED_SPY) {
-        currentPlayerName = redSpyMasterName;
-    } else if (currentTurn == RED_OP) {
-        currentPlayerName = redOperativeName;
-    } else if (currentTurn == BLUE_SPY) {
-        currentPlayerName = blueSpyMasterName;
-    } else if (currentTurn == BLUE_OP) {
-        currentPlayerName = blueOperativeName;
-    }
+    
     // Determine the team based on the current turn
     ChatBox::Team team = (currentTurn == RED_SPY || currentTurn == RED_OP) ? ChatBox::RED_TEAM : ChatBox::BLUE_TEAM;
 
-    chatBox = new ChatBox(currentPlayerName, team, this);
+    // Create and add chat box to the right
+    chatBox = new ChatBox(redSpyMasterName, team, this);
     mainHorizontalLayout->addWidget(chatBox);
 
     // Set spacing and stretch factors
@@ -387,16 +379,21 @@ void GameBoard::nextTurn() {
     // Update the team labels
     if(currentTurn == RED_SPY) {
         currentTurnLabel->setText("Current Turn: " + redSpyMasterName);
+        currentPlayerName = redSpyMasterName;
     }
     else if(currentTurn == RED_OP) {
         currentTurnLabel->setText("Current Turn: " + redOperativeName);
+        currentPlayerName = redOperativeName;
     }
     else if(currentTurn == BLUE_SPY) {
         currentTurnLabel->setText("Current Turn: " + blueSpyMasterName);
+        currentPlayerName = blueSpyMasterName;
     }
     else if(currentTurn == BLUE_OP) {
         currentTurnLabel->setText("Current Turn: " + blueOperativeName);
+        currentPlayerName = blueOperativeName;
     }
+    chatBox->setPlayerName(currentPlayerName); // Update the chat box with the current player's name
 }
 
 void GameBoard::onContinueClicked() {
@@ -583,4 +580,5 @@ void GameBoard::resetGame() {
 
     transition->hide();
     chatBox->clearChat(); // Clear the chat box
+    chatBox->setPlayerName(redSpyMasterName); // Reset the player name in the chat box
 }

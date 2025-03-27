@@ -39,8 +39,7 @@ void ChatBox::addSystemMessage(const QString& message, Team team) {
 }
 
 void ChatBox::addPlayerMessage(const QString& playerName, const QString& message) {
-    // Add a player message to the chat display
-    chatDisplay->append("<b>" + playerName + ": </b>" + message);
+    chatDisplay->append("<b>&lt;" + playerName + "&gt;</b> " + message);
 }
 
 void ChatBox::sendMessage() {
@@ -54,6 +53,10 @@ void ChatBox::sendMessage() {
 
     // Multiplayer functionality 
 
+}
+
+void ChatBox::setPlayerName(const QString& name) {
+    playerName = name;
 }
 
 void ChatBox::clearChat() {

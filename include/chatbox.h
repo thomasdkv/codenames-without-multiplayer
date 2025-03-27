@@ -6,6 +6,7 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QDebug>
 
 class ChatBox : public QWidget {
     Q_OBJECT
@@ -19,6 +20,7 @@ public:
     ~ChatBox();
     void addSystemMessage(const QString& message, Team team);
     void addPlayerMessage(const QString& playerName, const QString& message);
+    void setPlayerName(const QString& name);
     void clearChat();
 
 public slots:
