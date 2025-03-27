@@ -70,6 +70,12 @@ private:
     };
 
     int currentTurn;
+    int redCardsRemaining;
+    int blueCardsRemaining;
+
+    int maxGuesses=0;
+    int currentGuesses=0;
+
     QString redSpyMasterName;
     QString redOperativeName;
     QString blueSpyMasterName;
@@ -94,9 +100,6 @@ private:
     QString correspondingNumber;
 
     Transition* transition;
-
-    int redCardsRemaining;
-    int blueCardsRemaining;
 
     QLabel* redScoreLabel;
     QLabel* blueScoreLabel;

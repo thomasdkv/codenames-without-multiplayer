@@ -16,7 +16,9 @@ GameBoard::GameBoard(const QString& redSpyMaster, const QString& redOperative,
       blueOperativeName(blueOperative), 
       
       redCardsRemaining(0),
-      blueCardsRemaining(0)
+      blueCardsRemaining(0),
+      maxGuesses(0),
+      currentGuesses(0)
 {
     
     setWindowTitle("Codenames - Game Board");
@@ -225,6 +227,8 @@ void GameBoard::onCardClicked(int row, int col) {
     if (gameGrid[row][col].revealed) {
         return;
     }
+    // Increment the guess count for this turn
+    currentGuesses++;
 
     // Mark the card as revealed and disable it
     gameGrid[row][col].revealed = true;
@@ -263,6 +267,25 @@ void GameBoard::onCardClicked(int row, int col) {
 
     checkGameEnd();
 
+    // If maxGuesses is 0 (unlimited), skip this check
+    if (maxGuesses > 0) {
+        // Allow a bonus guess if the operative has guessed correctly 'number' times
+        int correctGuesses = maxGuesses - 1;  // maxGuesses includes the bonus guess
+        int effectiveMax = correctCard ? maxGuesses : (maxGuesses - 1);
+        if (currentGuesses >= effectiveMax) {
+            qDebug() << "Maximum guesses reached (" << currentGuesses << "/" << effectiveMax << ")";
+            for (int i = 0; i < GRID_SIZE; ++i) {
+                for (int j = 0; j < GRID_SIZE; ++j) {
+                    cards[i][j]->setEnabled(false);
+                }
+            }
+            operatorGuess->setVisible(false);
+            nextTurn();
+            showTransition();
+            return;
+        }
+    }
+
     // Show the transition widget
     if (!correctCard) {
         qDebug() << "Wrong card selected by" << (currentTurn == RED_OP ? "Red team" : "Blue team")
@@ -284,8 +307,11 @@ void GameBoard::displayHint(const QString& hint, int number) {
     // Update the coreesponding number for the hint, if it is 0, display "∞"
     if (number == 0) {
         correspondingNumber = "∞";
-    } else {
+        maxGuesses=0;
+    } 
+    else {
         correspondingNumber = QString::number(number);
+        maxGuesses = number + 1;
     }
     currentHint->setText("Current hint: " + hint + " (" + correspondingNumber + ")"); // Update the hint
 
@@ -298,6 +324,9 @@ void GameBoard::nextTurn() {
 
     // Hide Board for next player
     if (currentTurn == RED_OP || currentTurn == BLUE_OP) {
+        // Reset guess count at start of operative turn
+        currentGuesses=0;
+        
         for (int i = 0; i < GRID_SIZE; ++i) {
             for (int j = 0; j < GRID_SIZE; ++j) {
                 if (!gameGrid[i][j].revealed) {
@@ -517,6 +546,7 @@ void GameBoard::resetGame() {
     // Reset scores
     redCardsRemaining = 0;
     blueCardsRemaining = 0;
+
     for (int i = 0; i < GRID_SIZE; ++i) {
         for (int j = 0; j < GRID_SIZE; ++j) {
             if (gameGrid[i][j].type == RED_TEAM) redCardsRemaining++;
@@ -529,6 +559,10 @@ void GameBoard::resetGame() {
     currentTurn = RED_SPY;
     currentTurnLabel->setText("Current Turn: " + redSpyMasterName);
     currentHint->setText("Current hint: ");
+
+    // Reset guess tracking variables
+    maxGuesses=0;
+    currentGuesses=0;
 
     // Reset widget states
     spymasterHint->setEnabled(true); 
