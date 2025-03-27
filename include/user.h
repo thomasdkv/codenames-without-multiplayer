@@ -23,10 +23,19 @@ class User : public QWidget {
 
   ~User();
 
-  void signUp(QString& username);
+  void signUp(const QString& username);
+
+  void updateGamesPlayed(const QString& username, const int& newGamesPlayed);
+  int getGamesPlayed(const QString& username) const;
 
   void updateWins(const QString& username, const int& newWins);
-  int getWins(const QString& username);
+  int getWins(const QString& username) const;
+
+  void updateGuessTotal(const QString& username, const int& newGuessTotal);
+  int getGuessTotal(const QString& username) const;
+
+  void updateGuessHit(const QString& username, const int& newGuessHit);
+  int getGuessHit(const QString& username) const;
 
   void renameUser(const QString& oldUsername, const QString& newUsername);
 
@@ -50,7 +59,8 @@ class User : public QWidget {
   void loadJsonFile();  // Function to load JSON data
   void saveJsonFile(const QString& username);
   // QString hashPassword(const QString& password);
-  // bool verifyPassword(const QString& inputPassword, const QString& storedHash);
+  // bool verifyPassword(const QString& inputPassword, const QString&
+  // storedHash);
 };
 
 #endif  // USER_H

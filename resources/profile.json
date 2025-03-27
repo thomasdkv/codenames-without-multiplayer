@@ -1,0 +1,47 @@
+{
+    "abc": {
+        "statistics": {
+            "games_played": 1,
+            "games_win": 0,
+            "guess_hit": 2,
+            "guess_total": 10
+        },
+        "user_name": "abc"
+    },
+    "cde": {
+        "statistics": {
+            "games_played": 0,
+            "games_win": 0,
+            "guess_hit": 0,
+            "guess_total": 0
+        },
+        "user_name": "cde"
+    },
+    "def": {
+        "statistics": {
+            "games_played": 1,
+            "games_win": 0,
+            "guess_hit": 2,
+            "guess_total": 10
+        },
+        "user_name": "def"
+    },
+    "ghi": {
+        "statistics": {
+            "games_played": 1,
+            "games_win": 0,
+            "guess_hit": 2,
+            "guess_total": 10
+        },
+        "user_name": "ghi"
+    },
+    "thomas": {
+        "statistics": {
+            "games_played": 100,
+            "games_win": 99,
+            "guess_hit": 10,
+            "guess_total": 20
+        },
+        "user_name": "thomas"
+    }
+}
