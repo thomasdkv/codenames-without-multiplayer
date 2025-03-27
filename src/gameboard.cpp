@@ -272,6 +272,9 @@ void GameBoard::onCardClicked(int row, int col) {
                 cards[i][j]->setEnabled(false);
             }
         }
+        operatorGuess->setVisible(false);
+
+        nextTurn();
         showTransition();  
     }
 }
@@ -398,23 +401,19 @@ void GameBoard::onContinueClicked() {
 }
 
 void GameBoard::showTransition() {
-    // Determine the next player's turn and name
-    int nextPlayerTurn = (currentTurn + 1) % 4;
     QString nextSpymasterName;
 
-    // Skip to the next spymaster
-    while (nextPlayerTurn != RED_SPY && nextPlayerTurn != BLUE_SPY) {
-        nextPlayerTurn = (nextPlayerTurn + 1) % 4;
-    }
-
-    // Set the next spymaster's name
-    if (nextPlayerTurn == RED_SPY) {
+    if (currentTurn == RED_SPY) {
         nextSpymasterName = redSpyMasterName;
-    } else if (nextPlayerTurn == BLUE_SPY) {
+    } 
+    else if (currentTurn == BLUE_SPY) {
         nextSpymasterName = blueSpyMasterName;
+    } 
+    else {
+        qDebug() << "Error: showTransition called when currentTurn is not a spymaster turn:" << currentTurn;
+        return;
     }
 
-    // Disable all elements 
     for (int i = 0; i < GRID_SIZE; ++i) {
         for (int j = 0; j < GRID_SIZE; ++j) {
             cards[i][j]->setEnabled(false);
@@ -425,13 +424,13 @@ void GameBoard::showTransition() {
     }
     spymasterHint->setEnabled(false);
     operatorGuess->setEnabled(false);
-
-    currentTurn = nextPlayerTurn; 
+    // I'm not sure if we want to show spymasterhint and operatorguess on transition screen. I thought it would be nicer
+    // if it didn't show.
+    spymasterHint->setVisible(false);
+    operatorGuess->setVisible(false);
 
     transition->setMessage("Please pass the device to " + nextSpymasterName);
     transition->show();
-
-    qDebug() << "Transitioning to next spymaster:" << nextSpymasterName;
 }
 
 void GameBoard::updateScores() {
