@@ -228,7 +228,7 @@ void User::handleLogin() {
   }
 }
 
-unsigned int User::getGamesPlayed(const QString& username) const{
+unsigned int User::getGamesPlayed(const QString& username) const {
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -236,14 +236,14 @@ unsigned int User::getGamesPlayed(const QString& username) const{
   if (!file.exists()) {
     qDebug() << "Error: profile.json does not exist.";
     jsonContentLabel->setText("Error: No user data found.");
-    return -1;  // Indicates error
+    return 0;  // Indicates error
   }
 
   // Read existing JSON data
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     qDebug() << "Failed to open" << absolutePath << " for reading.";
     jsonContentLabel->setText("Error: Could not read profile.json");
-    return -1;
+    return 0;
   }
 
   QByteArray jsonData = file.readAll();
@@ -253,7 +253,7 @@ unsigned int User::getGamesPlayed(const QString& username) const{
   if (!doc.isObject()) {
     qDebug() << "Invalid JSON format.";
     jsonContentLabel->setText("Error: Invalid profile format.");
-    return -1;
+    return 0;
   }
 
   QJsonObject jsonObject = doc.object();
@@ -262,7 +262,7 @@ unsigned int User::getGamesPlayed(const QString& username) const{
   if (!jsonObject.contains(username)) {
     qDebug() << "User not found:" << username;
     jsonContentLabel->setText("Error: User does not exist.");
-    return -1;
+    return 0;
   }
 
   // Get user object
@@ -273,19 +273,24 @@ unsigned int User::getGamesPlayed(const QString& username) const{
       !userObject["statistics"].isObject()) {
     qDebug() << "Error: No statistics found for user:" << username;
     jsonContentLabel->setText("Error: User statistics missing.");
-    return -1;
+    return 0;
   }
 
   QJsonObject statisticsObject = userObject["statistics"].toObject();
   int gamesPlayed = statisticsObject.contains("games_played")
-                 ? statisticsObject["games_played"].toInt()
-                 : 0;
+                        ? statisticsObject["games_played"].toInt()
+                        : 0;
 
-  qDebug() << "Retrieved games played for user:" << username << "| Games played count:" << gamesPlayed;
-  return gamesPlayed;
+  // Ensure gamesPlayed is non-negative
+  unsigned int finalGamesPlayed = std::max(gamesPlayed, 0);
+
+  qDebug() << "Retrieved games played for user:" << username
+           << "| Games played count:" << finalGamesPlayed;
+  return finalGamesPlayed;
 }
 
-void User::updateGamesPlayed(const QString& username, const unsigned int& newGamesPlayed) {
+void User::updateGamesPlayed(const QString& username,
+                             const unsigned int& newGamesPlayed) {
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -336,8 +341,21 @@ void User::updateGamesPlayed(const QString& username, const unsigned int& newGam
     return;
   }
 
+  // Get the current wins count
+  int currentWins = statisticsObject.contains("games_won")
+                        ? statisticsObject["games_won"].toInt()
+                        : 0;
+
+  // Check if the new games played is smaller than the wins count
+  if (newGamesPlayed < currentWins) {
+    qDebug() << "Error: New games played cannot be smaller than games won.";
+    jsonContentLabel->setText(
+        "Error: New games played count cannot be smaller than wins.");
+    return;
+  }
+
   // Update wins count
-  statisticsObject["games_played"] = (int) newGamesPlayed;
+  statisticsObject["games_played"] = (int)newGamesPlayed;
   userObject["statistics"] = statisticsObject;
   jsonObject[username] = userObject;
 
@@ -353,12 +371,12 @@ void User::updateGamesPlayed(const QString& username, const unsigned int& newGam
   file.close();
 
   qDebug() << "Updated games played for user:" << username
-           << "| New games played count:" << statisticsObject["games_played"].toInt();
+           << "| New games played count:"
+           << statisticsObject["games_played"].toInt();
   jsonContentLabel->setText("Games played count updated for " + username);
 }
 
-
-unsigned int User::getWins(const QString& username) const{
+unsigned int User::getWins(const QString& username) const {
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -366,14 +384,14 @@ unsigned int User::getWins(const QString& username) const{
   if (!file.exists()) {
     qDebug() << "Error: profile.json does not exist.";
     jsonContentLabel->setText("Error: No user data found.");
-    return -1;  // Indicates error
+    return 0;  // Indicates error
   }
 
   // Read existing JSON data
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     qDebug() << "Failed to open" << absolutePath << " for reading.";
     jsonContentLabel->setText("Error: Could not read profile.json");
-    return -1;
+    return 0;
   }
 
   QByteArray jsonData = file.readAll();
@@ -383,7 +401,7 @@ unsigned int User::getWins(const QString& username) const{
   if (!doc.isObject()) {
     qDebug() << "Invalid JSON format.";
     jsonContentLabel->setText("Error: Invalid profile format.");
-    return -1;
+    return 0;
   }
 
   QJsonObject jsonObject = doc.object();
@@ -392,7 +410,7 @@ unsigned int User::getWins(const QString& username) const{
   if (!jsonObject.contains(username)) {
     qDebug() << "User not found:" << username;
     jsonContentLabel->setText("Error: User does not exist.");
-    return -1;
+    return 0;
   }
 
   // Get user object
@@ -403,7 +421,7 @@ unsigned int User::getWins(const QString& username) const{
       !userObject["statistics"].isObject()) {
     qDebug() << "Error: No statistics found for user:" << username;
     jsonContentLabel->setText("Error: User statistics missing.");
-    return -1;
+    return 0;
   }
 
   QJsonObject statisticsObject = userObject["statistics"].toObject();
@@ -411,8 +429,24 @@ unsigned int User::getWins(const QString& username) const{
                  ? statisticsObject["games_win"].toInt()
                  : 0;
 
-  qDebug() << "Retrieved wins for user:" << username << "| Wins count:" << wins;
-  return wins;
+  // Ensure gamesPlayed is non-negative
+  unsigned int finalWins = std::max(wins, 0);
+
+  qDebug() << "Retrieved wins for user:" << username
+           << "| Wins count:" << finalWins;
+  return finalWins;
+}
+
+float User::getWinRate(const QString& username) const {
+  unsigned int gamesPlayed = getGamesPlayed(username);
+  unsigned int gamesWin = getWins(username);
+
+  if (gamesPlayed == 0) {
+    return 0;
+  }
+
+  float winRate = gamesWin / gamesPlayed;
+  return winRate;
 }
 
 void User::updateWins(const QString& username, const unsigned int& newWins) {
@@ -466,8 +500,21 @@ void User::updateWins(const QString& username, const unsigned int& newWins) {
     return;
   }
 
+  // Get the current wins count
+  int currentGamesPlayed = statisticsObject.contains("games_played")
+                               ? statisticsObject["games_played"].toInt()
+                               : 0;
+
+  // Check if the new games played is smaller than the wins count
+  if (newWins > currentGamesPlayed) {
+    qDebug() << "Error: New games won cannot be greater than games played.";
+    jsonContentLabel->setText(
+        "Error: New games win count cannot be greater than games played.");
+    return;
+  }
+
   // Update wins count
-  statisticsObject["games_win"] = (int) newWins;
+  statisticsObject["games_win"] = (int)newWins;
   userObject["statistics"] = statisticsObject;
   jsonObject[username] = userObject;
 
@@ -487,7 +534,7 @@ void User::updateWins(const QString& username, const unsigned int& newWins) {
   jsonContentLabel->setText("Win count updated for " + username);
 }
 
-unsigned int User::getGuessTotal(const QString& username) const{
+unsigned int User::getGuessTotal(const QString& username) const {
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -495,14 +542,14 @@ unsigned int User::getGuessTotal(const QString& username) const{
   if (!file.exists()) {
     qDebug() << "Error: profile.json does not exist.";
     jsonContentLabel->setText("Error: No user data found.");
-    return -1;  // Indicates error
+    return 0;  // Indicates error
   }
 
   // Read existing JSON data
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     qDebug() << "Failed to open" << absolutePath << " for reading.";
     jsonContentLabel->setText("Error: Could not read profile.json");
-    return -1;
+    return 0;
   }
 
   QByteArray jsonData = file.readAll();
@@ -512,7 +559,7 @@ unsigned int User::getGuessTotal(const QString& username) const{
   if (!doc.isObject()) {
     qDebug() << "Invalid JSON format.";
     jsonContentLabel->setText("Error: Invalid profile format.");
-    return -1;
+    return;
   }
 
   QJsonObject jsonObject = doc.object();
@@ -521,7 +568,7 @@ unsigned int User::getGuessTotal(const QString& username) const{
   if (!jsonObject.contains(username)) {
     qDebug() << "User not found:" << username;
     jsonContentLabel->setText("Error: User does not exist.");
-    return -1;
+    return 0;
   }
 
   // Get user object
@@ -532,19 +579,24 @@ unsigned int User::getGuessTotal(const QString& username) const{
       !userObject["statistics"].isObject()) {
     qDebug() << "Error: No statistics found for user:" << username;
     jsonContentLabel->setText("Error: User statistics missing.");
-    return -1;
+    return 0;
   }
 
   QJsonObject statisticsObject = userObject["statistics"].toObject();
   int guessTotal = statisticsObject.contains("guess_total")
-                 ? statisticsObject["guess_total"].toInt()
-                 : 0;
+                       ? statisticsObject["guess_total"].toInt()
+                       : 0;
 
-  qDebug() << "Retrieved total number of guess for user:" << username << "| Guess total count:" << guessTotal;
-  return guessTotal;
+  // Ensure gamesPlayed is non-negative
+  unsigned int finalGuessTotal = std::max(guessTotal, 0);
+
+  qDebug() << "Retrieved total number of guess for user:" << username
+           << "| Guess total count:" << finalGuessTotal;
+  return finalGuessTotal;
 }
 
-void User::updateGuessTotal(const QString& username, const unsigned int& newGuessTotal) {
+void User::updateGuessTotal(const QString& username,
+                            const unsigned int& newGuessTotal) {
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -595,8 +647,21 @@ void User::updateGuessTotal(const QString& username, const unsigned int& newGues
     return;
   }
 
-  // Update wins count
-  statisticsObject["guess_total"] = (int) newGuessTotal;
+  // Get the current guess hit count
+  int currentGuessHit = statisticsObject.contains("guess_hit")
+                            ? statisticsObject["guess_hit"].toInt()
+                            : 0;
+
+  // Check if the new guess total is smaller than the guess hit count
+  if (newGuessTotal < currentGuessHit) {
+    qDebug() << "Error: New guess total cannot be less than guess hit.";
+    jsonContentLabel->setText(
+        "Error: New guess total count cannot be less than guess hit.");
+    return;
+  }
+
+  // Update guess total count
+  statisticsObject["guess_total"] = (int)newGuessTotal;
   userObject["statistics"] = statisticsObject;
   jsonObject[username] = userObject;
 
@@ -612,11 +677,12 @@ void User::updateGuessTotal(const QString& username, const unsigned int& newGues
   file.close();
 
   qDebug() << "Updated guess total for user:" << username
-           << "| New guess total count:" << statisticsObject["guess_total"].toInt();
+           << "| New guess total count:"
+           << statisticsObject["guess_total"].toInt();
   jsonContentLabel->setText("Guess total count updated for " + username);
 }
 
-unsigned int User::getGuessHit(const QString& username) const{
+unsigned int User::getGuessHit(const QString& username) const {
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -624,14 +690,14 @@ unsigned int User::getGuessHit(const QString& username) const{
   if (!file.exists()) {
     qDebug() << "Error: profile.json does not exist.";
     jsonContentLabel->setText("Error: No user data found.");
-    return -1;  // Indicates error
+    return 0;  // Indicates error
   }
 
   // Read existing JSON data
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     qDebug() << "Failed to open" << absolutePath << " for reading.";
     jsonContentLabel->setText("Error: Could not read profile.json");
-    return -1;
+    return 0;
   }
 
   QByteArray jsonData = file.readAll();
@@ -641,7 +707,7 @@ unsigned int User::getGuessHit(const QString& username) const{
   if (!doc.isObject()) {
     qDebug() << "Invalid JSON format.";
     jsonContentLabel->setText("Error: Invalid profile format.");
-    return -1;
+    return 0;
   }
 
   QJsonObject jsonObject = doc.object();
@@ -650,7 +716,7 @@ unsigned int User::getGuessHit(const QString& username) const{
   if (!jsonObject.contains(username)) {
     qDebug() << "User not found:" << username;
     jsonContentLabel->setText("Error: User does not exist.");
-    return -1;
+    return 0;
   }
 
   // Get user object
@@ -661,19 +727,36 @@ unsigned int User::getGuessHit(const QString& username) const{
       !userObject["statistics"].isObject()) {
     qDebug() << "Error: No statistics found for user:" << username;
     jsonContentLabel->setText("Error: User statistics missing.");
-    return -1;
+    return 0;
   }
 
   QJsonObject statisticsObject = userObject["statistics"].toObject();
   int guessHit = statisticsObject.contains("guess_hit")
-                 ? statisticsObject["guess_hit"].toInt()
-                 : 0;
+                     ? statisticsObject["guess_hit"].toInt()
+                     : 0;
 
-  qDebug() << "Retrieved guess hit for user:" << username << "| Guess hit count:" << guessHit;
-  return guessHit;
+  // Ensure gamesPlayed is non-negative
+  unsigned int finalGuessHit = std::max(guessHit, 0);
+
+  qDebug() << "Retrieved guess hit for user:" << username
+           << "| Guess hit count:" << finalGuessHit;
+  return finalGuessHit;
 }
 
-void User::updateGuessHit(const QString& username, const unsigned int& newGuessHit) {
+float User::getHitRate(const QString& username) {
+  unsigned int guessTotal = getGuessTotal(username);
+  unsigned int guessHit = getGuessHit(username);
+
+  if (guessTotal == 0) {
+    return 0;
+  }
+
+  float hitRate = guessHit / guessTotal;
+  return hitRate;
+}
+
+void User::updateGuessHit(const QString& username,
+                          const unsigned int& newGuessHit) {
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -724,8 +807,21 @@ void User::updateGuessHit(const QString& username, const unsigned int& newGuessH
     return;
   }
 
+  // Get the current guess hit count
+  int currentGuessTotal = statisticsObject.contains("guess_total")
+                              ? statisticsObject["guess_total"].toInt()
+                              : 0;
+
+  // Check if the new guess total is smaller than the guess hit count
+  if (newGuessHit > currentGuessTotal) {
+    qDebug() << "Error: New guess hit cannot be greater than guess total.";
+    jsonContentLabel->setText(
+        "Error: New guess hit count cannot be greater than guess total.");
+    return;
+  }
+
   // Update wins count
-  statisticsObject["guess_hit"] = (int) newGuessHit;
+  statisticsObject["guess_hit"] = (int)newGuessHit;
   userObject["statistics"] = statisticsObject;
   jsonObject[username] = userObject;
 
@@ -744,7 +840,6 @@ void User::updateGuessHit(const QString& username, const unsigned int& newGuessH
            << "| New guess hit count:" << statisticsObject["guess_hit"].toInt();
   jsonContentLabel->setText("Guess hit count updated for " + username);
 }
-
 
 void User::renameUser(const QString& oldUsername, const QString& newUsername) {
   QFile file(jsonFilePath);
