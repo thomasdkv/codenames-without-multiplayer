@@ -25,17 +25,23 @@ class User : public QWidget {
 
   void signUp(const QString& username);
 
-  void updateGamesPlayed(const QString& username, const int& newGamesPlayed);
-  int getGamesPlayed(const QString& username) const;
+  void updateGamesPlayed(const QString& username,
+                         const unsigned int& newGamesPlayed);
+  unsigned int getGamesPlayed(const QString& username) const;
 
-  void updateWins(const QString& username, const int& newWins);
-  int getWins(const QString& username) const;
+  void updateWins(const QString& username, const unsigned int& newWins);
+  unsigned int getWins(const QString& username) const;
 
-  void updateGuessTotal(const QString& username, const int& newGuessTotal);
-  int getGuessTotal(const QString& username) const;
+  float getWinRate(const QString& username) const;
 
-  void updateGuessHit(const QString& username, const int& newGuessHit);
-  int getGuessHit(const QString& username) const;
+  void updateGuessTotal(const QString& username,
+                        const unsigned int& newGuessTotal);
+  unsigned int getGuessTotal(const QString& username) const;
+
+  void updateGuessHit(const QString& username, const unsigned int& newGuessHit);
+  unsigned int getGuessHit(const QString& username) const;
+
+  float getHitRate(const QString& username);
 
   void renameUser(const QString& oldUsername, const QString& newUsername);
 
