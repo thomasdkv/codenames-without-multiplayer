@@ -12,56 +12,71 @@ User::User(QWidget* parent) : QWidget(parent) {
   this->setFixedSize(1000, 600);
 
   QVBoxLayout* layout = new QVBoxLayout(this);
+
+  backButton = new QPushButton("Back to Main Menu", this);
+  layout->addWidget(backButton);
+
   jsonContentLabel = new QLabel("Loading...", this);
 
   layout->addWidget(jsonContentLabel);
 
-  usernameInput = new QLineEdit(this);
-  usernameInput->setPlaceholderText("Enter Username");
-
-  // passwordInput = new QLineEdit(this);
-  // passwordInput->setPlaceholderText("Enter Password");
-  // passwordInput->setEchoMode(QLineEdit::Password);
+  // Create and populate the drop-down menu with usernames
+  usernameComboBox = new QComboBox(this);
+  layout->addWidget(usernameComboBox);
 
   loginButton = new QPushButton("Login", this);
-  signUpButton = new QPushButton("Sign Up", this);
-
-  layout->addWidget(usernameInput);
-  // layout->addWidget(passwordInput);
   layout->addWidget(loginButton);
-  layout->addWidget(signUpButton);
 
   setLayout(layout);
 
   connect(loginButton, &QPushButton::clicked, this, &User::handleLogin);
-  connect(signUpButton, &QPushButton::clicked, this, &User::handleSignUp);
 
-  QString name = "thomas";
-  signUp(name);
-  updateGamesPlayed(name, 100);
-  updateWins(name, 99);
-  updateGuessTotal(name, 20);
-  updateGuessHit(name, 10);
+  // createAccountWindow = CreateAccountWindow::getInstance();
+  connect(backButton, &QPushButton::clicked, this,
+          &User::showMainMenu);
 
-  loadJsonFile();
+  // Load usernames from the JSON file and populate the drop-down menu
+  QJsonObject jsonObject = loadJsonFile();
+  if (!jsonObject.isEmpty()) {
+    populateUsernameComboBox(jsonObject);
+  }
+}
+
+void User::showUserWindow() { this->show(); }
+void User::showMainMenu() {
+  this->hide();
+  emit backToMainMenu();
+}
+// void User::handleCreateAccount() {
+//   this->hide();
+//   createAccountWindow->show();
+// }
+void User::populateUsernameComboBox(const QJsonObject& jsonObject) {
+  // Loop through the JSON object and add usernames to the combo box
+  QJsonObject::const_iterator it = jsonObject.constBegin();
+  while (it != jsonObject.constEnd()) {
+    QString username = it.key();          // Extract username
+    usernameComboBox->addItem(username);  // Add to combo box
+    ++it;
+  }
 }
 
 User::~User() {}
 
-void User::loadJsonFile() {
+QJsonObject User::loadJsonFile() {
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
 
   if (!file.exists() || file.size() == 0) {
     jsonContentLabel->setText("No profile found. Please sign up.");
-    return;
+    return QJsonObject();  // Return empty object if no profile exists
   }
 
   if (!file.open(QIODevice::ReadOnly)) {
     jsonContentLabel->setText("Error: Could not open profile.json");
     qDebug() << "Failed to open " << absolutePath;
-    return;
+    return QJsonObject();  // Return empty object on error
   }
 
   QByteArray jsonData = file.readAll();
@@ -71,16 +86,17 @@ void User::loadJsonFile() {
   if (!doc.isObject()) {
     jsonContentLabel->setText("Error: Invalid JSON format");
     qDebug() << "Invalid JSON format";
-    return;
+    return QJsonObject();  // Return empty object on invalid JSON
   }
 
   QJsonObject jsonObject = doc.object();
-  if (!jsonObject.contains("user_name")) {
-    jsonContentLabel->setText("Profile incomplete. Please sign up.");
-    return;
+  if (jsonObject.isEmpty()) {
+    jsonContentLabel->setText("Profile is empty. Please sign up.");
+    return QJsonObject();  // Return empty object if no users in profile
   }
 
   jsonContentLabel->setText("Profile found. Please log in.");
+  return jsonObject;
 }
 
 // Hashing function with salt
@@ -98,88 +114,98 @@ void User::loadJsonFile() {
 // }
 
 // Save JSON data
-void User::saveJsonFile(const QString& username) {
-  QFile file(jsonFilePath);
-  QDir dir = QFileInfo(file).absoluteDir();
-  QString absolutePath = dir.filePath(file.fileName());
+// void User::saveJsonFile(const QString& username) {
+//   QFile file(jsonFilePath);
+//   QDir dir = QFileInfo(file).absoluteDir();
+//   QString absolutePath = dir.filePath(file.fileName());
 
-  QJsonObject jsonObject;
+//   QJsonObject jsonObject;
 
-  // Read existing JSON data (if any)
-  if (file.exists()) {
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-      qDebug() << "Failed to open" << absolutePath << " for reading.";
-      jsonContentLabel->setText("Error: Could not read profile.json");
-      return;
-    }
+//   // Read existing JSON data (if any)
+//   if (file.exists()) {
+//     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+//       qDebug() << "Failed to open" << absolutePath << " for reading.";
+//       jsonContentLabel->setText("Error: Could not read profile.json");
+//       return;
+//     }
 
-    QByteArray jsonData = file.readAll();
-    file.close();
+//     QByteArray jsonData = file.readAll();
+//     file.close();
 
-    QJsonDocument doc = QJsonDocument::fromJson(jsonData);
-    if (doc.isObject()) {
-      jsonObject = doc.object();  // Load existing data
-    }
-  }
+//     QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+//     if (doc.isObject()) {
+//       jsonObject = doc.object();  // Load existing data
+//     }
+//   }
 
-  // Check if user exists and preserve statistics
-  QJsonObject userObject;
-  QJsonObject statistics;
+//   // Check if user exists and preserve statistics
+//   QJsonObject userObject;
+//   QJsonObject statistics;
 
-  if (jsonObject.contains(username)) {
-    userObject = jsonObject[username].toObject();
-    if (userObject.contains("statistics")) {
-      statistics =
-          userObject["statistics"].toObject();  // Preserve existing statistics
-    }
-  }
+//   if (jsonObject.contains(username)) {
+//     userObject = jsonObject[username].toObject();
+//     if (userObject.contains("statistics")) {
+//       statistics =
+//           userObject["statistics"].toObject();  // Preserve existing
+//           statistics
+//     }
+//   }
 
-  // Initialize statistics if they don't exist
-  if (statistics.isEmpty()) {
-    statistics["games_played"] = 0;
-    statistics["games_win"] = 0;
-    statistics["guess_total"] = 0;
-    statistics["guess_hit"] = 0;
-  }
+//   // Initialize statistics if they don't exist
+//   if (statistics.isEmpty()) {
+//     statistics["games_played"] = 0;
+//     statistics["games_win"] = 0;
+//     statistics["guess_total"] = 0;
+//     statistics["guess_hit"] = 0;
+//   }
 
-  // Update user object
-  userObject["user_name"] = username;
-  userObject["statistics"] = statistics;
+//   // Update user object
+//   userObject["user_name"] = username;
+//   userObject["statistics"] = statistics;
 
-  // Store the updated user object in the main JSON
-  jsonObject[username] = userObject;
+//   // Store the updated user object in the main JSON
+//   jsonObject[username] = userObject;
 
-  // Write updated JSON data
-  if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-    qDebug() << "Failed to write to" << absolutePath;
-    jsonContentLabel->setText("Error: Could not write to profile.json");
-    return;
-  }
+//   // Write updated JSON data
+//   if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+//     qDebug() << "Failed to write to" << absolutePath;
+//     jsonContentLabel->setText("Error: Could not write to profile.json");
+//     return;
+//   }
 
-  QJsonDocument newDoc(jsonObject);
-  file.write(newDoc.toJson());
-  file.close();
-}
+//   QJsonDocument newDoc(jsonObject);
+//   file.write(newDoc.toJson());
+//   file.close();
+// }
 
 // Handle user sign-up
-void User::handleSignUp() {
-  QString username = usernameInput->text().trimmed();
-  // QString password = passwordInput->text().trimmed();
+// void User::handleSignUp() {
+//   QString username = usernameInput->text().trimmed();
+//   // QString password = passwordInput->text().trimmed();
 
-  if (username.isEmpty()) {
-    jsonContentLabel->setText("Username and password cannot be empty.");
+//   if (username.isEmpty()) {
+//     jsonContentLabel->setText("Username and password cannot be empty.");
+//     return;
+//   }
+
+//   // QString hashedPassword = hashPassword(password);
+//   saveJsonFile(username);
+
+//   jsonContentLabel->setText("Account created. Please log in.");
+// }
+
+// void User::signUp(const QString& username) { saveJsonFile(username); }
+
+void User::handleLogin() {
+  // Get the selected username from the combo box
+  QString selectedUsername = usernameComboBox->currentText().trimmed();
+
+  // Check if a username is selected
+  if (selectedUsername.isEmpty()) {
+    jsonContentLabel->setText("Please select a username.");
     return;
   }
 
-  // QString hashedPassword = hashPassword(password);
-  saveJsonFile(username);
-
-  jsonContentLabel->setText("Account created. Please log in.");
-}
-
-void User::signUp(const QString& username) { saveJsonFile(username); }
-
-void User::handleLogin() {
   QFile file(jsonFilePath);  // Use the relative path
 
   if (!file.open(QIODevice::ReadOnly)) {
@@ -202,29 +228,29 @@ void User::handleLogin() {
   }
 
   QJsonObject jsonObject = doc.object();
-  QString enteredUsername = usernameInput->text().trimmed();
-  // QString enteredPassword = passwordInput->text().trimmed();
 
-  if (!jsonObject.contains(enteredUsername)) {
+  // Check if the selected username exists in the JSON object
+  if (!jsonObject.contains(selectedUsername)) {
     jsonContentLabel->setText("Login failed. User not found.");
-    qDebug() << "User not found: " << enteredUsername;
+    qDebug() << "User not found: " << selectedUsername;
     return;
   }
 
-  QJsonObject userObject = jsonObject[enteredUsername].toObject();
+  QJsonObject userObject = jsonObject[selectedUsername].toObject();
   QString storedUsername = userObject["user_name"].toString();
   // QString storedHashedPassword = userObject["hashed-password"].toString();
 
   qDebug() << "Stored Username: " << storedUsername;
   // qDebug() << "Stored Hashed Password: " << storedHashedPassword;
 
-  if (enteredUsername == storedUsername) {
+  // Check if the selected username matches the stored username
+  if (selectedUsername == storedUsername) {
     jsonContentLabel->setText("Login successful. Welcome, " + storedUsername +
                               "!");
     qDebug() << "User logged in: " << storedUsername;
   } else {
     jsonContentLabel->setText("Login failed. Check credentials.");
-    qDebug() << "Login failed for user: " << enteredUsername;
+    qDebug() << "Login failed for user: " << selectedUsername;
   }
 }
 
@@ -347,7 +373,7 @@ void User::updateGamesPlayed(const QString& username,
                         : 0;
 
   // Check if the new games played is smaller than the wins count
-  if (newGamesPlayed < currentWins) {
+  if ((int)newGamesPlayed < currentWins) {
     qDebug() << "Error: New games played cannot be smaller than games won.";
     jsonContentLabel->setText(
         "Error: New games played count cannot be smaller than wins.");
@@ -506,7 +532,7 @@ void User::updateWins(const QString& username, const unsigned int& newWins) {
                                : 0;
 
   // Check if the new games played is smaller than the wins count
-  if (newWins > currentGamesPlayed) {
+  if ((int)newWins > currentGamesPlayed) {
     qDebug() << "Error: New games won cannot be greater than games played.";
     jsonContentLabel->setText(
         "Error: New games win count cannot be greater than games played.");
@@ -559,7 +585,7 @@ unsigned int User::getGuessTotal(const QString& username) const {
   if (!doc.isObject()) {
     qDebug() << "Invalid JSON format.";
     jsonContentLabel->setText("Error: Invalid profile format.");
-    return;
+    return 0;
   }
 
   QJsonObject jsonObject = doc.object();
@@ -653,7 +679,7 @@ void User::updateGuessTotal(const QString& username,
                             : 0;
 
   // Check if the new guess total is smaller than the guess hit count
-  if (newGuessTotal < currentGuessHit) {
+  if ((int)newGuessTotal < currentGuessHit) {
     qDebug() << "Error: New guess total cannot be less than guess hit.";
     jsonContentLabel->setText(
         "Error: New guess total count cannot be less than guess hit.");
@@ -813,7 +839,7 @@ void User::updateGuessHit(const QString& username,
                               : 0;
 
   // Check if the new guess total is smaller than the guess hit count
-  if (newGuessHit > currentGuessTotal) {
+  if ((int)newGuessHit > currentGuessTotal) {
     qDebug() << "Error: New guess hit cannot be greater than guess total.";
     jsonContentLabel->setText(
         "Error: New guess hit count cannot be greater than guess total.");

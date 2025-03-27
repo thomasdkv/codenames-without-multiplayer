@@ -9,8 +9,13 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
-class PreGame;  // Forward declaration of PreGame class
+#include "createaccountwindow.h"
+#include "pregame.h"
+#include "user.h"
+
+class Pregame;
 class User;
+class CreateAccountWindow;
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
@@ -23,6 +28,7 @@ class MainWindow : public QMainWindow {
   void openPreGame();
   void showMainWindow();
   void openOnlineGame();
+  void openCreateAccount();
 
  private:
   QWidget* centralWidget;
@@ -33,9 +39,11 @@ class MainWindow : public QMainWindow {
   QPushButton* localPlayButton;
   QPushButton* onlinePlayButton;
   QPushButton* statsButton;
+  QPushButton* createAccountButton;
 
   PreGame* preGameWindow;  // PreGame pointer to the second window
   User* onlineGameWindow;
+  CreateAccountWindow* createAccountWindow;
 };
 
 #endif  // MAINWINDOW_H

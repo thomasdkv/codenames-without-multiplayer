@@ -1,4 +1,13 @@
 {
+    "LOL": {
+        "statistics": {
+            "games_played": 0,
+            "games_win": 0,
+            "guess_hit": 0,
+            "guess_total": 0
+        },
+        "user_name": "LOL"
+    },
     "abc": {
         "statistics": {
             "games_played": 1,
@@ -7,6 +16,33 @@
             "guess_total": 10
         },
         "user_name": "abc"
+    },
+    "ac": {
+        "statistics": {
+            "games_played": 0,
+            "games_win": 0,
+            "guess_hit": 0,
+            "guess_total": 0
+        },
+        "user_name": "ac"
+    },
+    "acb": {
+        "statistics": {
+            "games_played": 0,
+            "games_win": 0,
+            "guess_hit": 0,
+            "guess_total": 0
+        },
+        "user_name": "acb"
+    },
+    "alex": {
+        "statistics": {
+            "games_played": 0,
+            "games_win": 0,
+            "guess_hit": 0,
+            "guess_total": 0
+        },
+        "user_name": "alex"
     },
     "cde": {
         "statistics": {
@@ -34,6 +70,15 @@
             "guess_total": 10
         },
         "user_name": "ghi"
+    },
+    "michal": {
+        "statistics": {
+            "games_played": 0,
+            "games_win": 0,
+            "guess_hit": 0,
+            "guess_total": 0
+        },
+        "user_name": "michal"
     },
     "thomas": {
         "statistics": {

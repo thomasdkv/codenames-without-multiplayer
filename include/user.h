@@ -1,6 +1,7 @@
 #ifndef USER_H
 #define USER_H
 
+#include <QComboBox>
 #include <QCryptographicHash>
 #include <QDebug>
 #include <QDir>
@@ -14,6 +15,9 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
+#include "createaccountwindow.h"
+
+// class CreateAccountWindow;
 class User : public QWidget {
   Q_OBJECT
 
@@ -23,7 +27,7 @@ class User : public QWidget {
 
   ~User();
 
-  void signUp(const QString& username);
+  // void signUp(const QString& username);
 
   void updateGamesPlayed(const QString& username,
                          const unsigned int& newGamesPlayed);
@@ -45,25 +49,33 @@ class User : public QWidget {
 
   void renameUser(const QString& oldUsername, const QString& newUsername);
 
+ signals:
+  void backToMainMenu();
+
  private slots:
-  void handleLogin();   // Handles user login
-  void handleSignUp();  // Handles user registration
+  void handleLogin();  // Handles user login
+  // void handleSignUp();  // Handles user registration
+  void showUserWindow();
+  // void handleCreateAccount();
+  void showMainMenu();
 
  private:
   explicit User(QWidget* parent = nullptr);
 
+  // CreateAccountWindow* createAccountWindow;
   QString jsonFilePath = "resources/profile.json";
-
+  QPushButton* backButton;
+  QComboBox* usernameComboBox;
   QLabel* jsonContentLabel;  // Label to display JSON content
-  QLineEdit* usernameInput;
+  // QLineEdit* usernameInput;
   // QLineEdit* passwordInput;
   QPushButton* loginButton;
-  QPushButton* signUpButton;
+  // QPushButton* signUpButton;
 
   const QString SALT = "Ashton Hall";
-
-  void loadJsonFile();  // Function to load JSON data
-  void saveJsonFile(const QString& username);
+  void populateUsernameComboBox(const QJsonObject& jsonObject);
+  QJsonObject loadJsonFile();  // Function to load JSON data
+  // void saveJsonFile(const QString& username);
   // QString hashPassword(const QString& password);
   // bool verifyPassword(const QString& inputPassword, const QString&
   // storedHash);

@@ -18,7 +18,7 @@ PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
   layout->addWidget(label);
 
   // Create a button to go back to the main window
-  backButton = new QPushButton("Back to Main Window", this);
+  backButton = new QPushButton("Back", this);
   buttonsLayout->addWidget(backButton);
 
   // Create a button to start game
@@ -105,10 +105,10 @@ void PreGame::startGame() {
   game->addPlayer(Player(blueSpyMaster, ROLE::SPYMASTER, TEAM::BLUE));
   game->addPlayer(Player(blueOperative, ROLE::OPERATIVE, TEAM::BLUE));
 
-  users->signUp(redSpyMaster);
-  users->signUp(redOperative);
-  users->signUp(blueSpyMaster);
-  users->signUp(blueOperative);
+  // users->signUp(redSpyMaster);
+  // users->signUp(redOperative);
+  // users->signUp(blueSpyMaster);
+  // users->signUp(blueOperative);
 
   gameBoard->setRedSpyMasterName(redSpyMaster);
   gameBoard->setRedOperativeName(redOperative);
