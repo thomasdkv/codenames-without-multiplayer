@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <QComboBox>
 
 #include "game.h"
 #include "gameboard.h"
@@ -25,6 +26,9 @@ class PreGame : public QWidget {
   QString getRedTeamOperativeNickname() const;
   QString getBlueTeamSpyMasterNickname() const;
   QString getBlueTeamOperativeNickname() const;
+
+ private:
+  void populateUserDropdowns();
 
  private slots:
   void goBackToMain();  // Slot to handle back button click
@@ -45,10 +49,15 @@ class PreGame : public QWidget {
   QPushButton* backButton;
   QPushButton* startButton;
 
-  QLineEdit* redTeamSpyMasterNickname;
-  QLineEdit* redTeamOperativeNickname;
-  QLineEdit* blueTeamSpyMasterNickname;
-  QLineEdit* blueTeamOperativeNickname;
+  // QLineEdit* redTeamSpyMasterNickname;
+  // QLineEdit* redTeamOperativeNickname;
+  // QLineEdit* blueTeamSpyMasterNickname;
+  // QLineEdit* blueTeamOperativeNickname;
+
+  QComboBox* redTeamSpyMasterComboBox;
+  QComboBox* redTeamOperativeComboBox;
+  QComboBox* blueTeamSpyMasterComboBox;
+  QComboBox* blueTeamOperativeComboBox;
 
   QVBoxLayout* layout;
   QHBoxLayout* teamsLayout;

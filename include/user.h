@@ -49,6 +49,8 @@ class User : public QWidget {
 
   void renameUser(const QString& oldUsername, const QString& newUsername);
 
+  QJsonObject loadJsonFile();  // Function to load JSON data
+
  signals:
   void backToMainMenu();
 
@@ -74,7 +76,6 @@ class User : public QWidget {
 
   const QString SALT = "Ashton Hall";
   void populateUsernameComboBox(const QJsonObject& jsonObject);
-  QJsonObject loadJsonFile();  // Function to load JSON data
   // void saveJsonFile(const QString& username);
   // QString hashPassword(const QString& password);
   // bool verifyPassword(const QString& inputPassword, const QString&
