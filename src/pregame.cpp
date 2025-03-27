@@ -5,6 +5,7 @@ PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
 
   game = new Game();
   users = User::instance();
+  createAccountWindow = CreateAccountWindow::getInstance();
 
   // Create pregame window UI elements manually
   layout = new QVBoxLayout(this);
@@ -21,12 +22,18 @@ PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
   backButton = new QPushButton("Back", this);
   buttonsLayout->addWidget(backButton);
 
+  createAccountButton = new QPushButton("Create Account", this);
+  buttonsLayout->addWidget(createAccountButton);
+
   // Create a button to start game
   startButton = new QPushButton("Start", this);
   buttonsLayout->addWidget(startButton);
 
   // Connect back button to a slot
   connect(backButton, &QPushButton::clicked, this, &PreGame::goBackToMain);
+
+  connect(createAccountButton, &QPushButton::clicked, this,
+          &PreGame::openCreateAccount);
 
   // Connect start button to a slot
   connect(startButton, &QPushButton::clicked, this, &PreGame::startGame);
@@ -102,6 +109,12 @@ void PreGame::populateUserDropdowns() {
 void PreGame::goBackToMain() {
   this->hide();
   emit backToMainWindow();  // Emit signal to notify MainWindow to show itself
+}
+
+void PreGame::openCreateAccount() {
+  this->hide();
+  createAccountWindow->setPreviousScreen(this);
+  createAccountWindow->show();
 }
 
 void PreGame::startGame() {

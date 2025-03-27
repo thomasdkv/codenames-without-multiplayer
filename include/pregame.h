@@ -13,7 +13,9 @@
 #include "game.h"
 #include "gameboard.h"
 #include "user.h"
+#include "createaccountwindow.h"
 
+class CreateAccountWindow;
 class PreGame : public QWidget {
   Q_OBJECT
 
@@ -35,6 +37,7 @@ class PreGame : public QWidget {
   void startGame();
   void showPreGame();
   void handleGameEnd();
+  void openCreateAccount();
 
  signals:
   void backToMainWindow();  // Signal to notify MainWindow to show itself
@@ -45,8 +48,11 @@ class PreGame : public QWidget {
 
   User *users;
 
+  CreateAccountWindow* createAccountWindow;
+
   QLabel* label;
   QPushButton* backButton;
+  QPushButton* createAccountButton;
   QPushButton* startButton;
 
   // QLineEdit* redTeamSpyMasterNickname;

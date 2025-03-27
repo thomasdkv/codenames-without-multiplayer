@@ -58,8 +58,17 @@ CreateAccountWindow* CreateAccountWindow::getInstance(QWidget* parent) {
   return instance;
 }
 
+void CreateAccountWindow::setPreviousScreen(QWidget* previous) {
+  previousScreen = previous;
+}
+
 void CreateAccountWindow::goBack() {
   this->hide();
+
+  if (previousScreen) {
+    previousScreen->show();
+  }
+
   emit back();
 }
 

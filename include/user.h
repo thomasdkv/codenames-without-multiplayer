@@ -17,7 +17,7 @@
 
 #include "createaccountwindow.h"
 
-// class CreateAccountWindow;
+class CreateAccountWindow;
 class User : public QWidget {
   Q_OBJECT
 
@@ -58,15 +58,16 @@ class User : public QWidget {
   void handleLogin();  // Handles user login
   // void handleSignUp();  // Handles user registration
   void showUserWindow();
-  // void handleCreateAccount();
+  void handleCreateAccount();
   void showMainMenu();
 
  private:
   explicit User(QWidget* parent = nullptr);
 
-  // CreateAccountWindow* createAccountWindow;
+  CreateAccountWindow* createAccountWindow;
   QString jsonFilePath = "resources/profile.json";
   QPushButton* backButton;
+  QPushButton* createAccountButton;
   QComboBox* usernameComboBox;
   QLabel* jsonContentLabel;  // Label to display JSON content
   // QLineEdit* usernameInput;
