@@ -24,3 +24,26 @@ ChatBox::ChatBox(const QString& playerName, QWidget* parent) : QWidget(parent), 
 ChatBox::~ChatBox() {
     // Deconstructor for the ChatBox class, does nothing
 }
+
+void ChatBox::addSystemMessage(const QString& message) {
+    // Add a system message to the chat display
+    chatDisplay->append("<b>System: </b>" + message);
+}
+
+void ChatBox::addPlayerMessage(const QString& playerName, const QString& message) {
+    // Add a player message to the chat display
+    chatDisplay->append("<b>" + playerName + ": </b>" + message);
+}
+
+void ChatBox::sendMessage() {
+    // Get the text from the chat input
+    QString message = chatInput->text().trimmed();
+    if (!message.isEmpty()) {
+        // Add the player's message to the chat display
+        addPlayerMessage(playerName, message);
+        chatInput->clear();
+    }
+
+    // Multiplayer functionality 
+    
+}
