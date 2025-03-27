@@ -1,6 +1,7 @@
 #include "chatbox.h"
 
-ChatBox::ChatBox(const QString& playerName, QWidget* parent) : QWidget(parent), playerName(playerName) {
+ChatBox::ChatBox(const QString& playerName, Team team, QWidget* parent) 
+    : QWidget(parent), team(team), playerName(playerName) {
     // Set up the layout and UI
     QVBoxLayout* layout = new QVBoxLayout(this);
     chatDisplay = new QTextEdit(this);
@@ -8,12 +9,12 @@ ChatBox::ChatBox(const QString& playerName, QWidget* parent) : QWidget(parent), 
     layout->addWidget(chatDisplay);
 
     // Set up the chat input layout
-    QHBoxLayout* inputLayout = new QHBoxLayout();
+    QHBoxLayout* textArea = new QHBoxLayout();
     chatInput = new QLineEdit(this);
     sendButton = new QPushButton("Send", this);
-    inputLayout->addWidget(chatInput);
-    inputLayout->addWidget(sendButton);
-    layout->addLayout(inputLayout);
+    textArea->addWidget(chatInput);
+    textArea->addWidget(sendButton);
+    layout->addLayout(textArea);
 
     // Connect signals and slots
     connect(sendButton, &QPushButton::clicked, this, &ChatBox::sendMessage);
@@ -25,9 +26,16 @@ ChatBox::~ChatBox() {
     // Deconstructor for the ChatBox class, does nothing
 }
 
-void ChatBox::addSystemMessage(const QString& message) {
-    // Add a system message to the chat display
-    chatDisplay->append(message);
+void ChatBox::addSystemMessage(const QString& message, Team team) {
+    QString nameColor = (team == BLUE_TEAM) ? "blue" : "red";
+    QString messageBackgroundColor = (team == BLUE_TEAM) ? "rgba(0, 0, 255, 0.2)" : "rgba(255, 0, 0, 0.2)";
+
+    // Format the system message with the appropriate color
+    QString formattedMessage = "<span style='color:" + nameColor + "; background-color:" + messageBackgroundColor + 
+        "; padding: 2px; border-radius: 5px;'>";
+    formattedMessage += message + "</span>";
+
+    chatDisplay->append(formattedMessage);
 }
 
 void ChatBox::addPlayerMessage(const QString& playerName, const QString& message) {
