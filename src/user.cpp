@@ -228,7 +228,7 @@ void User::handleLogin() {
   }
 }
 
-int User::getGamesPlayed(const QString& username) const{
+unsigned int User::getGamesPlayed(const QString& username) const{
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -285,7 +285,7 @@ int User::getGamesPlayed(const QString& username) const{
   return gamesPlayed;
 }
 
-void User::updateGamesPlayed(const QString& username, const int& newGamesPlayed) {
+void User::updateGamesPlayed(const QString& username, const unsigned int& newGamesPlayed) {
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -337,7 +337,7 @@ void User::updateGamesPlayed(const QString& username, const int& newGamesPlayed)
   }
 
   // Update wins count
-  statisticsObject["games_played"] = newGamesPlayed;
+  statisticsObject["games_played"] = (int) newGamesPlayed;
   userObject["statistics"] = statisticsObject;
   jsonObject[username] = userObject;
 
@@ -358,7 +358,7 @@ void User::updateGamesPlayed(const QString& username, const int& newGamesPlayed)
 }
 
 
-int User::getWins(const QString& username) const{
+unsigned int User::getWins(const QString& username) const{
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -415,7 +415,7 @@ int User::getWins(const QString& username) const{
   return wins;
 }
 
-void User::updateWins(const QString& username, const int& newWins) {
+void User::updateWins(const QString& username, const unsigned int& newWins) {
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -467,7 +467,7 @@ void User::updateWins(const QString& username, const int& newWins) {
   }
 
   // Update wins count
-  statisticsObject["games_win"] = newWins;
+  statisticsObject["games_win"] = (int) newWins;
   userObject["statistics"] = statisticsObject;
   jsonObject[username] = userObject;
 
@@ -487,7 +487,7 @@ void User::updateWins(const QString& username, const int& newWins) {
   jsonContentLabel->setText("Win count updated for " + username);
 }
 
-int User::getGuessTotal(const QString& username) const{
+unsigned int User::getGuessTotal(const QString& username) const{
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -544,7 +544,7 @@ int User::getGuessTotal(const QString& username) const{
   return guessTotal;
 }
 
-void User::updateGuessTotal(const QString& username, const int& newGuessTotal) {
+void User::updateGuessTotal(const QString& username, const unsigned int& newGuessTotal) {
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -596,7 +596,7 @@ void User::updateGuessTotal(const QString& username, const int& newGuessTotal) {
   }
 
   // Update wins count
-  statisticsObject["guess_total"] = newGuessTotal;
+  statisticsObject["guess_total"] = (int) newGuessTotal;
   userObject["statistics"] = statisticsObject;
   jsonObject[username] = userObject;
 
@@ -616,7 +616,7 @@ void User::updateGuessTotal(const QString& username, const int& newGuessTotal) {
   jsonContentLabel->setText("Guess total count updated for " + username);
 }
 
-int User::getGuessHit(const QString& username) const{
+unsigned int User::getGuessHit(const QString& username) const{
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -673,7 +673,7 @@ int User::getGuessHit(const QString& username) const{
   return guessHit;
 }
 
-void User::updateGuessHit(const QString& username, const int& newGuessHit) {
+void User::updateGuessHit(const QString& username, const unsigned int& newGuessHit) {
   QFile file(jsonFilePath);
   QDir dir = QFileInfo(file).absoluteDir();
   QString absolutePath = dir.filePath(file.fileName());
@@ -725,7 +725,7 @@ void User::updateGuessHit(const QString& username, const int& newGuessHit) {
   }
 
   // Update wins count
-  statisticsObject["guess_hit"] = newGuessHit;
+  statisticsObject["guess_hit"] = (int) newGuessHit;
   userObject["statistics"] = statisticsObject;
   jsonObject[username] = userObject;
 
