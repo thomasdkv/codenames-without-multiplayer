@@ -34,19 +34,19 @@ PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
   // Add labels for the teams
   redTeamLayout->addWidget(new QLabel("Red"));
   redTeamLayout->addWidget(new QLabel("Spy Master"));
-  redTeamSpyMasterNickname = new QLineEdit();
-  redTeamLayout->addWidget(redTeamSpyMasterNickname);
+  redTeamSpyMasterComboBox = new QComboBox();
+  redTeamLayout->addWidget(redTeamSpyMasterComboBox);
   redTeamLayout->addWidget(new QLabel("Operative"));
-  redTeamOperativeNickname = new QLineEdit();
-  redTeamLayout->addWidget(redTeamOperativeNickname);
+  redTeamOperativeComboBox = new QComboBox();
+  redTeamLayout->addWidget(redTeamOperativeComboBox);
 
   blueTeamLayout->addWidget(new QLabel("Blue"));
   blueTeamLayout->addWidget(new QLabel("Spy Master"));
-  blueTeamSpyMasterNickname = new QLineEdit();
-  blueTeamLayout->addWidget(blueTeamSpyMasterNickname);
+  blueTeamSpyMasterComboBox = new QComboBox();
+  blueTeamLayout->addWidget(blueTeamSpyMasterComboBox);
   blueTeamLayout->addWidget(new QLabel("Operative"));
-  blueTeamOperativeNickname = new QLineEdit();
-  blueTeamLayout->addWidget(blueTeamOperativeNickname);
+  blueTeamOperativeComboBox = new QComboBox();
+  blueTeamLayout->addWidget(blueTeamOperativeComboBox);
 
   redTeamLayout->setAlignment(Qt::AlignLeft);
   blueTeamLayout->setAlignment(Qt::AlignRight);
@@ -79,6 +79,7 @@ PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
   connect(gameBoard, &GameBoard::gameEnded, this, &PreGame::handleGameEnd);
   gameBoard->hide();
 
+  populateUserDropdowns();
 }
 
 PreGame::~PreGame() {
@@ -88,27 +89,31 @@ PreGame::~PreGame() {
   delete game;
 }
 
+void PreGame::populateUserDropdowns() {
+  QJsonObject json = users->loadJsonFile();
+  QStringList usernames = json.keys();
+
+  redTeamSpyMasterComboBox->addItems(usernames);
+  redTeamOperativeComboBox->addItems(usernames);
+  blueTeamSpyMasterComboBox->addItems(usernames);
+  blueTeamOperativeComboBox->addItems(usernames);
+}
+
 void PreGame::goBackToMain() {
   this->hide();
   emit backToMainWindow();  // Emit signal to notify MainWindow to show itself
 }
 
 void PreGame::startGame() {
-  // Get the text from the textboxes
-  QString redSpyMaster = getRedTeamSpyMasterNickname();
-  QString redOperative = getRedTeamOperativeNickname();
-  QString blueSpyMaster = getBlueTeamSpyMasterNickname();
-  QString blueOperative = getBlueTeamOperativeNickname();
+  QString redSpyMaster = redTeamSpyMasterComboBox->currentText();
+  QString redOperative = redTeamOperativeComboBox->currentText();
+  QString blueSpyMaster = blueTeamSpyMasterComboBox->currentText();
+  QString blueOperative = blueTeamOperativeComboBox->currentText();
 
   game->addPlayer(Player(redSpyMaster, ROLE::SPYMASTER, TEAM::RED));
   game->addPlayer(Player(redOperative, ROLE::OPERATIVE, TEAM::RED));
   game->addPlayer(Player(blueSpyMaster, ROLE::SPYMASTER, TEAM::BLUE));
   game->addPlayer(Player(blueOperative, ROLE::OPERATIVE, TEAM::BLUE));
-
-  // users->signUp(redSpyMaster);
-  // users->signUp(redOperative);
-  // users->signUp(blueSpyMaster);
-  // users->signUp(blueOperative);
 
   gameBoard->setRedSpyMasterName(redSpyMaster);
   gameBoard->setRedOperativeName(redOperative);
@@ -116,13 +121,9 @@ void PreGame::startGame() {
   gameBoard->setBlueOperativeName(blueOperative);
 
   gameBoard->updateTeamLabels();
-
   this->hide();
   emit start();
-
   gameBoard->show();
-
-  qDebug() << "Connection to GameBoard successful";
 }
 
 void PreGame::showPreGame() {
@@ -130,23 +131,21 @@ void PreGame::showPreGame() {
   this->show();
 }
 
-void PreGame::handleGameEnd() {
-  showPreGame();
-}
+void PreGame::handleGameEnd() { showPreGame(); }
 
 // Getter functions to return the text from the textboxes
 QString PreGame::getRedTeamSpyMasterNickname() const {
-  return redTeamSpyMasterNickname->text();
+  return redTeamSpyMasterComboBox->currentText().trimmed();
 }
 
 QString PreGame::getRedTeamOperativeNickname() const {
-  return redTeamOperativeNickname->text();
+  return redTeamOperativeComboBox->currentText().trimmed();
 }
 
 QString PreGame::getBlueTeamSpyMasterNickname() const {
-  return blueTeamSpyMasterNickname->text();
+  return blueTeamSpyMasterComboBox->currentText().trimmed();
 }
 
 QString PreGame::getBlueTeamOperativeNickname() const {
-  return blueTeamOperativeNickname->text();
+  return blueTeamOperativeComboBox->currentText().trimmed();
 }
