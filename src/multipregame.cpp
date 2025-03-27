@@ -7,7 +7,7 @@
 #include <QNetworkInterface>
 
 MultiPregame::MultiPregame(QWebSocketServer* server, const QString& username, QWidget* parent)
-    : QWidget(parent), m_server(server), m_isHost(true) {
+: QWidget(parent), m_server(server), m_isHost(true) {
     m_usernames[nullptr] = username; // Host has null socket
     setupUI();
     connect(m_server, &QWebSocketServer::newConnection, this, &MultiPregame::onNewConnection);
@@ -120,6 +120,8 @@ void MultiPregame::processMessage(const QString& message) {
         QStringList players = playersData.split("|");
         playerList->clear();
         playerList->addItems(players);
+    } else if(message.startsWith("START_GAME:")) {
+        startGame();
     }
 }
 
@@ -152,11 +154,43 @@ void MultiPregame::socketDisconnected() {
 }
 
 void MultiPregame::startGame() {
+    //1 host 3 clients
+    if(m_clients.size() != 3) {
+        QMessageBox::warning(this, "Wrong Amount of Players", "You need 4 players to start the game." + QString::number(m_clients.size()));
+        return;
+    }
+    if(m_roles[nullptr] == "Unassigned" || m_roles[nullptr] == "") {
+        QMessageBox::warning(this, "Role Not Selected", "You need to select a role for the host.");
+        return;
+    }
+    for (QWebSocket* client : m_clients) {
+        if (m_roles[client] == "Unassigned" || m_roles[client] == "") {
+            QMessageBox::warning(this, "Role Not Selected", "You need to select a role for each player.");
+            return;
+        }
+        }
+        
+
+    for (QWebSocket* client : m_clients) {
+        client->sendTextMessage("START_GAME");
+    }
     QMessageBox::information(this, "Game Starting", "Starting the game!");
 }
 
 void MultiPregame::handleRoleSelection(const QString& message, QWebSocket* sender) {
     QString role = message.section(':', 1);
+    //Making sure the role isnt taken already
+    if(m_roles[nullptr] == role) {
+        QMessageBox::warning(this, "Role Taken", "The role " + role + " is already taken.");
+        return;
+    }
+    for (QWebSocket* client : m_clients) {
+        qDebug() << m_roles[client] << role;
+        if (m_roles[client] == role ) {
+            QMessageBox::warning(this, "Role Taken", "The role " + role + " is already taken.");
+            return;
+        }
+    }
     m_roles[sender] = role;
     sendLobbyUpdate();
 }
