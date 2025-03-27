@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "pregame.h"
+#include "multimain.h"
 #include <QGraphicsDropShadowEffect>
 #include <QPixmap>
 #include <QPalette>
@@ -83,16 +84,27 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Create the PreGame window
     preGameWindow = new PreGame();
+    // Create the Multiplayer window
+    multiMain = new MultiMain();
     
     // Connect button to open PreGame window
     connect(localPlayButton, &QPushButton::clicked, this, &MainWindow::openPreGame);
     
     // Connect signal from PreGame to show MainWindow when back button is clicked
     connect(preGameWindow, &PreGame::backToMainWindow, this, &MainWindow::showMainWindow);
+    connect(multiMain, &MultiMain::backToMainWindow, this, &MainWindow::showMainWindow);
+
+    // Connect button to open Multiplayer Window
+    connect(onlinePlayButton, &QPushButton::clicked, this, &MainWindow::openMultiMain);
     
     // Set central widget and layout
     centralWidget->setLayout(layout);
     setCentralWidget(centralWidget);
+}
+
+void MainWindow::openMultiMain() {
+    this->hide();
+    multiMain->show();
 }
 
 MainWindow::~MainWindow() {

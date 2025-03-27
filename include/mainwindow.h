@@ -6,7 +6,9 @@
 #include <QLabel>
 #include <QVBoxLayout>
 
+
 class PreGame;  // Forward declaration of PreGame class
+class MultiMain;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -18,6 +20,7 @@ public:
 private slots:
     void openPreGame();
     void showMainWindow();
+    void openMultiMain();
 
 private:
     QWidget *centralWidget;
@@ -30,6 +33,7 @@ private:
     QPushButton *statsButton;
 
     PreGame *preGameWindow;  // PreGame pointer to the second window
+    MultiMain *multiMain;
 };
 
 #endif // MAINWINDOW_H

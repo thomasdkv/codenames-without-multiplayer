@@ -1,5 +1,5 @@
 # Qt Modules
-QT += core gui widgets
+QT += core gui widgets websockets
 
 CONFIG += c++17
 # CONFIG += release    # Options: debug, release, console, static, shared
@@ -17,7 +17,9 @@ SOURCES += src/main.cpp \
            src/operatorguess.cpp \
            src/player.cpp \
            src/game.cpp \
-           src/transition.cpp
+           src/transition.cpp \
+           src/multimain.cpp \
+           src/multipregame.cpp
 
 HEADERS += include/mainwindow.h \
            include/pregame.h \
@@ -28,7 +30,9 @@ HEADERS += include/mainwindow.h \
            include/team.h \
            include/player.h \
            include/game.h \
-           include/transition.h
+           include/transition.h \
+           include/multimain.h \
+           include/multipregame.h
 
 # Output Directory
 DESTDIR = $$PWD/bin
