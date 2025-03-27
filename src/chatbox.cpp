@@ -27,7 +27,7 @@ ChatBox::~ChatBox() {
 
 void ChatBox::addSystemMessage(const QString& message) {
     // Add a system message to the chat display
-    chatDisplay->append("<b>System: </b>" + message);
+    chatDisplay->append(message);
 }
 
 void ChatBox::addPlayerMessage(const QString& playerName, const QString& message) {
@@ -45,5 +45,5 @@ void ChatBox::sendMessage() {
     }
 
     // Multiplayer functionality 
-    
+
 }

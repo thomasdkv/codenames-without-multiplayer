@@ -6,7 +6,6 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QDateTime>
 
 class ChatBox : public QWidget {
     Q_OBJECT

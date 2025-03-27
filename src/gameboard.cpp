@@ -20,7 +20,7 @@ GameBoard::GameBoard(const QString& redSpyMaster, const QString& redOperative,
 {
     
     setWindowTitle("Codenames - Game Board");
-    setFixedSize(1000, 800);
+    setFixedSize(1200, 800);
     
     loadWordsFromFile();
     generateGameGrid();
@@ -214,6 +214,20 @@ void GameBoard::setupUI() {
     mainLayout->addWidget(operatorGuess);
     operatorGuess->setVisible(false);
     connect(operatorGuess, &OperatorGuess::guessSubmitted, this, &GameBoard::displayGuess);
+
+    // Implement chat box
+    if (currentTurn == RED_SPY) {
+        currentPlayerName = redSpyMasterName;
+    } else if (currentTurn == RED_OP) {
+        currentPlayerName = redOperativeName;
+    } else if (currentTurn == BLUE_SPY) {
+        currentPlayerName = blueSpyMasterName;
+    } else if (currentTurn == BLUE_OP) {
+        currentPlayerName = blueOperativeName;
+    }
+
+    chatBox = new ChatBox(currentPlayerName, this);
+    mainLayout->addWidget(chatBox);
 }
 
 void GameBoard::displayGuess() {
@@ -258,6 +272,12 @@ void GameBoard::onCardClicked(int row, int col) {
         qDebug() << "Blue team card selected. Blue cards remaining:" << blueCardsRemaining;
     }
 
+    // Add the guess to the chat box
+    QString currOperativeName = (currentTurn == RED_OP) ? redOperativeName : blueOperativeName;
+    QString teamColor = (currentTurn == RED_OP) ? "Red" : "Blue";
+    QString hintMessage = teamColor + " operative " + currOperativeName + " taps " + gameGrid[row][col].word;
+    chatBox->addSystemMessage(hintMessage);
+
     bool correctCard = (currentTurn == RED_OP && gameGrid[row][col].type == RED_TEAM) || 
                        (currentTurn == BLUE_OP && gameGrid[row][col].type == BLUE_TEAM);
 
@@ -288,6 +308,13 @@ void GameBoard::displayHint(const QString& hint, int number) {
         correspondingNumber = QString::number(number);
     }
     currentHint->setText("Current hint: " + hint + " (" + correspondingNumber + ")"); // Update the hint
+
+    // Add the hint to the chat box
+    QString currSpymasterName = (currentTurn == RED_SPY) ? redSpyMasterName : blueSpyMasterName;
+    QString teamColor = (currentTurn == RED_SPY) ? "Red" : "Blue";
+    QString chatNumber = (number == 0) ? "∞" : QString::number(number);
+    QString hintMessage = teamColor + " spymaster " + currSpymasterName + " gives clue " + hint + " " + chatNumber;
+    chatBox->addSystemMessage(hintMessage);
 
     nextTurn();
 }
@@ -356,7 +383,6 @@ void GameBoard::nextTurn() {
     else if(currentTurn == BLUE_OP) {
         currentTurnLabel->setText("Current Turn: " + blueOperativeName);
     }
-
 }
 
 void GameBoard::onContinueClicked() {
