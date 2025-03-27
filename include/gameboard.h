@@ -104,6 +104,7 @@ private:
 
     ChatBox* chatBox;
     QString currentPlayerName;
+    ChatBox::Team currentPlayerTeam;
 };
 
 #endif // GAMEBOARD_H
