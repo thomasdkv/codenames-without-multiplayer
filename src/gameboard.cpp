@@ -128,7 +128,11 @@ void GameBoard::generateGameGrid() {
 }
 
 void GameBoard::setupUI() {
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    // Main horizontal layout that will hold grid area and chat box
+    QHBoxLayout* mainHorizontalLayout = new QHBoxLayout(this);
+    
+    // Create vertical layout for the game elements (left side)
+    QVBoxLayout* gameVerticalLayout = new QVBoxLayout();
     
     // Team info
     redTeamLabel = new QLabel("Red Team - Spymaster: " + redSpyMasterName + 
@@ -140,37 +144,36 @@ void GameBoard::setupUI() {
     redScoreLabel = new QLabel("Red Cards Remaining: " + QString::number(redCardsRemaining));
     blueScoreLabel = new QLabel("Blue Cards remaining: " + QString::number(blueCardsRemaining));
 
-    // Create a horizontal layout for score labels to place them side by side
+    // Implement score layout
     QHBoxLayout* scoreLayout = new QHBoxLayout();
     scoreLayout->addWidget(redScoreLabel);
     scoreLayout->addStretch();
     scoreLayout->addWidget(blueScoreLabel);
-    mainLayout->addLayout(scoreLayout);
+    gameVerticalLayout->addLayout(scoreLayout);
 
-    // Create a horizontal layout for team labels to place them side by side
+    // Implement team layout
     QHBoxLayout* teamLayout = new QHBoxLayout();
     teamLayout->addWidget(redTeamLabel);
     teamLayout->addStretch();
     teamLayout->addWidget(blueTeamLabel);
-    mainLayout->addLayout(teamLayout);
+    gameVerticalLayout->addLayout(teamLayout);
 
-    mainLayout->addWidget(currentTurnLabel);
+    gameVerticalLayout->addWidget(currentTurnLabel); // Add current turn label
 
-    // Display the current hint (initially empty) above the grid
+    // Implement current hint label
     currentHint = new QLabel("Current hint: ");
     currentHint->setAlignment(Qt::AlignCenter);
     currentHint->setStyleSheet("font-weight: bold; font-size: 20px; color: black; ");
-    mainLayout->insertWidget(2, currentHint);
+    gameVerticalLayout->insertWidget(2, currentHint);
 
     // Grid setup
     gridLayout = new QGridLayout();
     for (int i = 0; i < GRID_SIZE; ++i) {
         for (int j = 0; j < GRID_SIZE; ++j) {
             cards[i][j] = new QPushButton(gameGrid[i][j].word);
-            qDebug() << "card at" << i << j << "set to" << gameGrid[i][j].word;
             cards[i][j]->setFixedSize(120, 80);
             gridLayout->addWidget(cards[i][j], i, j);
-            
+            qDebug() << "card at" << i << j << "set to" << gameGrid[i][j].word;
             // For now, we'll show the card type in the background (for testing)
             // In a real game, this would be hidden from operatives
             switch (gameGrid[i][j].type) {
@@ -194,28 +197,30 @@ void GameBoard::setupUI() {
             });
         }
     }
-    mainLayout->addLayout(gridLayout);
-    setLayout(mainLayout);
+    gameVerticalLayout->addLayout(gridLayout);
 
-    // Implement the transition widget
+    // Implement transition widget
     transition = new Transition(this);
     transition->setFixedSize(400, 200);
     transition->hide();
-    mainLayout->addWidget(transition);
+    gameVerticalLayout->addWidget(transition);
     connect(transition, &Transition::continueClicked, this, &GameBoard::onContinueClicked);
     
-    // Implement the Spymaster hint widget and connect the hintSubmitted signal to displayHint slot
+    // Implement spymaster hint widget
     spymasterHint = new SpymasterHint(this);
-    mainLayout->addWidget(spymasterHint);
+    gameVerticalLayout->addWidget(spymasterHint);
     connect(spymasterHint, &SpymasterHint::hintSubmitted, this, &GameBoard::displayHint);
 
-    // Implement Operator guess (start hidden)
+    // Implement operator guess widget
     operatorGuess = new OperatorGuess(this);
-    mainLayout->addWidget(operatorGuess);
+    gameVerticalLayout->addWidget(operatorGuess);
     operatorGuess->setVisible(false);
     connect(operatorGuess, &OperatorGuess::guessSubmitted, this, &GameBoard::displayGuess);
 
-    // Implement chat box
+    // Add the game vertical layout to the main horizontal layout
+    mainHorizontalLayout->addLayout(gameVerticalLayout);
+
+    // Create and add chat box to the right
     if (currentTurn == RED_SPY) {
         currentPlayerName = redSpyMasterName;
     } else if (currentTurn == RED_OP) {
@@ -225,9 +230,18 @@ void GameBoard::setupUI() {
     } else if (currentTurn == BLUE_OP) {
         currentPlayerName = blueOperativeName;
     }
+    // Determine the team based on the current turn
+    ChatBox::Team team = (currentTurn == RED_SPY || currentTurn == RED_OP) ? ChatBox::RED_TEAM : ChatBox::BLUE_TEAM;
 
-    chatBox = new ChatBox(currentPlayerName, this);
-    mainLayout->addWidget(chatBox);
+    chatBox = new ChatBox(currentPlayerName, team, this);
+    mainHorizontalLayout->addWidget(chatBox);
+
+    // Set spacing and stretch factors
+    mainHorizontalLayout->setStretch(0, 3);  
+    mainHorizontalLayout->setStretch(1, 1); 
+    mainHorizontalLayout->setSpacing(20);    
+
+    setLayout(mainHorizontalLayout);
 }
 
 void GameBoard::displayGuess() {
@@ -275,8 +289,8 @@ void GameBoard::onCardClicked(int row, int col) {
     // Add the guess to the chat box
     QString currOperativeName = (currentTurn == RED_OP) ? redOperativeName : blueOperativeName;
     QString teamColor = (currentTurn == RED_OP) ? "Red" : "Blue";
-    QString hintMessage = teamColor + " operative " + currOperativeName + " taps " + gameGrid[row][col].word;
-    chatBox->addSystemMessage(hintMessage);
+    QString hintMessage = currOperativeName + " taps " + gameGrid[row][col].word;
+    chatBox->addSystemMessage(hintMessage, (currentTurn == RED_OP) ? ChatBox::RED_TEAM : ChatBox::BLUE_TEAM);
 
     bool correctCard = (currentTurn == RED_OP && gameGrid[row][col].type == RED_TEAM) || 
                        (currentTurn == BLUE_OP && gameGrid[row][col].type == BLUE_TEAM);
@@ -313,8 +327,8 @@ void GameBoard::displayHint(const QString& hint, int number) {
     QString currSpymasterName = (currentTurn == RED_SPY) ? redSpyMasterName : blueSpyMasterName;
     QString teamColor = (currentTurn == RED_SPY) ? "Red" : "Blue";
     QString chatNumber = (number == 0) ? "∞" : QString::number(number);
-    QString hintMessage = teamColor + " spymaster " + currSpymasterName + " gives clue " + hint + " " + chatNumber;
-    chatBox->addSystemMessage(hintMessage);
+    QString hintMessage = currSpymasterName + " gives clue " + hint + " " + chatNumber;
+    chatBox->addSystemMessage(hintMessage, (currentTurn == RED_SPY) ? ChatBox::RED_TEAM : ChatBox::BLUE_TEAM);
 
     nextTurn();
 }
