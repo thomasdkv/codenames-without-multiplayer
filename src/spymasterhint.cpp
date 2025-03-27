@@ -73,3 +73,10 @@ void SpymasterHint::textToUppercase(const QString& text) {
         hintLineEdit->setText(text.toUpper());
     }
 }
+
+void SpymasterHint::reset() {
+    hintLineEdit->clear();
+    numberSpinBox->clear();
+    numberSpinBox->setValue(1);
+    updateButtonClickable(); // This will disable giveClueButton since hintLineEdit is empty
+}

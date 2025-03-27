@@ -74,11 +74,17 @@ PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
 
   // Set the layout of the window
   setLayout(layout);
+
+  gameBoard = new GameBoard("RedSpy", "RedOp", "BlueSpy", "BlueOp", nullptr);
+  connect(gameBoard, &GameBoard::gameEnded, this, &PreGame::handleGameEnd);
+  gameBoard->hide();
+
 }
 
 PreGame::~PreGame() {
   // Let Qt handle widget deletion
   // changed so that qt is no longer responsible for deleting the widgets.
+  delete gameBoard;
   delete game;
 }
 
@@ -104,14 +110,17 @@ void PreGame::startGame() {
   users->signUp(blueSpyMaster);
   users->signUp(blueOperative);
 
+  gameBoard->setRedSpyMasterName(redSpyMaster);
+  gameBoard->setRedOperativeName(redOperative);
+  gameBoard->setBlueSpyMasterName(blueSpyMaster);
+  gameBoard->setBlueOperativeName(blueOperative);
+
+  gameBoard->updateTeamLabels();
+
   this->hide();
   emit start();
 
-  // Add the game board transition
-  gameBoard = new GameBoard(redSpyMaster, redOperative, blueSpyMaster, blueOperative);
   gameBoard->show();
-
-  connect(gameBoard, &GameBoard::gameEnded, this, &PreGame::handleGameEnd);
 
   qDebug() << "Connection to GameBoard successful";
 }
@@ -122,7 +131,7 @@ void PreGame::showPreGame() {
 }
 
 void PreGame::handleGameEnd() {
-  emit backToMainWindow();
+  showPreGame();
 }
 
 // Getter functions to return the text from the textboxes

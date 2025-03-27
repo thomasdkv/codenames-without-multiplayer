@@ -20,6 +20,12 @@ public:
                       QWidget* parent = nullptr);
     ~GameBoard();
 
+    void setRedSpyMasterName(const QString& name);
+    void setRedOperativeName(const QString& name);
+    void setBlueSpyMasterName(const QString& name);
+    void setBlueOperativeName(const QString& name);
+    void updateTeamLabels();
+
 signals:
     void gameEnded();
 
@@ -40,6 +46,8 @@ private:
     void updateScores();
     void checkGameEnd();
     void endGame(const QString& message);
+
+    void resetGame();
 
     enum CardType {
         RED_TEAM,

@@ -30,8 +30,30 @@ GameBoard::GameBoard(const QString& redSpyMaster, const QString& redOperative,
 GameBoard::~GameBoard() {}
 
 void GameBoard::show() {
+    resetGame();
     QWidget::show();
     qDebug() << "GameBoard shown";
+}
+
+void GameBoard::setRedSpyMasterName(const QString& name) {
+    redSpyMasterName = name;
+}
+
+void GameBoard::setRedOperativeName(const QString& name) {
+    redOperativeName = name;
+}
+
+void GameBoard::setBlueSpyMasterName(const QString& name) {
+    blueSpyMasterName = name;
+}
+
+void GameBoard::setBlueOperativeName(const QString& name) {
+    blueOperativeName = name;
+}
+
+void GameBoard::updateTeamLabels() {
+    redTeamLabel->setText("Red Team - Spymaster: " + redSpyMasterName + ", Operative: " + redOperativeName);
+    blueTeamLabel->setText("Blue Team - Spymaster: " + blueSpyMasterName +  ", Operative: " + blueOperativeName);
 }
 
 void GameBoard::loadWordsFromFile() {
@@ -287,6 +309,8 @@ void GameBoard::nextTurn() {
         // Remove spymaster widget
         spymasterHint->hide();
         operatorGuess->setVisible(true);
+        operatorGuess->setEnabled(true);
+        operatorGuess->reset();
     }
 
     // Reveal the board for spymaster
@@ -462,4 +486,61 @@ void GameBoard::endGame(const QString& message) {
     emit gameEnded();
 
     this->close();
+}
+
+void GameBoard::resetGame() {
+
+    loadWordsFromFile();
+    generateGameGrid();
+
+    // Reset the UI elements
+    for (int i = 0; i < GRID_SIZE; ++i) {
+        for (int j = 0; j < GRID_SIZE; ++j) {
+            cards[i][j]->setText(gameGrid[i][j].word);
+            cards[i][j]->setEnabled(false);
+            switch (gameGrid[i][j].type) {
+                case RED_TEAM:
+                    cards[i][j]->setStyleSheet("background-color: #ff9999; color: black");
+                    break;
+                case BLUE_TEAM:
+                    cards[i][j]->setStyleSheet("background-color: #9999ff; color: black");
+                    break;
+                case NEUTRAL:
+                    cards[i][j]->setStyleSheet("background-color: #f0f0f0; color: black");
+                    break;
+                case ASSASSIN:
+                    cards[i][j]->setStyleSheet("background-color: #333333; color: white;");
+                    break;
+            }
+        }
+    }
+
+    // Reset scores
+    redCardsRemaining = 0;
+    blueCardsRemaining = 0;
+    for (int i = 0; i < GRID_SIZE; ++i) {
+        for (int j = 0; j < GRID_SIZE; ++j) {
+            if (gameGrid[i][j].type == RED_TEAM) redCardsRemaining++;
+            if (gameGrid[i][j].type == BLUE_TEAM) blueCardsRemaining++;
+        }
+    }
+    updateScores();
+
+    // Reset turn and labels
+    currentTurn = RED_SPY;
+    currentTurnLabel->setText("Current Turn: " + redSpyMasterName);
+    currentHint->setText("Current hint: ");
+
+    // Reset widget states
+    spymasterHint->setEnabled(true); 
+    spymasterHint->show();
+
+    spymasterHint->reset();
+
+    operatorGuess->setEnabled(true);
+    operatorGuess->setVisible(false);
+
+    operatorGuess->reset();
+
+    transition->hide();
 }

@@ -27,3 +27,7 @@ OperatorGuess::~OperatorGuess() {
 void OperatorGuess::submitGuess() {
     emit guessSubmitted();
 }
+
+void OperatorGuess::reset() {
+    submitGuessButton->setEnabled(true);
+}
