@@ -582,4 +582,5 @@ void GameBoard::resetGame() {
     operatorGuess->reset();
 
     transition->hide();
+    chatBox->clearChat(); // Clear the chat box
 }

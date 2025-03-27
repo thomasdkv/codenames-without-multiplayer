@@ -19,6 +19,7 @@ public:
     ~ChatBox();
     void addSystemMessage(const QString& message, Team team);
     void addPlayerMessage(const QString& playerName, const QString& message);
+    void clearChat();
 
 public slots:
     void sendMessage();

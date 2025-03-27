@@ -55,3 +55,8 @@ void ChatBox::sendMessage() {
     // Multiplayer functionality 
 
 }
+
+void ChatBox::clearChat() {
+    // Clear the chat display
+    chatDisplay->clear();
+}
