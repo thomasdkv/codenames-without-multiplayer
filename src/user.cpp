@@ -16,6 +16,9 @@ User::User(QWidget* parent) : QWidget(parent) {
   backButton = new QPushButton("Back to Main Menu", this);
   layout->addWidget(backButton);
 
+  createAccountButton = new QPushButton("Create Account", this);
+  layout->addWidget(createAccountButton);
+
   jsonContentLabel = new QLabel("Loading...", this);
 
   layout->addWidget(jsonContentLabel);
@@ -32,8 +35,16 @@ User::User(QWidget* parent) : QWidget(parent) {
   connect(loginButton, &QPushButton::clicked, this, &User::handleLogin);
 
   // createAccountWindow = CreateAccountWindow::getInstance();
-  connect(backButton, &QPushButton::clicked, this,
-          &User::showMainMenu);
+  connect(backButton, &QPushButton::clicked, this, &User::showMainMenu);
+
+  createAccountWindow = CreateAccountWindow::getInstance();
+
+  connect(createAccountButton, &QPushButton::clicked, this,
+          &User::handleCreateAccount);
+
+  // disconnect(createAccountWindow, &CreateAccountWindow::back, nullptr,
+  // nullptr); connect(createAccountWindow, &CreateAccountWindow::back, this,
+  //         &User::showUserWindow);
 
   // Load usernames from the JSON file and populate the drop-down menu
   QJsonObject jsonObject = loadJsonFile();
@@ -43,6 +54,12 @@ User::User(QWidget* parent) : QWidget(parent) {
 }
 
 void User::showUserWindow() { this->show(); }
+void User::handleCreateAccount() {
+  this->hide();
+  createAccountWindow->setPreviousScreen(this);
+  createAccountWindow->show();
+}
+
 void User::showMainMenu() {
   this->hide();
   emit backToMainMenu();

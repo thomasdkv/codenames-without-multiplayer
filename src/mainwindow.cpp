@@ -86,9 +86,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
   // Create the PreGame window
   preGameWindow = new PreGame();
-  createAccountWindow = CreateAccountWindow::getInstance();
-  onlineGameWindow = User::instance();
-
   // Connect button to open PreGame window
   connect(localPlayButton, &QPushButton::clicked, this,
           &MainWindow::openPreGame);
@@ -101,13 +98,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   connect(onlinePlayButton, &QPushButton::clicked, this,
           &MainWindow::openOnlineGame);
 
-  connect(onlineGameWindow, &User::backToMainMenu, this,
-          &MainWindow::showMainWindow);
-
+  createAccountWindow = CreateAccountWindow::getInstance();
   connect(createAccountButton, &QPushButton::clicked, this,
           &MainWindow::openCreateAccount);
 
-  connect(createAccountWindow, &CreateAccountWindow::back, this,
+  //   disconnect(createAccountWindow, &CreateAccountWindow::back, nullptr,
+  //   nullptr); connect(createAccountWindow, &CreateAccountWindow::back, this,
+  //           &MainWindow::showMainWindow);
+
+  onlineGameWindow = User::instance();
+  connect(onlineGameWindow, &User::backToMainMenu, this,
           &MainWindow::showMainWindow);
 
   // Set central widget and layout
@@ -132,5 +132,6 @@ void MainWindow::openOnlineGame() {
 
 void MainWindow::openCreateAccount() {
   this->hide();
+  createAccountWindow->setPreviousScreen(this);
   createAccountWindow->show();
 }

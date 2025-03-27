@@ -17,6 +17,7 @@ class CreateAccountWindow : public QWidget {
 
  public:
   static CreateAccountWindow* getInstance(QWidget* parent = nullptr);
+  void setPreviousScreen(QWidget* previous);
 
  private:
   explicit CreateAccountWindow(QWidget* parent = nullptr);
@@ -37,6 +38,7 @@ class CreateAccountWindow : public QWidget {
   QLabel* statusLabel;
 
   QString jsonFilePath = "resources/profile.json";  // Update path as necessary
+  QWidget* previousScreen = nullptr;
 };
 
 #endif  // CREATEACCOUNTWINDOW_H
