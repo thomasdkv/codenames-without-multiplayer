@@ -1,8 +1,5 @@
 #include "mainwindow.h"
 
-#include "pregame.h"
-#include "user.h"
-
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   // Create central widget and layout
   centralWidget = new QWidget(this);
@@ -53,6 +50,17 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   shadowEffectStats->setColor(Qt::black);  // Shadow color
   statsButton->setGraphicsEffect(shadowEffectStats);
 
+  // Button to open Create Account menu
+  createAccountButton = new QPushButton("Create Account", centralWidget);
+  createAccountButton->setFixedSize(200, 50);
+  createAccountButton->move(400, 425);  // Set y-position to 50
+  QGraphicsDropShadowEffect* shadowEffectAccount =
+      new QGraphicsDropShadowEffect;
+  shadowEffectAccount->setBlurRadius(5);     // Blur radius
+  shadowEffectAccount->setOffset(0, 3);      // Shadow offset
+  shadowEffectAccount->setColor(Qt::black);  // Shadow color
+  createAccountButton->setGraphicsEffect(shadowEffectAccount);
+
   // Styling
   titleLabel->setStyleSheet("font-weight: bold; font-size: 50px;");
 
@@ -74,9 +82,12 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   localPlayButton->setStyleSheet(buttonStyles);
   onlinePlayButton->setStyleSheet(buttonStyles);
   statsButton->setStyleSheet(buttonStyles);
+  createAccountButton->setStyleSheet(buttonStyles);
 
   // Create the PreGame window
   preGameWindow = new PreGame();
+  createAccountWindow = CreateAccountWindow::getInstance();
+  onlineGameWindow = User::instance();
 
   // Connect button to open PreGame window
   connect(localPlayButton, &QPushButton::clicked, this,
@@ -89,6 +100,15 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   // Connect button to open Multiplayer window
   connect(onlinePlayButton, &QPushButton::clicked, this,
           &MainWindow::openOnlineGame);
+
+  connect(onlineGameWindow, &User::backToMainMenu, this,
+          &MainWindow::showMainWindow);
+
+  connect(createAccountButton, &QPushButton::clicked, this,
+          &MainWindow::openCreateAccount);
+
+  connect(createAccountWindow, &CreateAccountWindow::back, this,
+          &MainWindow::showMainWindow);
 
   // Set central widget and layout
   centralWidget->setLayout(layout);
@@ -107,6 +127,10 @@ void MainWindow::showMainWindow() { this->show(); }
 void MainWindow::openOnlineGame() {
   // Show the login/signup screen
   this->hide();
-  onlineGameWindow = User::instance();
   onlineGameWindow->show();
+}
+
+void MainWindow::openCreateAccount() {
+  this->hide();
+  createAccountWindow->show();
 }
