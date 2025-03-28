@@ -1,6 +1,9 @@
 #ifndef MULTIBOARD_H
 #define MULTIBOARD_H
 
+
+#include "../spymasterhint.h"
+#include "../operatorguess.h"
 #include <QWidget>
 #include <QWebSocketServer>
 #include <QWebSocket>
@@ -27,7 +30,7 @@ public:
         QWidget* parent = nullptr
     );
 
-private slots:
+public slots:
     void handleTileClick();
     void processMessage(const QString& message);
     void socketDisconnected();
@@ -46,10 +49,13 @@ private:
     QString m_currentRole;
 
     // Game board components
+    QVBoxLayout* mainLayout;
     QGridLayout* m_grid;
     QLabel* m_playerInfoLabel;
     QLabel* m_turnLabel;
     QList<QPushButton*> m_tiles;
+    SpymasterHint* hint;
+    OperatorGuess* guess;
 
     // Game state
     QStringList m_words;

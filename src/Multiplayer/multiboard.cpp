@@ -29,7 +29,10 @@ MultiBoard::MultiBoard(bool isHost, QWebSocketServer* server, QList<QWebSocket*>
     // Setup network connections
     if (m_isHost) {
         if (m_server) {
+            qDebug() << "Listening for connections...";
             connect(m_server, &QWebSocketServer::newConnection, this, &MultiBoard::handleNewConnection);
+        } else {
+            qWarning() << "Invalid network configuration";
         }
     } else {
         if (m_clientSocket) {
@@ -49,22 +52,32 @@ MultiBoard::MultiBoard(bool isHost, QWebSocketServer* server, QList<QWebSocket*>
     initializeWords();
 
     if (m_isHost) {
-        initializeBoardColors();
+        //initializeBoardColors();
         
         // Send initial game state
-        sendInitialGameState();
+        //sendInitialGameState();
     }
-   
+    hint = new SpymasterHint(this);
+    mainLayout->addWidget(hint);
+    hint->hide();
+
+    guess = new OperatorGuess(this);
+    mainLayout->addWidget(guess);
+    guess->hide();
+
+    connect(hint, &SpymasterHint::hintSubmitted, this, &MultiBoard::advanceTurn);
+    connect(guess, &OperatorGuess::guessSubmitted, this, &MultiBoard::advanceTurn);
     setupBoard();
     updateTurnDisplay();
 }
 void MultiBoard::handleNewConnection()
 {
+    qDebug() << "New connection";
     if (!m_server) return;
-
+    qDebug() << "New connection2";
     QWebSocket* client = m_server->nextPendingConnection();
     if (!client) return;
-
+    qDebug() << "New connection3";
     connect(client, &QWebSocket::textMessageReceived, this, &MultiBoard::processMessage);
     m_clients.append(client);
 }
@@ -102,10 +115,10 @@ void MultiBoard::initializeBoardColors()
 void MultiBoard::sendInitialGameState()
 {
     // Validate game state before sending
-    if (m_words.size() != 25 || m_tileColors.size() != 25) {
-        qWarning() << "Invalid game state";
-        return;
-    }
+   // if (m_words.size() != 25 || m_tileColors.size() != 25) {
+     //   qWarning() << "Invalid game state";
+       // return;
+    //}
 
     sendToAll("BOARD_SETUP:" + m_words.join(",") + "|" + m_tileColors.join(","));
     sendToAll("TURN_UPDATE:" + m_turnOrder.first());
@@ -113,7 +126,7 @@ void MultiBoard::sendInitialGameState()
 
 void MultiBoard::setupUI()
 {
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    mainLayout = new QVBoxLayout(this);
     
     // Player info and turn display
     QHBoxLayout* infoLayout = new QHBoxLayout();
@@ -151,7 +164,10 @@ void MultiBoard::processMessage(const QString& message)
 {
     qDebug() << "Received message:" << message;
     
-     qDebug() << "Received message:" << message;
+    if(message.startsWith("TURN_ADVANCE") && m_isHost) {
+        qDebug() << "Advancing turn";
+        advanceTurn();
+    }
     
     if(message.startsWith("BOARD_SETUP:")) {
         QString data = message.section(':', 1);
@@ -236,11 +252,27 @@ bool MultiBoard::isMyTurn() const
     qDebug() << "Current Role:" << currentRole;
     qDebug() << "My Team:" << myTeam;
     qDebug() << "My Role:" << myRole;
+
+
     
     // More flexible role matching
     bool isTeamMatch = (myTeam == currentTeam);
     bool isRoleMatch = myRole.contains(currentRole);
-    
+    if(isTeamMatch && isRoleMatch) {
+        if(myRole.toLower() == "red_spymaster" || myRole.toLower() == "blue_spymaster") {
+        qDebug() << "Spymaster Hint";
+        hint->show();
+    }
+    else if(myRole.toLower() == "red_operative" || myRole.toLower() == "blue_operative") {
+        qDebug() << "Operative Hint";
+        guess->show();
+    }
+
+    }
+    else {
+        hint->hide();
+        guess->hide();
+    }
     qDebug() << "Team Match:" << isTeamMatch;
     qDebug() << "Role Match:" << isRoleMatch;
     
@@ -337,15 +369,22 @@ void MultiBoard::revealTile(int index, bool broadcast)
 
 void MultiBoard::advanceTurn()
 {
-    // Only host can advance turn
-    
-    // Cycle to next turn
+    if (!m_isHost) {
+        if (m_clientSocket && m_clientSocket->isValid()) {
+            qDebug() << "Client sending TURN_ADVANCE";
+            qDebug() << m_clientSocket->isValid();
+            m_clientSocket->sendTextMessage("TURN_ADVANCE");
+        } else {
+            qWarning() << "Client socket not connected!";
+        }
+        return;
+    }
+
+    // Host logic: advance turn and notify all clients
     m_currentTurnIndex = (m_currentTurnIndex + 1) % 4;
     QString nextTurn = m_turnOrder[m_currentTurnIndex];
-    
-    // Send turn update to all players
     sendToAll(QString("TURN_UPDATE:%1").arg(nextTurn));
-    updateTurnDisplay();
+    updateTurnDisplay(); // Host updates UI immediately
 }
 
 
