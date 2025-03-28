@@ -30,6 +30,7 @@ private:
     void setupUI();
     void sendLobbyUpdate();
     void handleRoleSelection(const QString& message, QWebSocket* sender);
+    void gameStarted(bool isHost, QWebSocketServer* server, const QList<QWebSocket*>& clients, QWebSocket* clientSocket, const QHash<QString, QString>& playerRoles);
 
     QWebSocketServer* m_server = nullptr;
     QWebSocket* m_clientSocket = nullptr;

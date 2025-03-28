@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "pregame.h"
-#include "multimain.h"
+#include "Multiplayer/multimain.h"
 #include <QGraphicsDropShadowEffect>
 #include <QPixmap>
 #include <QPalette>

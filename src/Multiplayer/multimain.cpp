@@ -1,5 +1,5 @@
-#include "multimain.h"
-#include "multipregame.h"
+#include "Multiplayer/multimain.h"
+#include "Multiplayer/multipregame.h"
 #include <QGraphicsDropShadowEffect>
 #include <QPixmap>
 #include <QPalette>
@@ -90,6 +90,7 @@ MultiMain::MultiMain(QWidget *parent)
         this->show();
     });
 });
+
 
     connect(this, &MultiMain::enterPregameAsClient, [this](QWebSocket* s, const QString& u) {
         MultiPregame* pregame = new MultiPregame(s, u);

@@ -1,4 +1,5 @@
-#include "multipregame.h"
+#include "Multiplayer/multipregame.h"
+#include "Multiplayer/multiboard.h"
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPushButton>
@@ -7,8 +8,9 @@
 #include <QNetworkInterface>
 
 MultiPregame::MultiPregame(QWebSocketServer* server, const QString& username, QWidget* parent)
-: QWidget(parent), m_server(server), m_isHost(true) {
+    : QWidget(parent), m_server(server), m_isHost(true) {
     m_usernames[nullptr] = username; // Host has null socket
+    m_roles[nullptr] = "Unassigned"; // Initialize host's role
     setupUI();
     connect(m_server, &QWebSocketServer::newConnection, this, &MultiPregame::onNewConnection);
 }
@@ -18,7 +20,7 @@ MultiPregame::MultiPregame(QWebSocket* socket, const QString& username, QWidget*
     setupUI();
     connect(m_clientSocket, &QWebSocket::textMessageReceived, this, &MultiPregame::processMessage);
     connect(m_clientSocket, &QWebSocket::disconnected, this, &MultiPregame::socketDisconnected);
-    
+
     // Send username to host immediately after connecting
     m_clientSocket->sendTextMessage("USERNAME:" + username);
 }
@@ -31,7 +33,7 @@ void MultiPregame::setupUI() {
     playerList->setStyleSheet("background: rgba(255, 255, 255, 150); border-radius: 10px;");
     layout->addWidget(playerList);
 
-    // Role selection buttons (for all players, including host)
+    // Role selection buttons
     QHBoxLayout* roleLayout = new QHBoxLayout();
     QPushButton* redSpymaster = new QPushButton("Red Spymaster", this);
     QPushButton* blueSpymaster = new QPushButton("Blue Spymaster", this);
@@ -101,10 +103,16 @@ void MultiPregame::setupUI() {
 }
 
 void MultiPregame::onNewConnection() {
+    if(m_clients.size() == 3) {
+        QMessageBox::warning(this, "Too many players", "The maximum number of players has been reached.");
+        return;
+    }
     QWebSocket* client = m_server->nextPendingConnection();
     connect(client, &QWebSocket::textMessageReceived, this, &MultiPregame::processMessage);
     connect(client, &QWebSocket::disconnected, this, &MultiPregame::socketDisconnected);
     m_clients.append(client);
+    m_roles[client] = "Unassigned"; // Initialize client role
+    sendLobbyUpdate();
 }
 
 void MultiPregame::processMessage(const QString& message) {
@@ -120,8 +128,20 @@ void MultiPregame::processMessage(const QString& message) {
         QStringList players = playersData.split("|");
         playerList->clear();
         playerList->addItems(players);
+    } else if(message.startsWith("ROLE_TAKEN:")) {
+        QString role = message.section(':', 1);
+        QMessageBox::warning(this, "Role Taken", QString("The role %1 has already been taken.").arg(role));
     } else if(message.startsWith("START_GAME:")) {
-        startGame();
+        QString data = message.section(':', 1);
+        QStringList entries = data.split("|");
+        QHash<QString, QString> playerRoles;
+        foreach (const QString& entry, entries) {
+            QStringList parts = entry.split(":");
+            if (parts.size() == 2) {
+                playerRoles[parts[0]] = parts[1];
+            }
+        }
+        emit gameStarted(false, nullptr, QList<QWebSocket*>(), m_clientSocket, playerRoles);
     }
 }
 
@@ -154,48 +174,90 @@ void MultiPregame::socketDisconnected() {
 }
 
 void MultiPregame::startGame() {
-    //1 host 3 clients
     if(m_clients.size() != 3) {
-        QMessageBox::warning(this, "Wrong Amount of Players", "You need 4 players to start the game." + QString::number(m_clients.size()));
+        QMessageBox::warning(this, "Wrong Amount of Players", "You need 4 players to start the game.");
         return;
     }
-    if(m_roles[nullptr] == "Unassigned" || m_roles[nullptr] == "") {
+    if(m_roles[nullptr] == "Unassigned") {
         QMessageBox::warning(this, "Role Not Selected", "You need to select a role for the host.");
         return;
     }
     for (QWebSocket* client : m_clients) {
-        if (m_roles[client] == "Unassigned" || m_roles[client] == "") {
+        if (m_roles[client] == "Unassigned") {
             QMessageBox::warning(this, "Role Not Selected", "You need to select a role for each player.");
             return;
         }
-        }
-        
-
-    for (QWebSocket* client : m_clients) {
-        client->sendTextMessage("START_GAME");
     }
-    QMessageBox::information(this, "Game Starting", "Starting the game!");
+    
+    QHash<QString, QString> playerRoles;
+    playerRoles[m_usernames[nullptr]] = m_roles[nullptr];
+    for (QWebSocket* client : m_clients) {
+        playerRoles[m_usernames[client]] = m_roles[client];
+    }
+
+    QStringList playerRoleList;
+    for (auto it = playerRoles.begin(); it != playerRoles.end(); ++it) {
+        playerRoleList << QString("%1:%2").arg(it.key()).arg(it.value());
+    }
+    QString message = "START_GAME:" + playerRoleList.join("|");
+    for (QWebSocket* client : m_clients) {
+        client->sendTextMessage(message);
+    }
+
+    gameStarted(true, m_server, m_clients, nullptr, playerRoles);
+}
+
+void MultiPregame::gameStarted(bool isHost, QWebSocketServer* server, 
+                              const QList<QWebSocket*>& clients, QWebSocket* clientSocket,
+                              const QHash<QString, QString>& playerRoles) {
+    QString currentUsername = m_isHost ? m_usernames[nullptr] : m_username;
+    MultiBoard* gameBoard = new MultiBoard(isHost, server, clients, clientSocket, playerRoles, currentUsername);
+    
+    // Transfer ownership to MultiBoard
+    if (isHost) {
+        if (server) {
+            server->setParent(gameBoard);
+            foreach (QWebSocket* client, clients) {
+                client->setParent(gameBoard);
+            }
+        }
+    } else {
+        if (clientSocket) {
+            clientSocket->setParent(gameBoard);
+        }
+    }
+    
+    gameBoard->show();
+    this->close();
 }
 
 void MultiPregame::handleRoleSelection(const QString& message, QWebSocket* sender) {
     QString role = message.section(':', 1);
-    //Making sure the role isnt taken already
-    if(m_roles[nullptr] == role) {
-        QMessageBox::warning(this, "Role Taken", "The role " + role + " is already taken.");
-        return;
-    }
-    for (QWebSocket* client : m_clients) {
-        qDebug() << m_roles[client] << role;
-        if (m_roles[client] == role ) {
-            QMessageBox::warning(this, "Role Taken", "The role " + role + " is already taken.");
-            return;
+    if (m_roles[sender] == role) return;
+
+    bool roleTaken = (m_roles[nullptr] == role);
+    if (!roleTaken) {
+        for (QWebSocket* client : m_clients) {
+            if (m_roles[client] == role) {
+                roleTaken = true;
+                break;
+            }
         }
     }
+
+    if (roleTaken) {
+        if (sender) {
+            sender->sendTextMessage("ROLE_TAKEN:" + role);
+        } else {
+            QMessageBox::warning(this, "Role Taken", QString("The role %1 is already taken.").arg(role));
+        }
+        return;
+    }
+
     m_roles[sender] = role;
     sendLobbyUpdate();
 }
 
 MultiPregame::~MultiPregame() {
-    if (m_server) m_server->deleteLater();
-    if (m_clientSocket) m_clientSocket->deleteLater();
+    // Ownership transferred to MultiBoard, no deletion needed here
 }

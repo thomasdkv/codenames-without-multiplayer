@@ -18,8 +18,9 @@ SOURCES += src/main.cpp \
            src/player.cpp \
            src/game.cpp \
            src/transition.cpp \
-           src/multimain.cpp \
-           src/multipregame.cpp
+           src/Multiplayer/multimain.cpp \
+           src/Multiplayer/multipregame.cpp \
+           src/Multiplayer/multiboard.cpp
 
 HEADERS += include/mainwindow.h \
            include/pregame.h \
@@ -31,8 +32,10 @@ HEADERS += include/mainwindow.h \
            include/player.h \
            include/game.h \
            include/transition.h \
-           include/multimain.h \
-           include/multipregame.h
+           include/Multiplayer/multimain.h \
+           include/Multiplayer/multipregame.h \
+            include/Multiplayer/multiboard.h
+
 
 # Output Directory
 DESTDIR = $$PWD/bin
