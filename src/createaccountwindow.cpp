@@ -2,6 +2,13 @@
 
 CreateAccountWindow* CreateAccountWindow::instance = nullptr;
 
+CreateAccountWindow* CreateAccountWindow::getInstance(QWidget* parent) {
+  if (instance == nullptr) {
+    instance = new CreateAccountWindow(parent);
+  }
+  return instance;
+}
+
 CreateAccountWindow::CreateAccountWindow(QWidget* parent) : QWidget(parent) {
   // Set up the window
   setWindowTitle("Create Account");
@@ -51,11 +58,9 @@ CreateAccountWindow::CreateAccountWindow(QWidget* parent) : QWidget(parent) {
   setLayout(layout);
 }
 
-CreateAccountWindow* CreateAccountWindow::getInstance(QWidget* parent) {
-  if (instance == nullptr) {
-    instance = new CreateAccountWindow(parent);
-  }
-  return instance;
+void CreateAccountWindow::show() {
+  QWidget::show();
+  qDebug() << "Create account window shown";
 }
 
 void CreateAccountWindow::setPreviousScreen(QWidget* previous) {
@@ -81,6 +86,7 @@ void CreateAccountWindow::onCreateAccountClicked() {
     // For now, just show that the account is created
     statusLabel->setText("Account Created.");
     saveJsonFile(username);
+    emit accountCreated();
   }
 }
 

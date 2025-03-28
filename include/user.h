@@ -16,7 +16,9 @@
 #include <QWidget>
 
 #include "createaccountwindow.h"
+#include "mainwindow.h"
 
+class MainWindow;
 class CreateAccountWindow;
 class User : public QWidget {
   Q_OBJECT
@@ -51,13 +53,17 @@ class User : public QWidget {
 
   QJsonObject loadJsonFile();  // Function to load JSON data
 
+ public slots:
+  void show();
+
  signals:
   void backToMainMenu();
 
  private slots:
   void handleLogin();  // Handles user login
   // void handleSignUp();  // Handles user registration
-  void showUserWindow();
+  void refreshUserDropdown();
+
   void handleCreateAccount();
   void showMainMenu();
 

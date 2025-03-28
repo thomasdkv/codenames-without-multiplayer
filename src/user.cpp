@@ -5,6 +5,7 @@ User* User::instance(QWidget* parent) {
   if (!_instance) {
     _instance = new User(parent);
   }
+
   return _instance;
 }
 
@@ -42,9 +43,12 @@ User::User(QWidget* parent) : QWidget(parent) {
   connect(createAccountButton, &QPushButton::clicked, this,
           &User::handleCreateAccount);
 
+  connect(createAccountWindow, &CreateAccountWindow::accountCreated, this,
+          &User::refreshUserDropdown);
+
   // disconnect(createAccountWindow, &CreateAccountWindow::back, nullptr,
   // nullptr); connect(createAccountWindow, &CreateAccountWindow::back, this,
-  //         &User::showUserWindow);
+  //         &User::show);
 
   // Load usernames from the JSON file and populate the drop-down menu
   QJsonObject jsonObject = loadJsonFile();
@@ -53,7 +57,13 @@ User::User(QWidget* parent) : QWidget(parent) {
   }
 }
 
-void User::showUserWindow() { this->show(); }
+void User::show() {
+  QJsonObject jsonData = loadJsonFile();  // Reload JSON to get latest data
+  populateUsernameComboBox(jsonData);
+  QWidget::show();
+  qDebug() << "User shown";
+}
+
 void User::handleCreateAccount() {
   this->hide();
   createAccountWindow->setPreviousScreen(this);
@@ -68,8 +78,15 @@ void User::showMainMenu() {
 //   this->hide();
 //   createAccountWindow->show();
 // }
+
+void User::refreshUserDropdown() {
+  QJsonObject jsonData = loadJsonFile();  // Reload latest data
+  populateUsernameComboBox(jsonData);     // Refresh the dropdown
+}
+
 void User::populateUsernameComboBox(const QJsonObject& jsonObject) {
   // Loop through the JSON object and add usernames to the combo box
+  usernameComboBox->clear();
   QJsonObject::const_iterator it = jsonObject.constBegin();
   while (it != jsonObject.constEnd()) {
     QString username = it.key();          // Extract username
