@@ -43,6 +43,7 @@ class MainWindow : public QMainWindow {
 
   QPushButton* localPlayButton;
   QPushButton* onlinePlayButton;
+  QPushButton* tutorialButton;
   QPushButton* statsButton;
   QPushButton* createAccountButton;
 

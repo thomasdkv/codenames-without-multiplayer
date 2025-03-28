@@ -40,10 +40,20 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   shadowEffectOnline->setColor(Qt::black);  // Shadow color
   onlinePlayButton->setGraphicsEffect(shadowEffectOnline);
 
+  // Button to open tutorial
+  tutorialButton = new QPushButton("Tutorial", centralWidget);
+  tutorialButton->setFixedSize(200, 50);
+  tutorialButton->move(400, 350);  // Set y-position to 50
+  QGraphicsDropShadowEffect* shadowEffectTutorial = new QGraphicsDropShadowEffect;
+  shadowEffectTutorial->setBlurRadius(5);     // Blur radius
+  shadowEffectTutorial->setOffset(0, 3);      // Shadow offset
+  shadowEffectTutorial->setColor(Qt::black);  // Shadow color
+  tutorialButton->setGraphicsEffect(shadowEffectTutorial);
+
   // Button to open statistics menu
   statsButton = new QPushButton("Statistics", centralWidget);
   statsButton->setFixedSize(200, 50);
-  statsButton->move(400, 350);  // Set y-position to 50
+  statsButton->move(400, 425);  // Set y-position to 50
   QGraphicsDropShadowEffect* shadowEffectStats = new QGraphicsDropShadowEffect;
   shadowEffectStats->setBlurRadius(5);     // Blur radius
   shadowEffectStats->setOffset(0, 3);      // Shadow offset
@@ -53,7 +63,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   // Button to open Create Account menu
   createAccountButton = new QPushButton("Create Account", centralWidget);
   createAccountButton->setFixedSize(200, 50);
-  createAccountButton->move(400, 425);  // Set y-position to 50
+  createAccountButton->move(400, 500);  // Set y-position to 50
   QGraphicsDropShadowEffect* shadowEffectAccount =
       new QGraphicsDropShadowEffect;
   shadowEffectAccount->setBlurRadius(5);     // Blur radius
@@ -81,6 +91,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
   localPlayButton->setStyleSheet(buttonStyles);
   onlinePlayButton->setStyleSheet(buttonStyles);
+  tutorialButton->setStyleSheet(buttonStyles);
   statsButton->setStyleSheet(buttonStyles);
   createAccountButton->setStyleSheet(buttonStyles);
 
