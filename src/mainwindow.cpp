@@ -3,7 +3,6 @@
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   // Create central widget and layout
   centralWidget = new QWidget(this);
-  layout = new QVBoxLayout(centralWidget);
 
   this->setStyleSheet(
       "background-image: url(:/images/menu-background.png);"
@@ -40,6 +39,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   shadowEffectOnline->setColor(Qt::black);  // Shadow color
   onlinePlayButton->setGraphicsEffect(shadowEffectOnline);
 
+  // Button to open tutorial
+  tutorialButton = new QPushButton("Tutorial", centralWidget);
+  tutorialButton->setFixedSize(200, 50);
+  tutorialButton->move(400, 425);  // Position below other buttons
+  QGraphicsDropShadowEffect* shadowEffectTutorial = new QGraphicsDropShadowEffect;
+  shadowEffectTutorial->setBlurRadius(5);     // Blur radius
+  shadowEffectTutorial->setOffset(0, 3);      // Shadow offset
+  shadowEffectTutorial->setColor(Qt::black);  // Shadow color
+  tutorialButton->setGraphicsEffect(shadowEffectTutorial);
+
   // Button to open statistics menu
   statsButton = new QPushButton("Statistics", centralWidget);
   statsButton->setFixedSize(200, 50);
@@ -53,7 +62,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   // Button to open Create Account menu
   createAccountButton = new QPushButton("Create Account", centralWidget);
   createAccountButton->setFixedSize(200, 50);
-  createAccountButton->move(400, 425);  // Set y-position to 50
+  createAccountButton->move(400, 500);  // Set y-position to 50
   QGraphicsDropShadowEffect* shadowEffectAccount =
       new QGraphicsDropShadowEffect;
   shadowEffectAccount->setBlurRadius(5);     // Blur radius
@@ -81,6 +90,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
   localPlayButton->setStyleSheet(buttonStyles);
   onlinePlayButton->setStyleSheet(buttonStyles);
+  tutorialButton->setStyleSheet(buttonStyles);
   statsButton->setStyleSheet(buttonStyles);
   createAccountButton->setStyleSheet(buttonStyles);
 
@@ -116,12 +126,21 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   connect(onlineGameWindow, &User::backToMainMenu, this,
           &MainWindow::showMainWindow);
 
+  // Create the Tutorial window
+  tutorialWindow = new Tutorial();
+  
+  // Make sure these connections exist
+  connect(tutorialButton, &QPushButton::clicked, this, &MainWindow::openTutorial);
+  connect(tutorialWindow, &Tutorial::tutorialClosed, this, &MainWindow::showMainWindow);
+
   // Set central widget and layout
-  centralWidget->setLayout(layout);
   setCentralWidget(centralWidget);
 }
 
-MainWindow::~MainWindow() { delete preGameWindow; }
+MainWindow::~MainWindow() {
+  delete preGameWindow;
+  delete tutorialWindow;
+}
 
 void MainWindow::openPreGame() {
   this->hide();
@@ -129,8 +148,8 @@ void MainWindow::openPreGame() {
 }
 
 void MainWindow::showMainWindow() {
+  qDebug() << "ShowMainWindow called";
   this->show();
-  qDebug() << "Main Window shown";
 }
 
 void MainWindow::openOnlineGame() {
@@ -148,4 +167,9 @@ void MainWindow::openCreateAccount() {
   this->hide();
   createAccountWindow->setPreviousScreen(this);
   createAccountWindow->show();
+}
+
+void MainWindow::openTutorial() {
+  this->hide();
+  tutorialWindow->show();
 }
