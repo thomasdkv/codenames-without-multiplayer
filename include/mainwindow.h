@@ -13,11 +13,13 @@
 #include "pregame.h"
 #include "user.h"
 #include "statisticswindow.h"
+#include "tutorial.h"
 
 class PreGame;
 class User;
 class CreateAccountWindow;
 class StatisticsWindow;
+class Tutorial;
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
@@ -34,6 +36,7 @@ class MainWindow : public QMainWindow {
   void openOnlineGame();
   void openStatsWindow();
   void openCreateAccount();
+  void openTutorial();
 
  private:
   QWidget* centralWidget;
@@ -51,6 +54,7 @@ class MainWindow : public QMainWindow {
   User* onlineGameWindow;
   CreateAccountWindow* createAccountWindow;
   StatisticsWindow* statsWindow;
+  Tutorial* tutorialWindow;
 };
 
 #endif  // MAINWINDOW_H
