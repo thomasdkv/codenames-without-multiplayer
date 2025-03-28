@@ -1,101 +1,92 @@
 {
-    "LAMDOWIJDOIW": {
+    "shadowhawk": {
         "statistics": {
-            "games_played": 0,
-            "games_win": 0,
-            "guess_hit": 0,
-            "guess_total": 0
+            "games_played": 50,
+            "games_win": 45,
+            "guess_hit": 10,
+            "guess_total": 20
         },
-        "user_name": "LAMDOWIJDOIW"
+        "user_name": "shadowhawk"
     },
-    "LOLLLL": {
+    "frostbyte": {
         "statistics": {
-            "games_played": 0,
-            "games_win": 0,
-            "guess_hit": 0,
-            "guess_total": 0
+            "games_played": 174,
+            "games_win": 125,
+            "guess_hit": 34,
+            "guess_total": 145
         },
-        "user_name": "LOLLLL"
+        "user_name": "frostbyte"
     },
-    "alex": {
+    "nightmare": {
         "statistics": {
-            "games_played": 0,
-            "games_win": 0,
-            "guess_hit": 0,
-            "guess_total": 0
+            "games_played": 147,
+            "games_win": 105,
+            "guess_hit": 57,
+            "guess_total": 75
         },
-        "user_name": "alex"
+        "user_name": "nightmare"
     },
-    "apple": {
+    "echofox": {
         "statistics": {
-            "games_played": 0,
-            "games_win": 0,
-            "guess_hit": 0,
-            "guess_total": 0
+            "games_played": 184,
+            "games_win": 176,
+            "guess_hit": 41,
+            "guess_total": 69
         },
-        "user_name": "apple"
+        "user_name": "echofox"
     },
-    "ethan": {
+    "cyberwolf": {
         "statistics": {
-            "games_played": 0,
-            "games_win": 0,
+            "games_played": 87,
+            "games_win": 67,
             "guess_hit": 0,
-            "guess_total": 0
+            "guess_total": 30
         },
-        "user_name": "ethan"
+        "user_name": "cyberwolf"
     },
-    "hi": {
+    "stormrider": {
         "statistics": {
-            "games_played": 0,
-            "games_win": 0,
-            "guess_hit": 0,
-            "guess_total": 0
+            "games_played": 33,
+            "games_win": 11,
+            "guess_hit": 8,
+            "guess_total": 9
         },
-        "user_name": "hi"
+        "user_name": "stormrider"
     },
-    "hibruh": {
+    "darknova": {
         "statistics": {
-            "games_played": 0,
-            "games_win": 0,
-            "guess_hit": 0,
-            "guess_total": 0
+            "games_played": 10,
+            "games_win": 3,
+            "guess_hit": 1,
+            "guess_total": 9
         },
-        "user_name": "hibruh"
+        "user_name": "darknova"
     },
-    "no hi": {
+    "blazefury": {
         "statistics": {
-            "games_played": 0,
-            "games_win": 0,
-            "guess_hit": 0,
-            "guess_total": 0
+            "games_played": 120,
+            "games_win": 64,
+            "guess_hit": 5,
+            "guess_total": 60
         },
-        "user_name": "no hi"
+        "user_name": "blazefury"
     },
-    "not alex": {
+    "venomstrike": {
         "statistics": {
-            "games_played": 0,
-            "games_win": 0,
-            "guess_hit": 0,
-            "guess_total": 0
+            "games_played": 71,
+            "games_win": 55,
+            "guess_hit": 12,
+            "guess_total": 51
         },
-        "user_name": "not alex"
+        "user_name": "venomstrike"
     },
-    "not thomas or alex": {
+    "steelphantom": {
         "statistics": {
-            "games_played": 0,
-            "games_win": 0,
-            "guess_hit": 0,
-            "guess_total": 0
+            "games_played": 127,
+            "games_win": 77,
+            "guess_hit": 32,
+            "guess_total": 47
         },
-        "user_name": "not thomas or alex"
-    },
-    "thomas": {
-        "statistics": {
-            "games_played": 0,
-            "games_win": 0,
-            "guess_hit": 0,
-            "guess_total": 0
-        },
-        "user_name": "thomas"
+        "user_name": "steelphantom"
     }
 }

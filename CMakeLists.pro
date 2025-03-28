@@ -19,7 +19,8 @@ SOURCES += src/main.cpp \
            src/game.cpp \
            src/transition.cpp \
            src/user.cpp \
-           src/createaccountwindow.cpp
+           src/createaccountwindow.cpp \
+           src/statisticswindow.cpp
 
 HEADERS += include/mainwindow.h \
            include/pregame.h \
@@ -32,7 +33,8 @@ HEADERS += include/mainwindow.h \
            include/game.h \
            include/transition.h \
            include/user.h \
-           include/createaccountwindow.h
+           include/createaccountwindow.h \
+           include/statisticswindow.h
 
 # Output Directory
 DESTDIR = $$PWD/bin

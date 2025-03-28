@@ -505,7 +505,7 @@ float User::getWinRate(const QString& username) const {
     return 0;
   }
 
-  float winRate = gamesWin / gamesPlayed;
+  float winRate = (float)gamesWin / (float)gamesPlayed;
   return winRate;
 }
 
@@ -811,7 +811,7 @@ float User::getHitRate(const QString& username) {
     return 0;
   }
 
-  float hitRate = guessHit / guessTotal;
+  float hitRate = (float)guessHit / (float)guessTotal;
   return hitRate;
 }
 

@@ -91,12 +91,18 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
           &MainWindow::openPreGame);
 
   // Connect signal from PreGame to show MainWindow when back button is clicked
-    connect(preGameWindow, &PreGame::backToMainWindow, this,
-            &MainWindow::showMainWindow);
+  connect(preGameWindow, &PreGame::backToMainWindow, this,
+          &MainWindow::showMainWindow);
 
   // Connect button to open Multiplayer window
   connect(onlinePlayButton, &QPushButton::clicked, this,
           &MainWindow::openOnlineGame);
+
+  statsWindow = new StatisticsWindow();
+  connect(statsButton, &QPushButton::clicked, this,
+          &MainWindow::openStatsWindow);
+  connect(statsWindow, &StatisticsWindow::backToMainWindow, this,
+          &MainWindow::showMainWindow);
 
   createAccountWindow = CreateAccountWindow::getInstance();
   connect(createAccountButton, &QPushButton::clicked, this,
@@ -124,13 +130,18 @@ void MainWindow::openPreGame() {
 
 void MainWindow::showMainWindow() {
   this->show();
-  qDebug() << "User shown";
+  qDebug() << "Main Window shown";
 }
 
 void MainWindow::openOnlineGame() {
   // Show the login/signup screen
   this->hide();
   onlineGameWindow->show();
+}
+
+void MainWindow::openStatsWindow() {
+  this->hide();
+  statsWindow->show();
 }
 
 void MainWindow::openCreateAccount() {

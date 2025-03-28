@@ -12,10 +12,12 @@
 #include "createaccountwindow.h"
 #include "pregame.h"
 #include "user.h"
+#include "statisticswindow.h"
 
 class PreGame;
 class User;
 class CreateAccountWindow;
+class StatisticsWindow;
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
@@ -30,6 +32,7 @@ class MainWindow : public QMainWindow {
  private slots:
   void openPreGame();
   void openOnlineGame();
+  void openStatsWindow();
   void openCreateAccount();
 
  private:
@@ -46,6 +49,7 @@ class MainWindow : public QMainWindow {
   PreGame* preGameWindow;  // PreGame pointer to the second window
   User* onlineGameWindow;
   CreateAccountWindow* createAccountWindow;
+  StatisticsWindow* statsWindow;
 };
 
 #endif  // MAINWINDOW_H
