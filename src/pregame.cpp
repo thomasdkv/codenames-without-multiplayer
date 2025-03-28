@@ -38,6 +38,9 @@ PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
   // Connect start button to a slot
   connect(startButton, &QPushButton::clicked, this, &PreGame::startGame);
 
+  connect(createAccountWindow, &CreateAccountWindow::accountCreated, this,
+          &PreGame::populateUserDropdowns);
+
   // Add labels for the teams
   redTeamLayout->addWidget(new QLabel("Red"));
   redTeamLayout->addWidget(new QLabel("Spy Master"));
@@ -100,9 +103,16 @@ void PreGame::populateUserDropdowns() {
   QJsonObject json = users->loadJsonFile();
   QStringList usernames = json.keys();
 
+  redTeamSpyMasterComboBox->clear();
   redTeamSpyMasterComboBox->addItems(usernames);
+
+  redTeamOperativeComboBox->clear();
   redTeamOperativeComboBox->addItems(usernames);
+
+  blueTeamSpyMasterComboBox->clear();
   blueTeamSpyMasterComboBox->addItems(usernames);
+
+  blueTeamOperativeComboBox->clear();
   blueTeamOperativeComboBox->addItems(usernames);
 }
 
@@ -139,12 +149,14 @@ void PreGame::startGame() {
   gameBoard->show();
 }
 
-void PreGame::showPreGame() {
+void PreGame::show() {
   qDebug() << "Returning to PreGame screen";
-  this->show();
+  populateUserDropdowns();
+  QWidget::show();
+  qDebug() << "Pregame shown";
 }
 
-void PreGame::handleGameEnd() { showPreGame(); }
+void PreGame::handleGameEnd() { show(); }
 
 // Getter functions to return the text from the textboxes
 QString PreGame::getRedTeamSpyMasterNickname() const {

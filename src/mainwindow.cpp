@@ -91,8 +91,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
           &MainWindow::openPreGame);
 
   // Connect signal from PreGame to show MainWindow when back button is clicked
-  connect(preGameWindow, &PreGame::backToMainWindow, this,
-          &MainWindow::showMainWindow);
+    connect(preGameWindow, &PreGame::backToMainWindow, this,
+            &MainWindow::showMainWindow);
 
   // Connect button to open Multiplayer window
   connect(onlinePlayButton, &QPushButton::clicked, this,
@@ -122,7 +122,10 @@ void MainWindow::openPreGame() {
   preGameWindow->show();
 }
 
-void MainWindow::showMainWindow() { this->show(); }
+void MainWindow::showMainWindow() {
+  this->show();
+  qDebug() << "User shown";
+}
 
 void MainWindow::openOnlineGame() {
   // Show the login/signup screen

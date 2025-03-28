@@ -13,7 +13,7 @@
 #include "pregame.h"
 #include "user.h"
 
-class Pregame;
+class PreGame;
 class User;
 class CreateAccountWindow;
 
@@ -24,9 +24,11 @@ class MainWindow : public QMainWindow {
   explicit MainWindow(QWidget* parent = nullptr);
   ~MainWindow();
 
+ public slots:
+  void showMainWindow();
+
  private slots:
   void openPreGame();
-  void showMainWindow();
   void openOnlineGame();
   void openCreateAccount();
 

@@ -19,6 +19,9 @@ class CreateAccountWindow : public QWidget {
   static CreateAccountWindow* getInstance(QWidget* parent = nullptr);
   void setPreviousScreen(QWidget* previous);
 
+ public slots:
+  void show();
+
  private:
   explicit CreateAccountWindow(QWidget* parent = nullptr);
   static CreateAccountWindow* instance;
@@ -29,6 +32,7 @@ class CreateAccountWindow : public QWidget {
 
  signals:
   void back();
+  void accountCreated();
 
  private:
   void saveJsonFile(const QString& username);
