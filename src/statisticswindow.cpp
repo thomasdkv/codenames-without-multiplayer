@@ -7,39 +7,90 @@ StatisticsWindow::StatisticsWindow(QWidget* parent) : QWidget(parent) {
 
   QVBoxLayout* layout = new QVBoxLayout(this);
 
-  backToMainButton = new QPushButton("Back to Main Menu");
+  QString buttonStyles =
+      "QPushButton {"
+      "   background-color:rgb(65, 42, 213);"
+      "   color: white;"
+      "   border-radius: 5px;"
+      "   border: 2px solid #412AD5;"
+      "   padding: 5px;"
+      "   font-weight: bold;"
+      "   font-size: 20px;"
+      "}"
+      "QPushButton:hover {"
+      "   background-color: rgb(54, 35, 177);"  // Hover background color
+      "}";
+
+  QString comboBoxStyle =
+      "QComboBox {"
+      "   background-color: #2a2a2a;"
+      "   color: white;"
+      "   border-radius: 5px;"
+      "   border: 2px solid #412AD5;"
+      "   padding: 5px;"
+      "   font-size: 16px;"
+      "}"
+      "QComboBox::drop-down {"
+      "   background-color: #2a2a2a;"
+      "   border: 2px solid #412AD5;"
+      "}"
+      "QComboBox QAbstractItemView {"
+      "   background-color: #2a2a2a;"
+      "   color: white;"
+      "   border: 2px solid #412AD5;"
+      "   selection-background-color: rgb(54, 35, 177);"
+      "}";
+
+  QString statsStyle = "color: white; font-size: 18px;";
+
+  // Back to Main Button Styling
+  backToMainButton = new QPushButton("Back to Main Menu", this);
+  backToMainButton->setFixedSize(220, 50);
+  backToMainButton->setStyleSheet(buttonStyles);
   layout->addWidget(backToMainButton);
 
   QHBoxLayout* dropDownLayout = new QHBoxLayout();
 
+  // ComboBox Styling
   usernameComboBox = new QComboBox();
+  usernameComboBox->setStyleSheet(comboBoxStyle);
   dropDownLayout->addWidget(usernameComboBox);
-  showUserStatsButton = new QPushButton();
-  dropDownLayout->addWidget(showUserStatsButton);
 
+  // Show Stats Button Styling
+  showUserStatsButton = new QPushButton("Show Stats", this);
+  showUserStatsButton->setFixedSize(200, 50);
+  showUserStatsButton->setStyleSheet(buttonStyles);
+  dropDownLayout->addWidget(showUserStatsButton);
   layout->addLayout(dropDownLayout);
 
-  username = "N/A";
-  usernameTitle = new QLabel(username);
+  // Username Label Styling
+  usernameTitle = new QLabel(username, this);
+  usernameTitle->setAlignment(Qt::AlignCenter);
+  usernameTitle->setStyleSheet(
+      "font-size: 24px; color: white; margin: 10px; font-weight: bold;");
   layout->addWidget(usernameTitle);
 
   QHBoxLayout* statisticsLayout = new QHBoxLayout();
   QVBoxLayout* gamesLayout = new QVBoxLayout();
   QVBoxLayout* guessLayout = new QVBoxLayout();
 
+  // Stats Layout Styling
   QHBoxLayout* gamesPlayedLayout = new QHBoxLayout();
-  gamesPlayedLayout->addWidget(new QLabel("Games Played:"));
-  gamesPlayedStats = new QLabel("N/A");
+  gamesPlayedLayout->addWidget(new QLabel("Games Played:", this));
+  gamesPlayedStats = new QLabel("N/A", this);
+  gamesPlayedStats->setStyleSheet(statsStyle);
   gamesPlayedLayout->addWidget(gamesPlayedStats);
 
   QHBoxLayout* gamesWinLayout = new QHBoxLayout();
-  gamesWinLayout->addWidget(new QLabel("Games Won:"));
-  gamesWinStats = new QLabel("N/A");
+  gamesWinLayout->addWidget(new QLabel("Games Won:", this));
+  gamesWinStats = new QLabel("N/A", this);
+  gamesWinStats->setStyleSheet(statsStyle);
   gamesWinLayout->addWidget(gamesWinStats);
 
   QHBoxLayout* gamesWinRateLayout = new QHBoxLayout();
-  gamesWinRateLayout->addWidget(new QLabel("Games Win Rate:"));
-  gamesWinRateStats = new QLabel("N/A");
+  gamesWinRateLayout->addWidget(new QLabel("Games Win Rate:", this));
+  gamesWinRateStats = new QLabel("N/A", this);
+  gamesWinRateStats->setStyleSheet(statsStyle);
   gamesWinRateLayout->addWidget(gamesWinRateStats);
 
   gamesLayout->addLayout(gamesPlayedLayout);
@@ -47,23 +98,29 @@ StatisticsWindow::StatisticsWindow(QWidget* parent) : QWidget(parent) {
   gamesLayout->addLayout(gamesWinRateLayout);
 
   QHBoxLayout* guessTotalLayout = new QHBoxLayout();
-  guessTotalLayout->addWidget(new QLabel("Guess Total:"));
-  guessTotalStats = new QLabel("N/A");
+  guessTotalLayout->addWidget(new QLabel("Guess Total:", this));
+  guessTotalStats = new QLabel("N/A", this);
+  guessTotalStats->setStyleSheet(statsStyle);
   guessTotalLayout->addWidget(guessTotalStats);
 
   QHBoxLayout* guessHitLayout = new QHBoxLayout();
-  guessHitLayout->addWidget(new QLabel("Guess Hit:"));
-  guessHitStats = new QLabel("N/A");
+  guessHitLayout->addWidget(new QLabel("Guess Hit:", this));
+  guessHitStats = new QLabel("N/A", this);
+  guessHitStats->setStyleSheet(statsStyle);
   guessHitLayout->addWidget(guessHitStats);
 
   QHBoxLayout* guessHitRateLayout = new QHBoxLayout();
-  guessHitRateLayout->addWidget(new QLabel("Guess Hit Rate:"));
-  guessHitRateStats = new QLabel("N/A");
+  guessHitRateLayout->addWidget(new QLabel("Guess Hit Rate:", this));
+  guessHitRateStats = new QLabel("N/A", this);
+  guessHitRateStats->setStyleSheet(statsStyle);
   guessHitRateLayout->addWidget(guessHitRateStats);
 
   guessLayout->addLayout(guessTotalLayout);
   guessLayout->addLayout(guessHitLayout);
   guessLayout->addLayout(guessHitRateLayout);
+
+  gamesLayout->setAlignment(Qt::AlignHCenter);
+  guessLayout->setAlignment(Qt::AlignHCenter);
 
   statisticsLayout->addLayout(gamesLayout);
   statisticsLayout->addLayout(guessLayout);
