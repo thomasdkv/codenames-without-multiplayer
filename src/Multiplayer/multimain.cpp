@@ -225,9 +225,7 @@ void MultiMain::onJoinRoomClicked() {
                     lobbyList->addItem("Player: " + user);
                 }
             }
-            else {
-                QMessageBox::information(this, "Message", message);
-            }
+           
         });
 
     m_clientSocket->open(QUrl(QString("ws://%1:%2").arg(host).arg(port)));

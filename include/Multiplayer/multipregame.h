@@ -15,6 +15,7 @@ public:
     MultiPregame(QWebSocket* socket, const QString& username, QWidget* parent = nullptr);
     ~MultiPregame();
 
+
 signals:
     void backToMultiMain();
     void enterPregameAsHost(QWebSocketServer* server, const QString& username);
@@ -41,6 +42,7 @@ private:
     QListWidget* playerList;
     QString m_username;
     bool m_isHost;
+
 };
 
 #endif

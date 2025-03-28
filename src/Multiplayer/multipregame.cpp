@@ -6,6 +6,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QNetworkInterface>
+#include <QLoggingCategory>
 
 MultiPregame::MultiPregame(QWebSocketServer* server, const QString& username, QWidget* parent)
     : QWidget(parent), m_server(server), m_isHost(true) {
@@ -20,7 +21,6 @@ MultiPregame::MultiPregame(QWebSocket* socket, const QString& username, QWidget*
     setupUI();
     connect(m_clientSocket, &QWebSocket::textMessageReceived, this, &MultiPregame::processMessage);
     connect(m_clientSocket, &QWebSocket::disconnected, this, &MultiPregame::socketDisconnected);
-
     // Send username to host immediately after connecting
     m_clientSocket->sendTextMessage("USERNAME:" + username);
 }
@@ -117,7 +117,6 @@ void MultiPregame::onNewConnection() {
 }
 
 void MultiPregame::processMessage(const QString& message) {
-
     if (message.startsWith("USERNAME:")) {
         QString username = message.section(':', 1);
         QWebSocket* sender = qobject_cast<QWebSocket*>(this->sender());
@@ -201,7 +200,7 @@ void MultiPregame::startGame() {
     for (auto it = playerRoles.begin(); it != playerRoles.end(); ++it) {
         playerRoleList << QString("%1:%2").arg(it.key()).arg(it.value());
     }
-    QString message = "START_GAME:" + playerRoleList.join("|");
+    const QString message = "START_GAME:" + playerRoleList.join("|");
     for (QWebSocket* client : m_clients) {
         client->sendTextMessage(message);
     }
@@ -238,7 +237,11 @@ void MultiPregame::gameStarted(bool isHost, QWebSocketServer* server,
 
 void MultiPregame::handleRoleSelection(const QString& message, QWebSocket* sender) {
     QString role = message.section(':', 1);
-    if (m_roles[sender] == role) return;
+    if (m_roles[sender] == role) {
+        role = "Unassigned";
+         m_roles[sender] = role;
+        sendLobbyUpdate();
+    }
 
     bool roleTaken = (m_roles[nullptr] == role);
     if (!roleTaken) {

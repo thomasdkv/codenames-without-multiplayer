@@ -14,6 +14,7 @@
 #include <QString>
 #include <QStringList>
 #include <QPushButton>
+#include <QFile>
 
 class MultiBoard : public QWidget 
 {
@@ -29,6 +30,25 @@ public:
         const QString& currentUsername, 
         QWidget* parent = nullptr
     );
+    enum CardType {
+        RED_TEAM,
+        BLUE_TEAM,
+        NEUTRAL,
+        ASSASSIN
+    };
+
+    enum Turn {
+        RED_SPY,
+        RED_OP,
+        BLUE_SPY,
+        BLUE_OP
+    };
+
+    struct Card {
+        QString word;
+        CardType type;
+        bool revealed;
+    };
 
 public slots:
     void handleTileClick();
@@ -57,6 +77,7 @@ private:
     SpymasterHint* hint;
     OperatorGuess* guess;
 
+
     // Game state
     QStringList m_words;
     QStringList m_tileColors;
@@ -69,11 +90,18 @@ private:
     void initializeWords();
     void initializeBoardColors();
     void sendInitialGameState();
+    void loadWordsFromFile();
+    void generateGameGrid();
     
     void revealTile(int index, bool broadcast = true);
     void advanceTurn();
     void updateTurnDisplay();
     void sendToAll(const QString& message);
+
+    static const int GRID_SIZE = 5;
+    Card gameGrid[GRID_SIZE][GRID_SIZE];
+    QStringList wordList;
+    QPushButton* cards[GRID_SIZE][GRID_SIZE];
 
     // Utility methods
     bool isMyTurn() const;
