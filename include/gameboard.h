@@ -10,6 +10,7 @@
 #include "spymasterhint.h"
 #include "operatorguess.h"
 #include "transition.h"
+#include "chatbox.h"
 
 class GameBoard : public QWidget {
     Q_OBJECT
@@ -103,6 +104,10 @@ private:
 
     QLabel* redScoreLabel;
     QLabel* blueScoreLabel;
+
+    ChatBox* chatBox;
+    QString currentPlayerName;
+    ChatBox::Team currentPlayerTeam;
 };
 
 #endif // GAMEBOARD_H
