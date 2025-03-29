@@ -370,6 +370,8 @@ void MultiBoard::setupBoard()
 
 void MultiBoard::checkGameEnd()
 {
+    users = User::instance();
+
     // Implement game end checks
     int redRemaining = 0;
     int blueRemaining = 0;
@@ -383,8 +385,23 @@ void MultiBoard::checkGameEnd()
         }
     }
     
-    if (redRemaining == 0) QMessageBox::information(this, "Game Over", "Red team wins!");
-    if (blueRemaining == 0) QMessageBox::information(this, "Game Over", "Blue team wins!");
+    if (redRemaining == 0) {
+        if (m_currentRole == "red_spymaster" || m_currentRole == "red_operative") {
+            users->won(m_currentUsername);
+        } else if (m_currentRole == "blue_spymaster" || m_currentRole == "blue_operative") {
+            users->lost(m_currentUsername);
+        }
+        QMessageBox::information(this, "Game Over", "Red team wins!");
+    }
+    
+    if (blueRemaining == 0) {
+        if (m_currentRole == "blue_spymaster" || m_currentRole == "blue_operative") {
+            users->won(m_currentUsername);
+        } else if (m_currentRole == "red_spymaster" || m_currentRole == "red_operative") {
+            users->lost(m_currentUsername);
+        }
+        QMessageBox::information(this, "Game Over", "Blue team wins!");
+    }
 }
 
 void MultiBoard::processMessage(const QString &message)
@@ -634,6 +651,8 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
     btn->setText("");
     btn->setEnabled(false);
 
+    users = User::instance();
+
     // Get current turn information
     QString currentPhase = m_turnOrder[m_currentTurnIndex];
     QStringList parts = currentPhase.split("_");
@@ -660,12 +679,21 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
     // Check if correct guess
     bool correctCard = false;
     if (currentTeam == "red" && gameGrid[row][col].type == RED_TEAM) {
+        if (m_currentRole.toLower() == "red_operative") {
+            users->hit(m_currentUsername);
+        }
         correctCard = true;
     } else if (currentTeam == "blue" && gameGrid[row][col].type == BLUE_TEAM) {
+        if (m_currentRole.toLower() == "blue_operative") {
+            users->hit(m_currentUsername);
+        }
         correctCard = true;
     }
 
     if (!correctCard) {
+        if (m_currentRole.toLower() == "red_operative" || m_currentRole.toLower() == "blue_operative") {
+            users->miss(m_currentUsername);
+        }
         sendToAll(QString("REVEAL:%1,%2").arg(row).arg(col));
         if(broadcast)  {
             sendToAll(QString("TURN_ADVANCE"));
