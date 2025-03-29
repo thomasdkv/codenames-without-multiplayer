@@ -10,6 +10,7 @@
 MultiMain::MultiMain(QWidget *parent)
     : QWidget(parent)
 {
+    this->setFixedSize(1000, 600);
     // Set background style
     this->setStyleSheet(
         "background-image: url(:/images/menu-background.png);"
