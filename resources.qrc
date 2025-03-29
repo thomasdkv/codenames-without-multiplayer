@@ -3,5 +3,6 @@
     <qresource>
         <file>resources/wordlist-eng.txt</file>
         <file>images/menu-background.png</file>
+        <file>resources/profile.json</file>
     </qresource>
 </RCC>

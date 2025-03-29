@@ -5,6 +5,13 @@
 #include <QWebSocketServer>
 #include <QWebSocket>
 #include <QListWidget>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QInputDialog>
+#include <QMessageBox>
+#include <QNetworkInterface>
+#include <QLoggingCategory>
 
 class MultiPregame : public QWidget {
     Q_OBJECT

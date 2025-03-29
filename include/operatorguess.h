@@ -16,6 +16,8 @@ public:
     explicit OperatorGuess(QWidget* parent = nullptr);
     ~OperatorGuess();
 
+    void reset();
+
 signals:
     void guessSubmitted();
 

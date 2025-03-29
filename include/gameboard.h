@@ -20,6 +20,15 @@ public:
                       QWidget* parent = nullptr);
     ~GameBoard();
 
+    void setRedSpyMasterName(const QString& name);
+    void setRedOperativeName(const QString& name);
+    void setBlueSpyMasterName(const QString& name);
+    void setBlueOperativeName(const QString& name);
+    void updateTeamLabels();
+
+signals:
+    void gameEnded();
+
 public slots:
     void show();
     void displayHint(const QString& hint, int number);
@@ -33,6 +42,12 @@ private:
     void onCardClicked(int row, int col);
     void onContinueClicked();
     void showTransition();
+
+    void updateScores();
+    void checkGameEnd();
+    void endGame(const QString& message);
+
+    void resetGame();
 
     enum CardType {
         RED_TEAM,
@@ -55,6 +70,12 @@ private:
     };
 
     int currentTurn;
+    int redCardsRemaining;
+    int blueCardsRemaining;
+
+    int maxGuesses=0;
+    int currentGuesses=0;
+
     QString redSpyMasterName;
     QString redOperativeName;
     QString blueSpyMasterName;
@@ -79,6 +100,9 @@ private:
     QString correspondingNumber;
 
     Transition* transition;
+
+    QLabel* redScoreLabel;
+    QLabel* blueScoreLabel;
 };
 
 #endif // GAMEBOARD_H

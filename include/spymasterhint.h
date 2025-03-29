@@ -16,6 +16,8 @@ class SpymasterHint : public QWidget {
   explicit SpymasterHint(QWidget* parent = nullptr);
   ~SpymasterHint();
 
+  void reset();
+
  signals:
   void hintSubmitted(const QString& hint, const int number);
 

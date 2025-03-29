@@ -1,0 +1,29 @@
+{
+  "abc": {
+      "user_name": "abc",
+      "statistics": {
+          "games_played": 1,
+          "games_win": 0,
+          "guess_total": 10,
+          "guess_hit": 2
+      }
+  },
+  "def": {
+      "user_name": "def",
+      "statistics": {
+        "games_played": 1,
+        "games_win": 0,
+        "guess_total": 10,
+        "guess_hit": 2
+    }
+  },
+  "ghi": {
+      "user_name": "ghi",
+      "statistics": {
+        "games_played": 1,
+        "games_win": 0,
+        "guess_total": 10,
+        "guess_hit": 2
+    }
+  }
+}
