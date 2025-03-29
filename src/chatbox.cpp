@@ -5,6 +5,7 @@ ChatBox::ChatBox(const QString& playerName, Team team, QWidget* parent)
     // Set up the layout and UI
     QVBoxLayout* layout = new QVBoxLayout(this);
     chatDisplay = new QTextEdit(this);
+    chatDisplay->document()->setDocumentMargin(0);
     chatDisplay->setReadOnly(true);
     layout->addWidget(chatDisplay);
 
@@ -28,18 +29,51 @@ ChatBox::~ChatBox() {
 
 void ChatBox::addSystemMessage(const QString& message, Team team) {
     QString nameColor = (team == BLUE_TEAM) ? "blue" : "red";
-    QString messageBackgroundColor = (team == BLUE_TEAM) ? "rgba(0, 0, 255, 0.2)" : "rgba(255, 0, 0, 0.2)";
-
-    // Format the system message with the appropriate color
-    QString formattedMessage = "<span style='color:" + nameColor + "; background-color:" + messageBackgroundColor + 
-        "; padding: 2px; border-radius: 5px;'>";
-    formattedMessage += message + "</span>";
-
-    chatDisplay->append(formattedMessage);
+    QColor bgColor = (team == BLUE_TEAM) ? QColor(103, 103, 255, 51) : QColor(255, 103, 103, 51);
+    
+    // Create a new text cursor at the end of the document to insert the message
+    QTextCursor cursor = chatDisplay->textCursor();
+    cursor.movePosition(QTextCursor::End);
+    
+    // Create a text block format with team background color
+    QTextBlockFormat blockFormat;
+    blockFormat.setBackground(bgColor);
+    blockFormat.setBottomMargin(2);
+    blockFormat.setTopMargin(0); 
+    
+    // Check if this is the first message
+    if (chatDisplay->document()->isEmpty()) {
+        cursor.setBlockFormat(blockFormat);
+    } else {
+        // Insert a new block with this format
+        cursor.insertBlock(blockFormat);
+    }
+    
+    // Style the text with the team color and bold font, then insert the message
+    QTextCharFormat charFormat;
+    charFormat.setForeground(QColor(nameColor));
+    charFormat.setFontWeight(QFont::Bold);
+    cursor.insertText(message, charFormat);
+    chatDisplay->setTextCursor(cursor);
+    chatDisplay->ensureCursorVisible();
 }
 
 void ChatBox::addPlayerMessage(const QString& playerName, const QString& message) {
-    chatDisplay->append("<b>&lt;" + playerName + "&gt;</b> " + message);
+    // Create clean HTML-formatted message
+    QString formattedMessage = QString("<b>&lt;%1&gt;</b> %2")
+                              .arg(playerName)
+                              .arg(message.toHtmlEscaped());
+    chatDisplay->append(formattedMessage);
+
+    // Create a new text cursor at the end of the document to insert the message
+    QTextCursor cursor = chatDisplay->textCursor();
+    cursor.movePosition(QTextCursor::End);
+
+    // Create a text block format with bottom margin
+    QTextBlockFormat blockFormat;
+    blockFormat.setBottomMargin(2); 
+    cursor.setBlockFormat(blockFormat);
+    chatDisplay->setTextCursor(cursor);
 }
 
 void ChatBox::sendMessage() {
