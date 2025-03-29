@@ -113,18 +113,62 @@ void MultiMain::showMainWindow() {
 }
 
 void MultiMain::onCreateRoomClicked() {
-    bool ok;
-    QString username = QInputDialog::getText(this, "Username", 
-        "Enter your username:", QLineEdit::Normal, "", &ok);
-    if(!ok || username.isEmpty()) return;
-
-    m_server = new QWebSocketServer("Game Server", QWebSocketServer::NonSecureMode, this);
+    // Load usernames from the JSON file
+    User* user = User::instance();
+    QJsonObject jsonData = user->loadJsonFile();
     
-    if (m_server->listen(QHostAddress::AnyIPv4, 12345)) {
-        emit enterPregameAsHost(m_server, username);
-        this->hide();
+    QStringList usernames;
+    QJsonObject::const_iterator it = jsonData.constBegin();
+    while (it != jsonData.constEnd()) {
+        usernames.append(it.key());  // Extract username keys
+        ++it;
+    }
+
+    // If there are no usernames, show a message and return
+    if (usernames.isEmpty()) {
+        QMessageBox::warning(this, "No Users", "No user profiles found. Please create an account first.");
+        return;
+    }
+
+    // Create a dialog for selecting a username
+    QDialog dialog(this);
+    dialog.setWindowTitle("Select Username");
+
+    QVBoxLayout layout(&dialog);
+    QLabel label("Select your username:");
+    QComboBox comboBox;
+    QHBoxLayout buttonLayout;
+    QPushButton okButton("OK");
+    QPushButton cancelButton("Cancel");
+
+    // Add widgets to layouts
+    layout.addWidget(&label);
+    layout.addWidget(&comboBox);
+    buttonLayout.addWidget(&okButton);
+    buttonLayout.addWidget(&cancelButton);
+    layout.addLayout(&buttonLayout);
+
+    // Populate the combo box with usernames
+    comboBox.addItems(usernames);
+
+    // Connect buttons to dialog actions
+    connect(&okButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    connect(&cancelButton, &QPushButton::clicked, &dialog, &QDialog::reject);
+
+    // Execute dialog
+    if (dialog.exec() == QDialog::Accepted) {
+        QString username = comboBox.currentText();
+        if (username.isEmpty()) return;
+
+        m_server = new QWebSocketServer("Game Server", QWebSocketServer::NonSecureMode, this);
+
+        if (m_server->listen(QHostAddress::AnyIPv4, 12345)) {
+            emit enterPregameAsHost(m_server, username);
+            this->hide();
+        }
     }
 }
+
 
 void MultiMain::onNewConnection() {
     QWebSocket* client = m_server->nextPendingConnection();

@@ -21,6 +21,7 @@ class User;
 class CreateAccountWindow;
 class StatisticsWindow;
 class Tutorial;
+class MultiMain;
 
 class MainWindow : public QMainWindow {
   Q_OBJECT

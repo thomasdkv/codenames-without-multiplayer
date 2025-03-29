@@ -9,6 +9,9 @@
 #include <QWebSocketServer>
 #include <QWebSocket>
 #include <QMap>
+#include <QComboBox>
+
+#include "user.h"
 
 class MultiMain : public QWidget
 {
