@@ -506,12 +506,23 @@ void GameBoard::updateScores() {
 }
 
 void GameBoard::checkGameEnd() {
+    users = User::instance();
     if (redCardsRemaining == 0) {
+        users->won(redSpyMasterName);
+        users->won(redOperativeName);
+        users->lost(blueSpyMasterName);
+        users->lost(blueOperativeName);
         endGame("Red Team Wins!");
+
         return;
     }
     if (blueCardsRemaining == 0) {
+        users->won(blueSpyMasterName);
+        users->won(blueOperativeName);
+        users->lost(redSpyMasterName);
+        users->lost(redOperativeName);
         endGame("Blue Team Wins!");
+        
         return;
     }
 
