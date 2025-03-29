@@ -305,6 +305,7 @@ void GameBoard::onCardClicked(int row, int col) {
                     cards[i][j]->setEnabled(false);
                 }
             }
+            chatBox->limitReachedMessage();
             operatorGuess->setVisible(false);
             nextTurn();
             showTransition();

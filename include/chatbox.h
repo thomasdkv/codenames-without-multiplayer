@@ -21,6 +21,7 @@ public:
     void addPlayerMessage(const QString& playerName, const QString& message);
     void setPlayerName(const QString& name);
     void clearChat();
+    void limitReachedMessage();
 
 public slots:
     void sendMessage();

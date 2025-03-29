@@ -97,3 +97,19 @@ void ChatBox::clearChat() {
     // Clear the chat display
     chatDisplay->clear();
 }
+
+void ChatBox::limitReachedMessage() {
+    // Create clean HTML-formatted message
+    QString formattedMessage = QString("<b>Guess Limit Reached</b>");
+    chatDisplay->append(formattedMessage);
+
+    // Create a new text cursor at the end of the document to insert the message
+    QTextCursor cursor = chatDisplay->textCursor();
+    cursor.movePosition(QTextCursor::End);
+
+    // Create a text block format with bottom margin
+    QTextBlockFormat blockFormat;
+    blockFormat.setBottomMargin(2); 
+    cursor.setBlockFormat(blockFormat);
+    chatDisplay->setTextCursor(cursor);
+}
