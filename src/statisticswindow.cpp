@@ -170,5 +170,6 @@ void StatisticsWindow::goBackToMain() {
 
 void StatisticsWindow::show() {
   QWidget::show();
+  populateDropDown();
   qDebug() << "Statistics shown";
 }
