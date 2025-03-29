@@ -255,18 +255,40 @@ void GameBoard::onCardClicked(int row, int col) {
     cards[row][col]->setText("");  // Clear the text to show the card is revealed
     cards[row][col]->setEnabled(false);
 
+    users = User::instance();
+
     // Always reveal the card's true color, regardless of whether it's correct
     switch (gameGrid[row][col].type) {
         case RED_TEAM:
+            if (currentTurn == RED_OP) {
+                users->hit(redOperativeName);
+            } else if (currentTurn == BLUE_OP) {
+                users->miss(blueOperativeName);
+            }
             cards[row][col]->setStyleSheet("background-color: #ff9999; color: black");
             break;
         case BLUE_TEAM:
+            if (currentTurn == BLUE_OP) {
+                users->hit(blueOperativeName);
+            } else if (currentTurn == RED_OP) {
+                users->miss(redOperativeName);
+            }
             cards[row][col]->setStyleSheet("background-color: #9999ff; color: black");
             break;
         case NEUTRAL:
+            if (currentTurn == RED_OP) {
+                users->miss(redOperativeName);
+            } else if (currentTurn == BLUE_OP) {
+                users->miss(blueOperativeName);
+            }
             cards[row][col]->setStyleSheet("background-color: #f0f0f0; color: black");
             break;
         case ASSASSIN:
+            if (currentTurn == RED_OP) {
+                users->miss(redOperativeName);
+            } else if (currentTurn == BLUE_OP) {
+                users->miss(blueOperativeName);
+            }
             cards[row][col]->setStyleSheet("background-color: #333333; color: white");
             break;
     }
@@ -530,8 +552,18 @@ void GameBoard::checkGameEnd() {
         for (int j = 0; j < GRID_SIZE; ++j) {
             if (gameGrid[i][j].revealed && gameGrid[i][j].type == ASSASSIN) {
                 if (currentTurn == RED_OP) {
+                    users->won(blueSpyMasterName);
+                    users->won(blueOperativeName);
+                    users->lost(redSpyMasterName);
+                    users->lost(redOperativeName);
+
                     endGame("Blue Team Wins! Red Team hit the Assassin card.");
                 } else if (currentTurn == BLUE_OP) {
+                    users->won(redSpyMasterName);
+                    users->won(redOperativeName);
+                    users->lost(blueSpyMasterName);
+                    users->lost(blueOperativeName);
+
                     endGame("Red Team Wins! Blue Team hit the Assassin card.");
                 }
                 return;
