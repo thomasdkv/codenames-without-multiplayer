@@ -49,7 +49,6 @@ private:
     QPushButton *createRoomButton;
     QPushButton *joinRoomButton;
     QPushButton *backButton;
-    QListWidget *lobbyList;
 
     // Lobby management
     void updateLobbyList();

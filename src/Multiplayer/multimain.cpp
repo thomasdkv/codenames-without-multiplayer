@@ -25,16 +25,7 @@ MultiMain::MultiMain(QWidget *parent)
     titleLabel->setAlignment(Qt::AlignCenter);
     titleLabel->setStyleSheet("font-weight: bold; font-size: 50px;");
 
-    // Lobby list
-    lobbyList = new QListWidget(this);
-    lobbyList->setFixedSize(300, 200);
-    lobbyList->setStyleSheet(
-        "background: rgba(255, 255, 255, 150);"
-        "font-size: 16px;"
-        "border-radius: 10px;"
-        "padding: 5px;"
-    );
-
+   
     // Button styling
     QString buttonStyles = "QPushButton {"
         "   background-color: rgb(65, 42, 213);"
@@ -72,7 +63,6 @@ MultiMain::MultiMain(QWidget *parent)
     layout->addWidget(titleLabel);
     layout->addWidget(createRoomButton);
     layout->addWidget(joinRoomButton);
-    layout->addWidget(lobbyList);
     layout->addWidget(backButton);
 
     connect(backButton, &QPushButton::clicked, this, &MultiMain::openMainWindow);
@@ -143,8 +133,7 @@ void MultiMain::onNewConnection() {
             if(message.startsWith("USERNAME:")) {
                 QString username = message.mid(9);
                 m_usernames[client] = username;
-                updateLobbyList();
-                sendLobbyListToAll();
+              
             }
             else {
                 processTextMessage(message);
@@ -159,30 +148,12 @@ void MultiMain::socketDisconnected() {
     if(QWebSocket* client = qobject_cast<QWebSocket*>(sender())) {
         m_clients.removeAll(client);
         m_usernames.remove(client);
-        updateLobbyList();
-        sendLobbyListToAll();
+    
         client->deleteLater();
     }
 }
 
-void MultiMain::updateLobbyList() {
-    lobbyList->clear();
-    lobbyList->addItem("Host: You");
-    for(const QString& user : m_usernames.values()) {
-        lobbyList->addItem("Player: " + user);
-    }
-}
 
-void MultiMain::sendLobbyListToAll() {
-    QStringList users;
-    for(const QString& user : m_usernames.values()) {
-        users << user;
-    }
-    QString message = "LOBBY_UPDATE:" + users.join(",");
-    for(QWebSocket* client : m_clients) {
-        client->sendTextMessage(message);
-    }
-}
 
 void MultiMain::onJoinRoomClicked() {
     bool ok;
@@ -215,19 +186,7 @@ void MultiMain::onJoinRoomClicked() {
 
     connect(m_clientSocket, &QWebSocket::disconnected, this, &MultiMain::onDisconnected);
     
-    connect(m_clientSocket, &QWebSocket::textMessageReceived,
-        this, [this](const QString& message) {
-            if(message.startsWith("LOBBY_UPDATE:")) {
-                lobbyList->clear();
-                QStringList users = message.mid(13).split(",");
-                lobbyList->addItem("Host: ???");
-                for(const QString& user : users) {
-                    lobbyList->addItem("Player: " + user);
-                }
-            }
-           
-        });
-
+   
     m_clientSocket->open(QUrl(QString("ws://%1:%2").arg(host).arg(port)));
 }
 
@@ -238,7 +197,6 @@ void MultiMain::onConnected() {
 void MultiMain::onDisconnected() {
     QMessageBox::warning(this, "Disconnected", "Lost connection to room");
     joinRoomButton->setEnabled(true);
-    lobbyList->clear();
 }
 
 void MultiMain::processTextMessage(QString message) {

@@ -92,16 +92,21 @@ private:
     void sendInitialGameState();
     void loadWordsFromFile();
     void generateGameGrid();
+    void checkGameEnd();
     
-    void revealTile(int index, bool broadcast = true);
+    void revealTile(int row, int col, bool broadcast = true);
     void advanceTurn();
+    void advanceTurnSpymaster(const QString& hint, int number);
     void updateTurnDisplay();
     void sendToAll(const QString& message);
+    void displayHint(const QString& hint, int number);
 
     static const int GRID_SIZE = 5;
     Card gameGrid[GRID_SIZE][GRID_SIZE];
     QStringList wordList;
     QPushButton* cards[GRID_SIZE][GRID_SIZE];
+    QLabel* currentHint;
+    QString correspondingNumber;
 
     // Utility methods
     bool isMyTurn() const;
