@@ -108,9 +108,11 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   // Connect signal from PreGame to show MainWindow when back button is clicked
   connect(preGameWindow, &PreGame::backToMainWindow, this,
           &MainWindow::showMainWindow);
-
-
    multiMain = new MultiMain();
+  // Connect the Multiplayer window
+    connect(multiMain, &MultiMain::backToMainWindow, this,
+          &MainWindow::showMainWindow);
+
   // Connect button to open Multiplayer window
   connect(onlinePlayButton, &QPushButton::clicked, this,
           &MainWindow::openOnlineGame);
