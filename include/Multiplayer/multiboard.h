@@ -4,6 +4,7 @@
 
 #include "../spymasterhint.h"
 #include "../operatorguess.h"
+#include "user.h"
 #include <QWidget>
 #include <QWebSocketServer>
 #include <QWebSocket>
@@ -62,6 +63,8 @@ private:
     QWebSocketServer* m_server;
     QList<QWebSocket*> m_clients;
     QWebSocket* m_clientSocket;
+
+    User* users;
 
     // Player information
     QHash<QString, QString> m_playerRoles;
