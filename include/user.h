@@ -16,9 +16,7 @@
 #include <QWidget>
 
 #include "createaccountwindow.h"
-#include "mainwindow.h"
 
-class MainWindow;
 class CreateAccountWindow;
 class User : public QWidget {
   Q_OBJECT
@@ -50,6 +48,9 @@ class User : public QWidget {
   float getHitRate(const QString& username);
 
   void renameUser(const QString& oldUsername, const QString& newUsername);
+
+  void won(const QString& username);
+  void lost(const QString& username);
 
   QJsonObject loadJsonFile();  // Function to load JSON data
 

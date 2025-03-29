@@ -101,7 +101,7 @@ PreGame::~PreGame() {
 
 void PreGame::populateUserDropdowns() {
   QJsonObject json = users->loadJsonFile();
-  QStringList usernames = json.keys();
+  usernames = json.keys();
 
   redTeamSpyMasterComboBox->clear();
   redTeamSpyMasterComboBox->addItems(usernames);
@@ -132,6 +132,19 @@ void PreGame::startGame() {
   QString redOperative = redTeamOperativeComboBox->currentText();
   QString blueSpyMaster = blueTeamSpyMasterComboBox->currentText();
   QString blueOperative = blueTeamOperativeComboBox->currentText();
+
+  QStringList selectedUsernames = {
+    redSpyMaster,
+    redOperative,
+    blueSpyMaster,
+    blueOperative
+  };
+
+  QSet<QString> uniqueUsernames(selectedUsernames.begin(), selectedUsernames.end());
+  if (uniqueUsernames.size() < selectedUsernames.size()) {
+    QMessageBox::critical(this, "Error", "Duplicate usernames are not allowed!");
+    return;
+  }
 
   game->addPlayer(Player(redSpyMaster, ROLE::SPYMASTER, TEAM::RED));
   game->addPlayer(Player(redOperative, ROLE::OPERATIVE, TEAM::RED));

@@ -11,6 +11,7 @@
 #include "operatorguess.h"
 #include "transition.h"
 #include "chatbox.h"
+#include "user.h"
 
 class GameBoard : public QWidget {
     Q_OBJECT
@@ -108,6 +109,7 @@ private:
     ChatBox* chatBox;
     QString currentPlayerName;
     ChatBox::Team currentPlayerTeam;
+    User* users;
 };
 
 #endif // GAMEBOARD_H

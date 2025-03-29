@@ -976,3 +976,12 @@ void User::renameUser(const QString& oldUsername, const QString& newUsername) {
   qDebug() << "User renamed from" << oldUsername << "to" << newUsername;
   jsonContentLabel->setText("Username successfully changed.");
 }
+
+void User::won(const QString& username) {
+  updateGamesPlayed(username, getGamesPlayed(username) + 1);
+  updateWins(username, getWins(username) + 1);
+}
+
+void User::lost(const QString& username) {
+  updateGamesPlayed(username, getGamesPlayed(username) + 1);
+}

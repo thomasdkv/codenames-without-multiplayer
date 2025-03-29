@@ -35,6 +35,7 @@ class PreGame : public QWidget {
 
  private:
   void populateUserDropdowns();
+  void validateUniqueSelection();
 
  private slots:
   void goBackToMain();  // Slot to handle back button click
@@ -51,6 +52,8 @@ class PreGame : public QWidget {
   Game* game;
 
   User* users;
+
+  QStringList usernames;
 
   CreateAccountWindow* createAccountWindow;
 
