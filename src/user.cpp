@@ -985,3 +985,12 @@ void User::won(const QString& username) {
 void User::lost(const QString& username) {
   updateGamesPlayed(username, getGamesPlayed(username) + 1);
 }
+
+void User::hit(const QString& username) {
+  updateGuessTotal(username, getGuessTotal(username) + 1);
+  updateGuessHit(username, getGuessHit(username) + 1);
+}
+
+void User::miss(const QString& username) {
+  updateGuessTotal(username, getGuessTotal(username) + 1);
+}

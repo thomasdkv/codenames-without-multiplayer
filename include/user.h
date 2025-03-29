@@ -52,6 +52,9 @@ class User : public QWidget {
   void won(const QString& username);
   void lost(const QString& username);
 
+  void hit(const QString& username);
+  void miss(const QString& username);
+
   QJsonObject loadJsonFile();  // Function to load JSON data
 
  public slots:
