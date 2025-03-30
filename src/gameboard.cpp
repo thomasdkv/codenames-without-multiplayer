@@ -59,7 +59,7 @@ void GameBoard::updateTeamLabels() {
 }
 
 void GameBoard::loadWordsFromFile() {
-    QFile file(":/resources/wordlist-eng.txt");
+    QFile file("resources/wordlist-eng.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "failed to open wordlist-eng.text file, using fallback";
         // Fallback word list if file not found
