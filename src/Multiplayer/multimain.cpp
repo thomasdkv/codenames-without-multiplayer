@@ -7,11 +7,23 @@
 #include <QInputDialog>
 #include <QNetworkInterface>
 #include <QMessageBox>
+#include <QScreen>
+#include <QGuiApplication>
 
 MultiMain::MultiMain(QWidget *parent)
     : QWidget(parent)
 {
-    this->setFixedSize(1000, 600);
+    this->setFixedSize(1000, 800);
+
+    // Center the window on the screen
+    QScreen *screen = QGuiApplication::primaryScreen();
+    if (screen) {
+        QRect screenGeometry = screen->geometry();
+        int x = (screenGeometry.width() - this->width()) / 2;
+        int y = (screenGeometry.height() - this->height()) / 2;
+        this->move(x, y);
+    }
+
     // Set background style
     this->setStyleSheet(
         "background-image: url(:/images/menu-background.png);"

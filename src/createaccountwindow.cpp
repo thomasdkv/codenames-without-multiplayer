@@ -12,7 +12,7 @@ CreateAccountWindow* CreateAccountWindow::getInstance(QWidget* parent) {
 CreateAccountWindow::CreateAccountWindow(QWidget* parent) : QWidget(parent) {
   // Set up the window
   setWindowTitle("Create Account");
-  this->setFixedSize(1000, 600);
+  this->setFixedSize(1000, 800);
 
   // Create the layout
   QVBoxLayout* layout = new QVBoxLayout(this);
