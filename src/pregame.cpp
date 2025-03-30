@@ -1,6 +1,11 @@
 #include "pregame.h"
 #include <QScreen>
 #include <QGuiApplication>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QComboBox>
 
 PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
   this->setFixedSize(1000, 800);
@@ -24,10 +29,6 @@ PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
   redTeamLayout = new QVBoxLayout();
   blueTeamLayout = new QVBoxLayout();
   buttonsLayout = new QHBoxLayout();
-
-  // Create a label
-  label = new QLabel("Welcome to PreGame Screen", this);
-  layout->addWidget(label);
 
   // Create a button to go back to the main window
   backButton = new QPushButton("Back", this);
@@ -53,19 +54,27 @@ PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
           &PreGame::populateUserDropdowns);
 
   // Add labels for the teams
-  redTeamLayout->addWidget(new QLabel("Red"));
-  redTeamLayout->addWidget(new QLabel("Spy Master"));
+  QLabel* redLabel = new QLabel("RED", this);
+  redLabel->setStyleSheet("font-weight: bold; color: red; font-size: 24px;");
+  redLabel->setAlignment(Qt::AlignCenter);
+  redTeamLayout->addWidget(redLabel);
+
+  redTeamLayout->addWidget(new QLabel("Spy Master: ", this));
   redTeamSpyMasterComboBox = new QComboBox();
   redTeamLayout->addWidget(redTeamSpyMasterComboBox);
-  redTeamLayout->addWidget(new QLabel("Operative"));
+  redTeamLayout->addWidget(new QLabel("Operative: ", this));
   redTeamOperativeComboBox = new QComboBox();
   redTeamLayout->addWidget(redTeamOperativeComboBox);
 
-  blueTeamLayout->addWidget(new QLabel("Blue"));
-  blueTeamLayout->addWidget(new QLabel("Spy Master"));
+  QLabel* blueLabel = new QLabel("BLUE", this);
+  blueLabel->setStyleSheet("font-weight: bold; color: blue; font-size: 24px;");
+  blueLabel->setAlignment(Qt::AlignCenter);
+  blueTeamLayout->addWidget(blueLabel);
+
+  blueTeamLayout->addWidget(new QLabel("Spy Master: ", this));
   blueTeamSpyMasterComboBox = new QComboBox();
   blueTeamLayout->addWidget(blueTeamSpyMasterComboBox);
-  blueTeamLayout->addWidget(new QLabel("Operative"));
+  blueTeamLayout->addWidget(new QLabel("Operative: ", this));
   blueTeamOperativeComboBox = new QComboBox();
   blueTeamLayout->addWidget(blueTeamOperativeComboBox);
 
@@ -101,6 +110,25 @@ PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
   gameBoard->hide();
 
   populateUserDropdowns();
+
+  // Button Styling
+  QString buttonStyles =
+      "QPushButton {"
+      "   background-color: rgb(65, 42, 213);"
+      "   color: white;"
+      "   border-radius: 5px;"
+      "   border: 2px solid #412AD5;"
+      "   padding: 5px;"
+      "   font-weight: bold;"
+      "   font-size: 20px;"
+      "}"
+      "QPushButton:hover {"
+      "   background-color: rgb(54, 35, 177);"  // Hover background color
+      "}";
+
+  startButton->setStyleSheet(buttonStyles);
+  backButton->setStyleSheet(buttonStyles);
+  createAccountButton->setStyleSheet(buttonStyles);
 }
 
 PreGame::~PreGame() {

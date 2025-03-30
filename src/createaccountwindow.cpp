@@ -10,41 +10,56 @@ CreateAccountWindow* CreateAccountWindow::getInstance(QWidget* parent) {
 }
 
 CreateAccountWindow::CreateAccountWindow(QWidget* parent) : QWidget(parent) {
+  // Button Styling
+  QString buttonStyles =
+      "QPushButton {"
+      "   background-color: rgb(65, 42, 213);"
+      "   color: white;"
+      "   border-radius: 5px;"
+      "   border: 2px solid #412AD5;"
+      "   padding: 5px;"
+      "   font-weight: bold;"
+      "   font-size: 20px;"
+      "}"
+      "QPushButton:hover {"
+      "   background-color: rgb(54, 35, 177);"  // Hover background color
+      "}";
+
   // Set up the window
   setWindowTitle("Create Account");
   this->setFixedSize(1000, 800);
 
-  // Create the layout
-  QVBoxLayout* layout = new QVBoxLayout(this);
 
-  // Create a horizontal layout for the top area
-  QHBoxLayout* topLayout = new QHBoxLayout();
-
-  // Create the "Back to Main Menu" button
-  QPushButton* backButton = new QPushButton("Back", this);
-  topLayout->addWidget(backButton);
-
-  // Add the "Back" button layout to the main layout
-  layout->addLayout(topLayout);
 
   // Create title label
   QLabel* titleLabel = new QLabel("Create Account", this);
   titleLabel->setAlignment(Qt::AlignCenter);
-  layout->addWidget(titleLabel);
+  titleLabel->setStyleSheet("font-weight: bold; font-size: 24px;");
+  titleLabel->move(415, 300);
 
   // Create username input field
   usernameEdit = new QLineEdit(this);
+  usernameEdit->setFixedSize(400, 30);
+  usernameEdit->move(300, 350);
   usernameEdit->setPlaceholderText("Enter username");
-  layout->addWidget(usernameEdit);
 
   // Create the "Create Account" button
-  createAccountButton = new QPushButton("Create Account", this);
-  layout->addWidget(createAccountButton);
+  createAccountButton = new QPushButton("Create", this);
+  createAccountButton->setFixedSize(200, 50);
+  createAccountButton->move(400, 400);
+  createAccountButton->setStyleSheet(buttonStyles);
+
+  // Create the "Back to Main Menu" button
+  QPushButton* backButton = new QPushButton("Back", this);
+  backButton->setFixedSize(200, 50);
+  backButton->move(400, 475);
+  backButton->setStyleSheet(buttonStyles);
 
   // Create label to show account status
   statusLabel = new QLabel(this);
   statusLabel->setAlignment(Qt::AlignCenter);
-  layout->addWidget(statusLabel);
+  statusLabel->setFixedSize(250, 50);
+  statusLabel->move(375, 250);
 
   // Connect the button click signal to a slot
   connect(createAccountButton, &QPushButton::clicked, this,
@@ -53,9 +68,6 @@ CreateAccountWindow::CreateAccountWindow(QWidget* parent) : QWidget(parent) {
   // // Connect the back button to navigate to the main menu
   connect(backButton, &QPushButton::clicked, this,
           &CreateAccountWindow::goBack);
-
-  // Set the layout for the window
-  setLayout(layout);
 }
 
 void CreateAccountWindow::show() {

@@ -9,11 +9,14 @@
 #include <QMessageBox>
 #include <QScreen>
 #include <QGuiApplication>
+#include <QVBoxLayout>
+#include <QPushButton>
 
 MultiMain::MultiMain(QWidget *parent)
     : QWidget(parent)
 {
     this->setFixedSize(1000, 800);
+
 
     // Center the window on the screen
     QScreen *screen = QGuiApplication::primaryScreen();
@@ -24,19 +27,11 @@ MultiMain::MultiMain(QWidget *parent)
         this->move(x, y);
     }
 
-    // Set background style
-    this->setStyleSheet(
-        "background-image: url(:/images/menu-background.png);"
-        "background-position: center;");
-
-    // Layout for widgets
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setAlignment(Qt::AlignCenter);
-
     // Title label
     titleLabel = new QLabel("C++Names", this);
     titleLabel->setAlignment(Qt::AlignCenter);
-    titleLabel->setStyleSheet("font-weight: bold; font-size: 50px;");
+    titleLabel->setStyleSheet("font-weight: bold; font-size: 50px; text-align: center;");
+    titleLabel->move(375, 100);
 
    QString buttonStyles =
       "QPushButton {"
@@ -69,14 +64,15 @@ MultiMain::MultiMain(QWidget *parent)
     };
 
     createRoomButton = createButton("Create Room");
-    joinRoomButton = createButton("Join Room");
-    backButton = createButton("Back");
+    createRoomButton->move(400, 300);
 
-    // Add widgets to layout
-    layout->addWidget(titleLabel);
-    layout->addWidget(createRoomButton);
-    layout->addWidget(joinRoomButton);
-    layout->addWidget(backButton);
+    joinRoomButton = createButton("Join Room");
+    joinRoomButton->move(400, 375);
+
+    backButton = createButton("Back");
+    backButton->move(400, 450);
+
+
 
     connect(backButton, &QPushButton::clicked, this, &MultiMain::openMainWindow);
     connect(createRoomButton, &QPushButton::clicked, this, &MultiMain::onCreateRoomClicked);

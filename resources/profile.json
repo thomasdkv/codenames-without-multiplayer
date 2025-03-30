@@ -8,6 +8,24 @@
         },
         "user_name": "Ashton"
     },
+    "Goon Lord": {
+        "statistics": {
+            "games_played": 0,
+            "games_win": 0,
+            "guess_hit": 0,
+            "guess_total": 0
+        },
+        "user_name": "Goon Lord"
+    },
+    "GoonLord": {
+        "statistics": {
+            "games_played": 0,
+            "games_win": 0,
+            "guess_hit": 0,
+            "guess_total": 0
+        },
+        "user_name": "GoonLord"
+    },
     "blazefury": {
         "statistics": {
             "games_played": 120,
@@ -34,6 +52,15 @@
             "guess_total": 19
         },
         "user_name": "darknova"
+    },
+    "dd": {
+        "statistics": {
+            "games_played": 0,
+            "games_win": 0,
+            "guess_hit": 0,
+            "guess_total": 0
+        },
+        "user_name": "dd"
     },
     "echofox": {
         "statistics": {
