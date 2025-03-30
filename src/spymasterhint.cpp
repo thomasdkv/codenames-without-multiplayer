@@ -52,6 +52,13 @@ SpymasterHint::~SpymasterHint() {
     // Deconstructor for the SpymasterHint class, does nothing
 }
 
+void SpymasterHint::reset() {
+    hintLineEdit->clear();
+    numberSpinBox->clear();
+    numberSpinBox->setValue(1);
+    updateButtonClickable(); // This will disable giveClueButton since hintLineEdit is empty
+}
+
 // Submit the hint to the game board
 void SpymasterHint::submitHint() {
     QString hint = hintLineEdit->text();
@@ -72,11 +79,4 @@ void SpymasterHint::textToUppercase(const QString& text) {
     if (text != text.toUpper()) {
         hintLineEdit->setText(text.toUpper());
     }
-}
-
-void SpymasterHint::reset() {
-    hintLineEdit->clear();
-    numberSpinBox->clear();
-    numberSpinBox->setValue(1);
-    updateButtonClickable(); // This will disable giveClueButton since hintLineEdit is empty
 }
