@@ -1,12 +1,21 @@
+/**
+ * @file statisticswindow.cpp
+ * @author Team 9 - UWO CS 3307
+ * @brief The screen to show the user's statistics
+ * @version 0.1
+ * @date 2025-03-30
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
+
 #include "statisticswindow.h"
-#include <QScreen>
-#include <QGuiApplication>
 
 StatisticsWindow::StatisticsWindow(QWidget* parent) : QWidget(parent) {
   this->setFixedSize(1000, 800);
 
   // Center the window on the screen
-  QScreen *screen = QGuiApplication::primaryScreen();
+  QScreen* screen = QGuiApplication::primaryScreen();
   if (screen) {
     QRect screenGeometry = screen->geometry();
     int x = (screenGeometry.width() - this->width()) / 2;
