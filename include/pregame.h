@@ -11,7 +11,6 @@
 #include <QWidget>
 
 #include "createaccountwindow.h"
-#include "game.h"
 #include "gameboard.h"
 #include "user.h"
 
@@ -49,8 +48,6 @@ class PreGame : public QWidget {
   void update();
 
  private:
-  Game* game;
-
   User* users;
 
   QStringList usernames;
