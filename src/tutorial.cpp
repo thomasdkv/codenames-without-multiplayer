@@ -7,11 +7,22 @@
 #include <QFile>
 #include <QPushButton>
 #include <QGraphicsDropShadowEffect>
+#include <QScreen>
+#include <QGuiApplication>
 
 Tutorial::Tutorial(QWidget *parent)
     : QMainWindow(parent), clickCount(0) {
     setWindowTitle("Tutorial");
     setFixedSize(1000, 800);
+
+    // Center the window on the screen
+    QScreen *screen = QGuiApplication::primaryScreen();
+    if (screen) {
+        QRect screenGeometry = screen->geometry();
+        int x = (screenGeometry.width() - this->width()) / 2;
+        int y = (screenGeometry.height() - this->height()) / 2;
+        this->move(x, y);
+    }
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);

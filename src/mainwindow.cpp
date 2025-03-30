@@ -4,8 +4,21 @@
 #include <QGraphicsDropShadowEffect>
 #include <QPixmap>
 #include <QPalette>
+#include <QScreen>
+#include <QGuiApplication>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
+  this->setFixedSize(1000, 800); // Set fixed size for MainWindow
+
+  // Center the window on the screen
+  QScreen *screen = QGuiApplication::primaryScreen();
+  if (screen) {
+    QRect screenGeometry = screen->geometry();
+    int x = (screenGeometry.width() - this->width()) / 2;
+    int y = (screenGeometry.height() - this->height()) / 2;
+    this->move(x, y);
+  }
+
   // Create central widget and layout
   centralWidget = new QWidget(this);
 
@@ -98,8 +111,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   tutorialButton->setStyleSheet(buttonStyles);
   statsButton->setStyleSheet(buttonStyles);
   createAccountButton->setStyleSheet(buttonStyles);
-
-
 
   // Create the PreGame window
   preGameWindow = new PreGame();

@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
   MainWindow game; // Create an instance of the application
   game.setWindowTitle("Codenames"); // Set the window title
   
-  game.setFixedSize(1000, 600);
+  game.setFixedSize(1000, 800);
 
   game.show(); // Display the game window
 
