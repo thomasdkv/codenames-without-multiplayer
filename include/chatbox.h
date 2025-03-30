@@ -25,6 +25,8 @@ public:
 
 public slots:
     void sendMessage();
+signals:
+    void massSend(const QString& playerName, const QString& message);
 
 private:
     Team team;

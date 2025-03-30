@@ -71,17 +71,14 @@ MultiBoard::MultiBoard(bool isHost, QWebSocketServer *server, QList<QWebSocket *
     }
     qDebug() << "Sent Game State";
     hint = new SpymasterHint(this);
-    mainLayout->addWidget(hint);
+    gameVerticalLayout->addWidget(hint);
     hint->hide();
 
     guess = new OperatorGuess(this);
-    mainLayout->addWidget(guess);
+    gameVerticalLayout->addWidget(guess);
     guess->hide();
 
-    currentHint = new QLabel("Current hint: ");
-    currentHint->setAlignment(Qt::AlignCenter);
-    currentHint->setStyleSheet("font-weight: bold; font-size: 20px; color: black; ");
-    mainLayout->insertWidget(2, currentHint);
+    
 
     connect(hint, &SpymasterHint::hintSubmitted, this, &MultiBoard::advanceTurnSpymaster);
     connect(guess, &OperatorGuess::guessSubmitted, this, &MultiBoard::advanceTurn);
@@ -102,6 +99,12 @@ void MultiBoard::displayHint(const QString &hint, int number)
         correspondingNumber = QString::number(number);
     }
     currentHint->setText("Current hint: " + hint + " (" + correspondingNumber + ")"); // Update the hint
+     // Add the hint to the chat box
+    QString currSpymasterName = (m_currentTurnIndex == 0) ? "Red Spymaster" : "Blue Spymaster";
+    QString teamColor = (m_currentTurnIndex == 0) ? "Red" : "Blue";
+    QString chatNumber = (number == 0) ? "∞" : QString::number(number);
+    QString hintMessage = currSpymasterName + " gives clue " + hint + " " + chatNumber;
+    chatBox->addSystemMessage(hintMessage, (m_currentTurnIndex == RED_SPY) ? ChatBox::RED_TEAM : ChatBox::BLUE_TEAM);
 }
 void MultiBoard::handleNewConnection()
 {
@@ -252,10 +255,13 @@ void MultiBoard::sendInitialGameState()
     }
 }
 
-void MultiBoard::setupUI()
-{
-    mainLayout = new QVBoxLayout(this);
-
+void MultiBoard::setupUI() {
+    // Main horizontal layout that will hold grid area and chat box
+    mainLayout = new QHBoxLayout(this);
+    
+    // Create vertical layout for the game elements (left side)
+    gameVerticalLayout = new QVBoxLayout();
+    
     // Player info and turn display
     QHBoxLayout *infoLayout = new QHBoxLayout();
     m_playerInfoLabel = new QLabel(this);
@@ -263,10 +269,41 @@ void MultiBoard::setupUI()
     infoLayout->addWidget(m_playerInfoLabel);
     infoLayout->addStretch();
     infoLayout->addWidget(m_turnLabel);
-    mainLayout->addLayout(infoLayout);
-
+    gameVerticalLayout->addLayout(infoLayout);
+    
+    // Add current hint label between the player info and the grid
+    currentHint = new QLabel("Current hint: ");
+    currentHint->setAlignment(Qt::AlignCenter);
+    currentHint->setStyleSheet("font-weight: bold; font-size: 20px; color: black; ");
+    gameVerticalLayout->addWidget(currentHint);  // Insert it here
+    
+    // Add grid layout to game vertical layout
     m_grid = new QGridLayout();
-    mainLayout->addLayout(m_grid);
+    gameVerticalLayout->addLayout(m_grid);
+    
+    // Add the game vertical layout to the main horizontal layout
+    mainLayout->addLayout(gameVerticalLayout);
+    
+    // Add chat box to the right
+    chatBox = new ChatBox(m_currentUsername, ChatBox::RED_TEAM, this);
+    connect(chatBox, &ChatBox::massSend, this, &MultiBoard::processChatMessage);
+    mainLayout->addWidget(chatBox);
+    
+    // Set spacing and stretch factors
+    mainLayout->setStretch(0, 3);  // Grid takes more space
+    mainLayout->setStretch(1, 1);  // Chat box takes less space
+    mainLayout->setSpacing(20);    // Space between grid and chat
+    
+    setLayout(mainLayout);
+}
+
+void MultiBoard::processChatMessage(const QString& playerName,const QString& message) {
+    if(!m_isHost) {
+        m_clientSocket->sendTextMessage("MESSAGE: " + playerName + " | " + message);
+    }
+    else {
+        sendToAll("MESSAGE: " + playerName + " | " + message);
+    }
 }
 void MultiBoard::setupBoard()
 {
@@ -534,6 +571,13 @@ void MultiBoard::processMessage(const QString &message)
             qDebug() << "Invalid UPDATE_HINT format: " << message;
         }
     }
+    else if (message.startsWith("MESSAGE:")) {
+        QString sender = message.section(':', 1, 1).section('|', 0, 0).trimmed();
+        // Extract message text
+        QString messageText = message.section('|', 1).trimmed();
+        // Add to chat box
+        chatBox->addPlayerMessage(sender, messageText);
+    }
     else if (message.startsWith("END_GAME:"))
     {
         qDebug() << "Received END_GAME message: " << message;
@@ -541,7 +585,7 @@ void MultiBoard::processMessage(const QString &message)
         QMessageBox::warning(this, "Won", "Game Over! " + winMessage);
         emit goBack();
         this->close();
-    }
+    } 
 }
 
 bool MultiBoard::isMyTurn() const
@@ -667,6 +711,10 @@ void MultiBoard::handleTileClick()
         revealTile(row, col, false);
         m_clientSocket->sendTextMessage(QString("REVEAL:%1,%2").arg(row).arg(col));
     }
+    QString currOperativeName = (m_currentTurnIndex == 1) ? "Red Operative" : "Blue Operative";
+    QString teamColor = (m_currentTurnIndex == 1) ? "Red" : "Blue";
+    QString hintMessage = currOperativeName + " taps " + gameGrid[row][col].word;
+    chatBox->addSystemMessage(hintMessage, (m_currentTurnIndex == RED_OP) ? ChatBox::RED_TEAM : ChatBox::BLUE_TEAM);
 }
 
 void MultiBoard::revealTile(int row, int col, bool broadcast)

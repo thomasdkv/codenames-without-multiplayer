@@ -187,6 +187,7 @@ void MultiPregame::onNewConnection() {
         QMessageBox::warning(this, "Too many players", "The maximum number of players has been reached.");
         return;
     }
+
     QWebSocket* client = m_server->nextPendingConnection();
     connect(client, &QWebSocket::textMessageReceived, this, &MultiPregame::processMessage);
     connect(client, &QWebSocket::disconnected, this, &MultiPregame::socketDisconnected);
@@ -255,7 +256,7 @@ void MultiPregame::socketDisconnected() {
 }
 
 void MultiPregame::startGame() {
-   if(m_clients.size() != 3) {
+   /*if(m_clients.size() != 3) {
         QMessageBox::warning(this, "Wrong Amount of Players", "You need 4 players to start the game.");
         return;
     }
@@ -268,7 +269,7 @@ void MultiPregame::startGame() {
             QMessageBox::warning(this, "Role Not Selected", "You need to select a role for each player.");
             return;
         }
-    }
+    }*/
     
     QHash<QString, QString> playerRoles;
     playerRoles[m_usernames[nullptr]] = m_roles[nullptr];

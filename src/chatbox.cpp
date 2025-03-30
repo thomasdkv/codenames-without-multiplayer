@@ -86,7 +86,7 @@ void ChatBox::sendMessage() {
     }
 
     // Multiplayer functionality 
-
+    emit(massSend(playerName, message));
 }
 
 void ChatBox::setPlayerName(const QString& name) {

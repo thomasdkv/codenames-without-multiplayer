@@ -6,6 +6,7 @@
 #include "../operatorguess.h"
 #include "Multiplayer/multimain.h"
 #include "Multiplayer/multipregame.h"
+#include "chatbox.h"
 
 #include "user.h"
 #include <QWidget>
@@ -72,6 +73,8 @@ private:
     QWebSocket* m_clientSocket;
     MultiPregame* m_pregame;
 
+    ChatBox* chatBox;
+
     User* users;
 
     MultiMain* main;
@@ -82,7 +85,8 @@ private:
     QString m_currentRole;
 
     // Game board components
-    QVBoxLayout* mainLayout;
+    QVBoxLayout* gameVerticalLayout;
+    QHBoxLayout* mainLayout;
     QGridLayout* m_grid;
     QLabel* m_playerInfoLabel;
     QLabel* m_turnLabel;
@@ -110,6 +114,7 @@ private:
     void loadWordsFromFile();
     void generateGameGrid();
     void checkGameEnd();
+    void processChatMessage(const QString& playerName,const QString& message);
     
     void revealTile(int row, int col, bool broadcast = true);
     void advanceTurn();
