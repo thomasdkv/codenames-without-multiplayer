@@ -189,7 +189,7 @@ void MultiMain::onNewConnection()
             if(message.startsWith("USERNAME:")) {
                 QString username = message.mid(9);
                 m_usernames[client] = username;
-              
+                m_usernames_list.append(username);
             }
             else {
                 processTextMessage(message);
@@ -205,7 +205,7 @@ void MultiMain::socketDisconnected()
     {
         m_clients.removeAll(client);
         m_usernames.remove(client);
-
+        m_usernames_list.removeOne(m_usernames[client]);
         client->deleteLater();
     }
 }
@@ -266,6 +266,8 @@ void MultiMain::onJoinRoomClicked()
 
     // Connect buttons to dialog actions
     connect(&okButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+
+    // Connect cancel button to close the dialog
     connect(&cancelButton, &QPushButton::clicked, &dialog, &QDialog::reject);
 
     // Execute dialog
@@ -276,11 +278,11 @@ void MultiMain::onJoinRoomClicked()
     if (username.isEmpty())
         return;
 
+    // Proceed with joining the room
     m_username = username;
     m_clientSocket = new QWebSocket;
 
-    connect(m_clientSocket, &QWebSocket::connected, this, [this]()
-            {
+    connect(m_clientSocket, &QWebSocket::connected, this, [this]() {
         m_clientSocket->sendTextMessage("USERNAME:" + m_username);
         joinRoomButton->setEnabled(false); });
 

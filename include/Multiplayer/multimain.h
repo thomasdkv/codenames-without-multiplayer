@@ -45,6 +45,7 @@ private:
     QWebSocket *m_clientSocket = nullptr;
     QList<QWebSocket*> m_clients;
     QMap<QWebSocket*, QString> m_usernames;
+    QList<QString> m_usernames_list;
     QString m_username;
 
     // UI members
