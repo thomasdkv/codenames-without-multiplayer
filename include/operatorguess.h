@@ -81,7 +81,9 @@ private slots:
     void submitGuess();
 
 private:
-    QPushButton* submitGuessButton; /**< Button for submitting a guess */
+
+    /** @brief Button for submitting a guess */
+    QPushButton* submitGuessButton; 
 };
 
 #endif // OPERATORGUESS_H

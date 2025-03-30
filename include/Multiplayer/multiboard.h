@@ -158,45 +158,73 @@ signals:
 
 private:
     // Network setup
-    bool m_isHost;                  /**< Whether this instance is the host */
-    QWebSocketServer* m_server;     /**< The WebSocket server for hosting */
-    QList<QWebSocket*> m_clients;   /**< List of connected client sockets */
-    QWebSocket* m_clientSocket;     /**< This player's client socket */
-    MultiPregame* m_pregame;        /**< Reference to the pre-game setup screen */
+    
+    /** @brief Flag indicating if this instance is the host */
+    bool m_isHost;                 
+    /** @brief The WebSocket server for hosting */
+    QWebSocketServer* m_server;     
+    /** @brief List of connected client sockets */
+    QList<QWebSocket*> m_clients;   
+    /** @brief This player's client socket */
+    QWebSocket* m_clientSocket;     
+    /** @brief Reference to the pre-game setup screen */
+    MultiPregame* m_pregame;        
 
-    ChatBox* chatBox;               /**< Chat interface for player communication */
+    /** @brief Chat interface for player communication */
+    ChatBox* chatBox;               
 
-    User* users;                    /**< User information management */
+    /** @brief User information management */
+    User* users;                    
 
-    MultiMain* main;                /**< Main game interface reference */
+    /** @brief Main game interface reference */
+    MultiMain* main;                
 
     // Player information
-    QHash<QString, QString> m_playerRoles;  /**< Mapping of usernames to roles */
-    QString m_currentUsername;              /**< Current player's username */
-    QString m_currentRole;                  /**< Current player's role */
+    /** @brief Mapping of usernames to roles */
+    QHash<QString, QString> m_playerRoles;  
+    /** @brief Current player's username */
+    QString m_currentUsername;              
+    /** @brief Current player's role */
+    QString m_currentRole;                  
 
     // Game board components
-    QVBoxLayout* gameVerticalLayout;  /**< Vertical layout for the game */
-    QHBoxLayout* mainLayout;          /**< Main horizontal layout */
-    QGridLayout* m_grid;              /**< Grid layout for the game board */
-    QLabel* m_playerInfoLabel;        /**< Label showing player information */
-    QLabel* m_turnLabel;              /**< Label showing current turn */
-    QList<QPushButton*> m_tiles;      /**< List of clickable word tiles */
-    SpymasterHint* hint;              /**< Widget for spymaster to enter hints */
-    OperatorGuess* guess;             /**< Widget for operators to make guesses */
+    /** @brief Vertical layout for the game */
+    QVBoxLayout* gameVerticalLayout;  
+    /** @brief Main horizontal layout */
+    QHBoxLayout* mainLayout;          
+    /** @brief Grid layout for the game board */
+    QGridLayout* m_grid;              
+    /** @brief Label showing player information */
+    QLabel* m_playerInfoLabel;        
+    /** @brief Label showing current turn */
+    QLabel* m_turnLabel;              
+    /** @brief List of clickable word tiles */
+    QList<QPushButton*> m_tiles;      
+    /** @brief Widget for spymaster to enter hints */
+    SpymasterHint* hint;              
+    /** @brief Widget for operators to make guesses */
+    OperatorGuess* guess;             
 
-    QLabel* blueCardText;             /**< Label showing blue cards remaining */
-    QLabel* redCardText;              /**< Label showing red cards remaining */
+    /** @brief Label showing blue cards remaining */
+    QLabel* blueCardText;             
+    /** @brief Label showing red cards remaining */
+    QLabel* redCardText;              
 
     // Game state
-    QStringList m_words;             /**< List of words used in the game */
-    QStringList m_tileColors;        /**< List of card colors/teams */
-    QStringList m_turnOrder;         /**< Order of player turns */
-    int m_currentTurnIndex;          /**< Index of the current turn */
+    /** @brief List of words used in the game */
+    QStringList m_words;             
+    /** @brief List of card colors/teams */
+    QStringList m_tileColors;        
+    /** @brief Order of player turns */
+    QStringList m_turnOrder;         
+    /** @brief Index of the current turn */
+    int m_currentTurnIndex;          
 
     // Cards remaining
-    int redCardsRemaining;           /**< Number of red team cards left */
-    int blueCardsRemaining;          /**< Number of blue team cards left */
+    /** @brief Number of red team cards left */
+    int redCardsRemaining;           
+    /** @brief Number of blue team cards left */
+    int blueCardsRemaining;          
 
     /**
      * @brief Sets up the user interface for the game board.
@@ -374,12 +402,18 @@ private:
      */
     void endGame(const QString& message);
 
-    static const int GRID_SIZE = 5;              /**< Size of the game grid (5x5) */
-    Card gameGrid[GRID_SIZE][GRID_SIZE];         /**< 2D array of game cards */
-    QStringList wordList;                        /**< List of available words */
-    QPushButton* cards[GRID_SIZE][GRID_SIZE];    /**< 2D array of card buttons */
-    QLabel* currentHint;                         /**< Label showing current hint */
-    QString correspondingNumber;                 /**< Number associated with current hint */
+    /** @brief Size of the game grid (5x5) */
+    static const int GRID_SIZE = 5;              
+    /** @brief 2D array of game cards */
+    Card gameGrid[GRID_SIZE][GRID_SIZE];         
+    /** @brief List of available words */
+    QStringList wordList;                        
+    /** @brief 2D array of card buttons */
+    QPushButton* cards[GRID_SIZE][GRID_SIZE];    
+    /** @brief Label showing current hint */
+    QLabel* currentHint;                         
+    /** @brief Number associated with current hint */
+    QString correspondingNumber;                 
 
     /**
      * @brief Checks if it's the current player's turn.

@@ -180,17 +180,26 @@ private slots:
 
 private:
     // Network members
-    QWebSocketServer *m_server = nullptr;     /**< WebSocket server for hosting game rooms */
-    QWebSocket *m_clientSocket = nullptr;     /**< Client WebSocket for joining rooms */
-    QList<QWebSocket*> m_clients;             /**< List of connected client WebSockets */
-    QMap<QWebSocket*, QString> m_usernames;   /**< Mapping of WebSockets to player usernames */
-    QString m_username;                       /**< Current player's username */
+    /** @brief WebSocket server for hosting game rooms */
+    QWebSocketServer *m_server = nullptr;
+    /** @brief Client WebSocket for joining rooms */
+    QWebSocket *m_clientSocket = nullptr;
+    /** @brief List of connected client WebSockets */
+    QList<QWebSocket*> m_clients;
+    /** @brief Mapping of WebSockets to player usernames */
+    QMap<QWebSocket*, QString> m_usernames;
+    /** @brief Current player's username */
+    QString m_username;
 
     // UI members
-    QLabel *titleLabel;             /**< Title label for the multiplayer lobby */
-    QPushButton *createRoomButton;  /**< Button for creating a new game room */
-    QPushButton *joinRoomButton;    /**< Button for joining an existing game room */
-    QPushButton *backButton;        /**< Button for returning to the main window */
+    /** @brief Title label for the multiplayer lobby */
+    QLabel *titleLabel;
+    /** @brief Button for creating a new game room */
+    QPushButton *createRoomButton;
+    /** @brief Button for joining an existing game room */
+    QPushButton *joinRoomButton;
+    /** @brief Button for returning to the main window */
+    QPushButton *backButton;
 
     /**
      * @brief Updates the list of available game lobbies.

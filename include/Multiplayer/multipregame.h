@@ -226,16 +226,25 @@ private:
      */
     void showPregame();
 
-    QWebSocketServer* m_server = nullptr;      /**< WebSocket server for hosting (nullptr for clients) */
-    QWebSocket* m_clientSocket = nullptr;      /**< Client WebSocket connection (nullptr for hosts) */
-    QList<QWebSocket*> m_clients;              /**< List of connected client WebSockets */
-    QMap<QWebSocket*, QString> m_usernames;    /**< Mapping of WebSockets to player usernames */
-    QMap<QWebSocket*, QString> m_roles;        /**< Mapping of WebSockets to player roles */
-    QMap<QWebSocket*, bool> m_checked;         /**< Mapping of WebSockets to player readiness state */
+    /** @brief WebSocket server for hosting (nullptr for clients) */
+    QWebSocketServer* m_server = nullptr;      
+    /** @brief Client WebSocket connection (nullptr for hosts) */
+    QWebSocket* m_clientSocket = nullptr;    
+    /** @brief List of connected client WebSockets */
+    QList<QWebSocket*> m_clients;
+    /** @brief Mapping of WebSockets to player usernames */     
+    QMap<QWebSocket*, QString> m_usernames;   
+    /** @brief Mapping of WebSockets to player roles */
+    QMap<QWebSocket*, QString> m_roles;      
+    /** @brief Mapping of WebSockets to player readiness state */ 
+    QMap<QWebSocket*, bool> m_checked;        
     
-    QListWidget* playerList;                   /**< Widget displaying the list of connected players */
-    QString m_username;                        /**< Current player's username */
-    bool m_isHost;                             /**< Boolean indicating if this instance is the host */
+    /** @brief Widget displaying the list of connected players */
+    QListWidget* playerList;  
+    /** @brief Current player's username */                
+    QString m_username;    
+    /** @brief Boolean indicating if this instance is the host */                    
+    bool m_isHost;                            
 };
 
 #endif // MULTIPREGAME_H
