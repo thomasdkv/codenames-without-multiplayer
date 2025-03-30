@@ -5,6 +5,8 @@
 #include "../spymasterhint.h"
 #include "../operatorguess.h"
 #include "Multiplayer/multimain.h"
+#include "Multiplayer/multipregame.h"
+
 #include "user.h"
 #include <QWidget>
 #include <QWebSocketServer>
@@ -30,7 +32,8 @@ public:
         QWebSocket* clientSocket, 
         const QHash<QString, QString>& playerRoles,
         const QString& currentUsername, 
-        QWidget* parent = nullptr
+        QWidget* parent = nullptr//,
+      //  MultiPregame* pregame = nullptr
     );
     enum CardType {
         RED_TEAM,
@@ -58,12 +61,16 @@ public slots:
     void socketDisconnected();
     void handleNewConnection();
 
+signals:
+    void goBack();
+
 private:
     // Network setup
     bool m_isHost;
     QWebSocketServer* m_server;
     QList<QWebSocket*> m_clients;
     QWebSocket* m_clientSocket;
+    MultiPregame* m_pregame;
 
     User* users;
 

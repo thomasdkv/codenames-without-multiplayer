@@ -28,7 +28,7 @@ signals:
     void enterPregameAsHost(QWebSocketServer* server, const QString& username);
     void enterPregameAsClient(QWebSocket* socket, const QString& username);
 
-private slots:
+public slots:
     void onNewConnection();
     void processMessage(const QString& message);
     void socketDisconnected();
@@ -39,7 +39,7 @@ private:
     void sendLobbyUpdate();
     void handleRoleSelection(const QString& message, QWebSocket* sender);
     void gameStarted(bool isHost, QWebSocketServer* server, const QList<QWebSocket*>& clients, QWebSocket* clientSocket, const QHash<QString, QString>& playerRoles);
-
+    void showPregame();
     QWebSocketServer* m_server = nullptr;
     QWebSocket* m_clientSocket = nullptr;
     QList<QWebSocket*> m_clients;

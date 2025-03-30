@@ -4,7 +4,7 @@
             "games_played": 0,
             "games_win": 0,
             "guess_hit": 2,
-            "guess_total": 6
+            "guess_total": 9
         },
         "user_name": "Ashton"
     },
@@ -13,7 +13,7 @@
             "games_played": 120,
             "games_win": 64,
             "guess_hit": 17,
-            "guess_total": 75
+            "guess_total": 76
         },
         "user_name": "blazefury"
     },
@@ -22,7 +22,7 @@
             "games_played": 87,
             "games_win": 67,
             "guess_hit": 0,
-            "guess_total": 40
+            "guess_total": 50
         },
         "user_name": "cyberwolf"
     },
@@ -31,7 +31,7 @@
             "games_played": 10,
             "games_win": 3,
             "guess_hit": 1,
-            "guess_total": 13
+            "guess_total": 19
         },
         "user_name": "darknova"
     },
@@ -40,7 +40,7 @@
             "games_played": 184,
             "games_win": 176,
             "guess_hit": 41,
-            "guess_total": 69
+            "guess_total": 72
         },
         "user_name": "echofox"
     },
@@ -49,7 +49,7 @@
             "games_played": 174,
             "games_win": 125,
             "guess_hit": 34,
-            "guess_total": 148
+            "guess_total": 149
         },
         "user_name": "frostbyte"
     },

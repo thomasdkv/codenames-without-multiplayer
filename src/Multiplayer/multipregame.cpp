@@ -95,7 +95,16 @@ void MultiPregame::setupUI() {
     // Back button
     QPushButton* backButton = new QPushButton("Back", this);
     connect(backButton, &QPushButton::clicked, [this]() {
+        if(m_isHost) {
+            m_server->close();
+        }
+        else {
+            qDebug() << "Disconnecting from server";
+            m_clientSocket->close();
+            qDebug() << "Disconnected from server";
+        }
         emit backToMultiMain();
+        return;
     });
     layout->addWidget(backButton);
 
@@ -208,12 +217,18 @@ void MultiPregame::startGame() {
     gameStarted(true, m_server, m_clients, nullptr, playerRoles);
 }
 
+void MultiPregame::showPregame() {
+    qDebug() << "showing pregame";
+    this->show();
+    qDebug() << "pregame shown";
+}
+
 void MultiPregame::gameStarted(bool isHost, QWebSocketServer* server, 
                               const QList<QWebSocket*>& clients, QWebSocket* clientSocket,
                               const QHash<QString, QString>& playerRoles) {
     QString currentUsername = m_isHost ? m_usernames[nullptr] : m_username;
     MultiBoard* gameBoard = new MultiBoard(isHost, server, clients, clientSocket, playerRoles, currentUsername);
-    
+    connect(gameBoard, &MultiBoard::goBack, this, &MultiPregame::showPregame);
     // Transfer ownership to MultiBoard
     if (isHost) {
         if (server) {
@@ -232,7 +247,7 @@ void MultiPregame::gameStarted(bool isHost, QWebSocketServer* server,
     }
     
     gameBoard->show();
-    this->close();
+    this->hide();
 }
 
 void MultiPregame::handleRoleSelection(const QString& message, QWebSocket* sender) {

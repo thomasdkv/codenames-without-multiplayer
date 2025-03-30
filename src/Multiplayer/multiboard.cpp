@@ -410,7 +410,7 @@ void MultiBoard::checkGameEnd()
 
 void MultiBoard::processMessage(const QString &message)
 {
-
+    qDebug() << "Received message:" << message;
     if (message.startsWith("TURN_ADVANCE") && m_isHost)
     {
         advanceTurn();
@@ -534,8 +534,10 @@ void MultiBoard::processMessage(const QString &message)
     }
     else if (message.startsWith("END_GAME:"))
     {
-        QString data = message.section(':', 1);
-        endGame(data);
+        QString winMessage = message.section(':', 1);
+        QMessageBox::warning(this, "Won", "Game Over! " + winMessage);
+        emit goBack();
+        this->close();
     }
 }
 
@@ -772,29 +774,53 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
     }
 }
 
-void MultiBoard::endGame(const QString &message)
-{
-    if (m_isHost)
-    {
+void MultiBoard::endGame(const QString &message) {
+    if (!m_isHost) {
+        // Client: Send message and transfer ownership back
+        m_clientSocket->sendTextMessage("END_GAME:" + message);
+        
+        // Disconnect from MultiBoard's handler
+        disconnect(m_clientSocket, &QWebSocket::textMessageReceived, 
+                  this, &MultiBoard::processMessage);
+        
+        // Reparent clientSocket to original owner
+        m_clientSocket->setParent(qobject_cast<QObject*>(this->parent()));
+        
+        // Reconnect to MultiPregame's handler
+        if (this->parent()) {
+            connect(m_clientSocket, &QWebSocket::textMessageReceived,
+                   qobject_cast<MultiPregame*>(this->parent()), 
+                   &MultiPregame::processMessage);
+        }
+
+        // Add this: Force UI transition immediately
+        emit goBack();  // <--- Critical missing line
+        this->deleteLater();
+
+    } else {
+        // Host: Notify all clients and transfer ownership back
         sendToAll(QString("END_GAME:%1").arg(message));
+        
+        if (m_server) {
+            m_server->setParent(qobject_cast<QObject*>(this->parent()));
+            
+            foreach (QWebSocket* client, m_clients) {
+                disconnect(client, &QWebSocket::textMessageReceived,
+                         this, &MultiBoard::processMessage);
+                client->setParent(qobject_cast<QObject*>(this->parent()));
+                
+                if (this->parent()) {
+                    connect(client, &QWebSocket::textMessageReceived,
+                          qobject_cast<MultiPregame*>(this->parent()), 
+                          &MultiPregame::processMessage);
+                }
+            }
+        }
+
+        // Add this: Clean up host UI
+        emit goBack();  // <--- Ensure host UI transitions
+        this->deleteLater();
     }
-
-    // Disconnect from the server
-    if (m_clientSocket && !m_isHost) // Assuming m_socket is your QTcpSocket or QUdpSocket
-    {
-       m_clientSocket->close();
-    } else{
-        m_server->close();
-    }
-
-    QMessageBox::warning(this, "Won", "Game Over! " + message);
-
-    this->close();
-
-
-    // Create a new MultiMain instance after disconnecting
-    main = new MultiMain();
-    main->show();
 }
 void MultiBoard::advanceTurnSpymaster(const QString &hint, int number)
 {

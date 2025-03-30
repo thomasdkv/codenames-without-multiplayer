@@ -99,6 +99,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   statsButton->setStyleSheet(buttonStyles);
   createAccountButton->setStyleSheet(buttonStyles);
 
+
+
   // Create the PreGame window
   preGameWindow = new PreGame();
   // Connect button to open PreGame window

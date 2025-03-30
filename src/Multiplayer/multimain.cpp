@@ -1,5 +1,6 @@
 #include "Multiplayer/multimain.h"
 #include "Multiplayer/multipregame.h"
+#include "Multiplayer/multiboard.h"
 #include <QGraphicsDropShadowEffect>
 #include <QPixmap>
 #include <QPalette>
@@ -74,6 +75,7 @@ MultiMain::MultiMain(QWidget *parent)
     MultiPregame* pregame = new MultiPregame(s, u);
     pregame->show();
     this->hide();
+
     
     connect(pregame, &MultiPregame::backToMultiMain, [this, pregame]() {
         pregame->close();
@@ -81,6 +83,7 @@ MultiMain::MultiMain(QWidget *parent)
         this->show();
     });
 });
+
 
 
     connect(this, &MultiMain::enterPregameAsClient, [this](QWebSocket* s, const QString& u) {
@@ -266,7 +269,6 @@ void MultiMain::onJoinRoomClicked() {
     connect(m_clientSocket, &QWebSocket::connected, this, [this]() {
         m_clientSocket->sendTextMessage("USERNAME:" + m_username);
         joinRoomButton->setEnabled(false);
-        titleLabel->setText("Connected to room!");
     });
 
     connect(m_clientSocket, &QWebSocket::connected, this, [this, username]() {
@@ -285,6 +287,9 @@ void MultiMain::onConnected() {
 }
 
 void MultiMain::onDisconnected() {
+    if(m_clientSocket) {
+        m_clientSocket->close();
+    }
     QMessageBox::warning(this, "Disconnected", "Lost connection to room");
     joinRoomButton->setEnabled(true);
 }
