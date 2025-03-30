@@ -580,6 +580,7 @@ void MultiBoard::processMessage(const QString &message)
     else if (message.startsWith("TURN_UPDATE:"))
     {
         QString newTurn = message.section(':', 1);
+        qDebug() << "TURN_UPDATE: " << newTurn;
         m_currentTurnIndex = m_turnOrder.indexOf(newTurn);
         if (m_currentTurnIndex == -1)
             m_currentTurnIndex = 0;
@@ -739,17 +740,11 @@ void MultiBoard::handleTileClick()
 
     if (gameGrid[row][col].revealed)
         return;
+    
+    revealTile(row, col, true);
 
-    if (m_isHost)
-    {
-
-        revealTile(row, col, true);
-        checkGameEnd();
-    }
-    else
-    {
-        m_clientSocket->sendTextMessage(QString("REVEAL:%1,%2").arg(row).arg(col));
-    }
+    
+   
 }
 
 void MultiBoard::revealTile(int row, int col, bool broadcast)
@@ -758,10 +753,13 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         return;
 
 
-        QString currOperativeName = (m_currentTurnIndex == 1 || m_currentTurnIndex == 2) ? "Red Operative" : "Blue Operative";
-        QString teamColor = (m_currentTurnIndex == 1 || m_currentTurnIndex == 2) ? "Red" : "Blue";
-        QString hintMessage = currOperativeName + " taps " + gameGrid[row][col].word;
-        chatBox->addSystemMessage(hintMessage, (m_currentTurnIndex == RED_OP || m_currentTurnIndex == BLUE_SPY) ? ChatBox::RED_TEAM : ChatBox::BLUE_TEAM);
+    if(m_isHost || !broadcast) {
+    QString currOperativeName = (m_currentTurnIndex == 1 || m_currentTurnIndex == 2) ? "Red Operative" : "Blue Operative";
+    QString teamColor = (m_currentTurnIndex == 1 || m_currentTurnIndex == 2) ? "Red" : "Blue";
+    QString hintMessage = currOperativeName + " taps " + gameGrid[row][col].word;
+    chatBox->addSystemMessage(hintMessage, (m_currentTurnIndex == RED_OP || m_currentTurnIndex == BLUE_SPY) ? ChatBox::RED_TEAM : ChatBox::BLUE_TEAM);
+    }
+   
 
     gameGrid[row][col].revealed = true;
     QPushButton *btn = m_tiles.at(row * GRID_SIZE + col);
@@ -831,41 +829,24 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         break;
     }
 
+    if(broadcast) {
     // Check if correct guess
     bool correctCard = false;
     if (currentTeam == "red" && gameGrid[row][col].type == RED_TEAM)
     {
-        if (m_currentRole.toLower() == "red_operative")
-        {
-            users->hit(m_currentUsername);
-        }
         correctCard = true;
     }
     else if (currentTeam == "blue" && gameGrid[row][col].type == BLUE_TEAM)
     {
-        if (m_currentRole.toLower() == "blue_operative")
-        {
-            users->hit(m_currentUsername);
-        }
         correctCard = true;
     }
 
     if (!correctCard)
     {
-
-        if (m_currentRole.toLower() == "red_operative" || m_currentRole.toLower() == "blue_operative")
-        {
-            users->miss(m_currentUsername);
-        }
-        if (!m_isHost)
-        {
-            m_clientSocket->sendTextMessage(QString("TURN_ADVANCE"));
-        }
-        else
-        {
-            sendToAll(QString("TURN_ADVANCE"));
-        }
+        qDebug() << "Incorrect guess";
+        advanceTurn();
         return;
+    }
     }
     else if (currentRole == "operative")
     {
@@ -873,10 +854,7 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         btn->setEnabled(false);
     }
 
-    if (broadcast)
-    {
-        sendToAll(QString("REVEAL:%1,%2").arg(row).arg(col));
-    }
+    
 }
 
 void MultiBoard::endGame(const QString &message)
@@ -937,7 +915,6 @@ void MultiBoard::endGame(const QString &message)
 }
 void MultiBoard::advanceTurnSpymaster(const QString &hint, int number)
 {
-    qDebug() << "Advancing turn 2";
     if (!m_isHost)
     {
         if (m_clientSocket && m_clientSocket->isValid())
