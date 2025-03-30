@@ -27,4 +27,4 @@ OBJECTS_DIR = $$PWD/build
 
 INCLUDEPATH += $$PWD/include
 
-RESOURCES += $$PWD/src/resources.qrc
+RESOURCES += $$PWD/resources.qrc
