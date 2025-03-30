@@ -410,7 +410,7 @@ void MultiBoard::checkGameEnd()
 
 void MultiBoard::processMessage(const QString &message)
 {
-    qDebug() << "Received message:" << message;
+    qDebug() << "AMAMAMMA";
     if (message.startsWith("TURN_ADVANCE") && m_isHost)
     {
         advanceTurn();
@@ -534,6 +534,7 @@ void MultiBoard::processMessage(const QString &message)
     }
     else if (message.startsWith("END_GAME:"))
     {
+        qDebug() << "Received END_GAME message: " << message;
         QString winMessage = message.section(':', 1);
         QMessageBox::warning(this, "Won", "Game Over! " + winMessage);
         emit goBack();
@@ -688,6 +689,8 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
     {
         qDebug() << "Type: " << gameGrid[row][col].type;
     case RED_TEAM:
+
+        btn->setStyleSheet("background-color: #ff9999; color: black");
         if (m_isHost)
         {
             redCardsRemaining--;
@@ -696,9 +699,10 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
                 endGame("Red team wins!");
             }
         }
-        btn->setStyleSheet("background-color: #ff9999; color: black");
         break;
     case BLUE_TEAM:
+
+        btn->setStyleSheet("background-color: #9999ff; color: black");
         if (m_isHost)
         {
             blueCardsRemaining--;
@@ -707,21 +711,20 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
                 endGame("Blue team wins!");
             }
         }
-        btn->setStyleSheet("background-color: #9999ff; color: black");
         break;
     case NEUTRAL:
         btn->setStyleSheet("background-color: #f0f0f0; color: black");
         break;
     case ASSASSIN:
-        if (currentPhase == "red_operative" || currentPhase == "blue_spymaster")
-            {
-                endGame("Blue team wins!");
-            }
-            else
-            {
-                endGame("Red team wins!");
-            }
         btn->setStyleSheet("background-color: #333333; color: white;");
+        if (currentPhase == "red_operative" || currentPhase == "blue_spymaster")
+        {
+            endGame("Blue team wins!");
+        }
+        else
+        {
+            endGame("Red team wins!");
+        }
         break;
     }
 
@@ -774,55 +777,59 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
     }
 }
 
-void MultiBoard::endGame(const QString &message) {
-    if (!m_isHost) {
+void MultiBoard::endGame(const QString &message)
+{
+    if (!m_isHost)
+    {
         // Client: Send message and transfer ownership back
         m_clientSocket->sendTextMessage("END_GAME:" + message);
-        
+
         // Disconnect from MultiBoard's handler
-        disconnect(m_clientSocket, &QWebSocket::textMessageReceived, 
-                  this, &MultiBoard::processMessage);
-        
+        disconnect(m_clientSocket, &QWebSocket::textMessageReceived,
+                   this, &MultiBoard::processMessage);
+
         // Reparent clientSocket to original owner
-        m_clientSocket->setParent(qobject_cast<QObject*>(this->parent()));
-        
+        m_clientSocket->setParent(qobject_cast<QObject *>(this->parent()));
+
         // Reconnect to MultiPregame's handler
-        if (this->parent()) {
+        if (this->parent())
+        {
             connect(m_clientSocket, &QWebSocket::textMessageReceived,
-                   qobject_cast<MultiPregame*>(this->parent()), 
-                   &MultiPregame::processMessage);
+                    qobject_cast<MultiPregame *>(this->parent()),
+                    &MultiPregame::processMessage);
         }
-        QString winMessage = message.section(':', 1);
-        QMessageBox::warning(this, "Won", "Game Over! " + winMessage);
+        QMessageBox::warning(this, "Won", "Game Over! " + message);
 
-        // Add this: Force UI transition immediately
-        emit goBack();  // <--- Critical missing line
+        emit goBack();
         this->deleteLater();
-
-    } else {
+    }
+    else
+    {
         // Host: Notify all clients and transfer ownership back
         sendToAll(QString("END_GAME:%1").arg(message));
-        
-        if (m_server) {
-            m_server->setParent(qobject_cast<QObject*>(this->parent()));
-            
-            foreach (QWebSocket* client, m_clients) {
+
+        if (m_server)
+        {
+            m_server->setParent(qobject_cast<QObject *>(this->parent()));
+
+            foreach (QWebSocket *client, m_clients)
+            {
                 disconnect(client, &QWebSocket::textMessageReceived,
-                         this, &MultiBoard::processMessage);
-                client->setParent(qobject_cast<QObject*>(this->parent()));
-                
-                if (this->parent()) {
+                           this, &MultiBoard::processMessage);
+                client->setParent(qobject_cast<QObject *>(this->parent()));
+
+                if (this->parent())
+                {
+                    qDebug() << "Reconnecting to MultiPregame";
                     connect(client, &QWebSocket::textMessageReceived,
-                          qobject_cast<MultiPregame*>(this->parent()), 
-                          &MultiPregame::processMessage);
+                            qobject_cast<MultiPregame *>(this->parent()),
+                            &MultiPregame::processMessage);
                 }
             }
         }
-    QString winMessage = message.section(':', 1);
-        QMessageBox::warning(this, "Won", "Game Over! " + winMessage);
+        QMessageBox::warning(this, "Won", "Game Over! " + message);
 
-        // Add this: Clean up host UI
-        emit goBack();  // <--- Ensure host UI transitions
+        emit goBack();
         this->deleteLater();
     }
 }

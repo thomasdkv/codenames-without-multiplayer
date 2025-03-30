@@ -14,6 +14,7 @@ MultiPregame::MultiPregame(QWebSocketServer* server, const QString& username, QW
     m_roles[nullptr] = "Unassigned"; // Initialize host's role
     setupUI();
     connect(m_server, &QWebSocketServer::newConnection, this, &MultiPregame::onNewConnection);
+    
 }
 
 MultiPregame::MultiPregame(QWebSocket* socket, const QString& username, QWidget* parent)
@@ -24,8 +25,40 @@ MultiPregame::MultiPregame(QWebSocket* socket, const QString& username, QWidget*
     // Send username to host immediately after connecting
     m_clientSocket->sendTextMessage("USERNAME:" + username);
 }
-
+void MultiPregame::clearUI() {
+    // Get the current layout
+    QLayout* layout = this->layout();
+    
+    if (!layout) {
+        return; // No layout to clear
+    }
+    
+    // Remove all widgets from the layout and schedule them for deletion
+    QLayoutItem* item;
+    while ((item = layout->takeAt(0))) {
+        if (QWidget* widget = item->widget()) {
+            // Just schedule widgets for deletion
+            widget->deleteLater();
+        } else if (QLayout* childLayout = item->layout()) {
+            // Remove widgets from child layouts
+            while (QLayoutItem* childItem = childLayout->takeAt(0)) {
+                if (QWidget* childWidget = childItem->widget()) {
+                    childWidget->deleteLater();
+                }
+                delete childItem;
+            }
+        }
+        delete item;
+    }
+    
+    // DON'T delete the layout object itself
+    // Instead, just set a new layout which will automatically replace the old one
+    setLayout(new QVBoxLayout(this));
+    
+}
 void MultiPregame::setupUI() {
+    setFixedSize(1000, 800);
+
     QVBoxLayout* layout = new QVBoxLayout(this);
 
     // Player list
@@ -44,10 +77,46 @@ void MultiPregame::setupUI() {
         btn->setStyleSheet(QString("background: %1; color: white; border-radius: 5px;").arg(color));
     };
 
-    styleButton(redSpymaster, "#ff4444");
-    styleButton(blueSpymaster, "#4444ff");
-    styleButton(redOperative, "#ff8888");
-    styleButton(blueOperative, "#8888ff");
+
+    redSpymaster->setStyleSheet("QPushButton {"
+                                "background-color: #ff4444;"
+                                "border: 1px solid #ccc;"
+                                "border-radius: 5px;"
+                                "padding: 10px;"
+                                "}"
+                                "QPushButton:hover {"
+                                "background-color: #e60000;"
+                                "}");
+
+    blueSpymaster->setStyleSheet("QPushButton {"
+                                "background-color: #4444ff;"
+                                "border: 1px solid #ccc;"
+                                "border-radius: 5px;"
+                                "padding: 10px;"
+                                "}"
+                                "QPushButton:hover {"
+                                "background-color: #0000e6;"
+                                "}");
+
+    redOperative->setStyleSheet("QPushButton {"
+                                "background-color: #ff8888;"
+                                "border: 1px solid #ccc;"
+                                "border-radius: 5px;"
+                                "padding: 10px;"
+                                "}"
+                                "QPushButton:hover {"
+                                "background-color: #e60000;"
+                                "}");
+
+    blueOperative->setStyleSheet("QPushButton {"
+                                "background-color: #8888ff;"
+                                "border: 1px solid #ccc;"
+                                "border-radius: 5px;"
+                                "padding: 10px;"
+                                "}"
+                                "QPushButton:hover {"
+                                "background-color: #0000e6;"
+                                "}");
 
     if (m_isHost) {
         connect(redSpymaster, &QPushButton::clicked, [this]() { handleRoleSelection("ROLE:RED_SPYMASTER", nullptr); });
@@ -108,6 +177,7 @@ void MultiPregame::setupUI() {
     });
     layout->addWidget(backButton);
 
+    setLayout(layout);
     sendLobbyUpdate();
 }
 
@@ -126,6 +196,7 @@ void MultiPregame::onNewConnection() {
 }
 
 void MultiPregame::processMessage(const QString& message) {
+    qDebug() << "WAKA WAKA ";
     if (message.startsWith("USERNAME:")) {
         QString username = message.section(':', 1);
         QWebSocket* sender = qobject_cast<QWebSocket*>(this->sender());
@@ -218,9 +289,11 @@ void MultiPregame::startGame() {
 }
 
 void MultiPregame::showPregame() {
-    qDebug() << "showing pregame";
+    // Reset visual elements
     this->show();
-    qDebug() << "pregame shown";
+
+    
+  
 }
 
 void MultiPregame::gameStarted(bool isHost, QWebSocketServer* server, 
@@ -235,7 +308,6 @@ void MultiPregame::gameStarted(bool isHost, QWebSocketServer* server,
             server->setParent(gameBoard);
             foreach (QWebSocket* client, clients) {
                 client->setParent(gameBoard);
-                disconnect(client, &QWebSocket::textMessageReceived, this, &MultiPregame::processMessage);
                 connect(client, &QWebSocket::textMessageReceived, gameBoard, &MultiBoard::processMessage);
             }
         }
@@ -254,7 +326,7 @@ void MultiPregame::handleRoleSelection(const QString& message, QWebSocket* sende
     QString role = message.section(':', 1);
     if (m_roles[sender] == role) {
         role = "Unassigned";
-         m_roles[sender] = role;
+        m_roles[sender] = role;
         sendLobbyUpdate();
     }
 

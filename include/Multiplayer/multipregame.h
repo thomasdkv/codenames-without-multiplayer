@@ -21,6 +21,7 @@ public:
     // Client constructor
     MultiPregame(QWebSocket* socket, const QString& username, QWidget* parent = nullptr);
     ~MultiPregame();
+    void clearUI();
 
 
 signals:
@@ -35,6 +36,7 @@ public slots:
     void startGame();
 
 private:
+    void resetUIState();
     void setupUI();
     void sendLobbyUpdate();
     void handleRoleSelection(const QString& message, QWebSocket* sender);
