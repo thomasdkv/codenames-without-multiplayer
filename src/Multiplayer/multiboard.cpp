@@ -50,13 +50,14 @@ MultiBoard::MultiBoard(bool isHost, QWebSocketServer *server, QList<QWebSocket *
         }
     }
 
-    // Setup UI
+    // Setup UI and words
     if (m_isHost)
     {
         loadWordsFromFile();
         generateGameGrid();
     }
 
+    // Initialize scores
     redCardsRemaining = 9;
     blueCardsRemaining = 8;
 
@@ -73,6 +74,8 @@ MultiBoard::MultiBoard(bool isHost, QWebSocketServer *server, QList<QWebSocket *
         // Send initial game state
         sendInitialGameState();
     }
+
+    // Create hint and guess widgets
     qDebug() << "Sent Game State";
     hint = new SpymasterHint(this);
     gameVerticalLayout->addWidget(hint);
@@ -82,8 +85,11 @@ MultiBoard::MultiBoard(bool isHost, QWebSocketServer *server, QList<QWebSocket *
     gameVerticalLayout->addWidget(guess);
     guess->hide();
 
+    // Connect signals
     connect(hint, &SpymasterHint::hintSubmitted, this, &MultiBoard::advanceTurnSpymaster);
     connect(guess, &OperatorGuess::guessSubmitted, this, &MultiBoard::advanceTurn);
+
+    // Set up the board
     setupBoard();
     updateTurnDisplay();
 }
@@ -91,6 +97,7 @@ MultiBoard::MultiBoard(bool isHost, QWebSocketServer *server, QList<QWebSocket *
 void MultiBoard::displayHint(const QString &hint, int number)
 {
     qDebug() << "Received hint:" << hint << "for" << number << "corresponding words";
+
     // Update the coreesponding number for the hint, if it is 0, display "∞"
     if (number == 0)
     {
@@ -100,8 +107,12 @@ void MultiBoard::displayHint(const QString &hint, int number)
     {
         correspondingNumber = QString::number(number);
     }
-    currentHint->setText("Current hint: " + hint + " (" + correspondingNumber + ")"); // Update the hint
-                                                                                      // Add the hint to the chat box
+
+    // Update the hint
+    currentHint->setText("Current hint: " + hint + " (" + correspondingNumber + ")"); 
+
+
+    // Add the hint to the chat box                                                       
     QString currSpymasterName = (m_currentTurnIndex == 0) ? "Red Spymaster" : "Blue Spymaster";
     QString teamColor = (m_currentTurnIndex == 0) ? "Red" : "Blue";
     QString chatNumber = (number == 0) ? "∞" : QString::number(number);
@@ -113,17 +124,17 @@ void MultiBoard::handleNewConnection()
     qDebug() << "New connection";
     if (!m_server)
         return;
-    qDebug() << "New connection2";
     QWebSocket *client = m_server->nextPendingConnection();
     if (!client)
         return;
-    qDebug() << "New connection3";
     connect(client, &QWebSocket::textMessageReceived, this, &MultiBoard::processMessage);
     m_clients.append(client);
 }
 
 void MultiBoard::loadWordsFromFile()
 {
+
+    // Load words from file
     QFile file("resources/wordlist-eng.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -137,6 +148,7 @@ void MultiBoard::loadWordsFromFile()
         return;
     }
 
+    // Read words from file
     QTextStream in(&file);
     while (!in.atEnd())
     {
@@ -173,6 +185,7 @@ void MultiBoard::generateGameGrid()
     int neutralCards = 7;
 
    
+    // Shuffle card types
 
     QList<CardType> cardTypes;
     for (int i = 0; i < redCards; ++i)
@@ -184,7 +197,6 @@ void MultiBoard::generateGameGrid()
     for (int i = 0; i < assassinCards; ++i)
         cardTypes.append(ASSASSIN);
 
-    // Shuffle card types
     for (int i = cardTypes.size() - 1; i > 0; --i)
     {
         int j = QRandomGenerator::global()->bounded(i + 1);
@@ -210,7 +222,7 @@ void MultiBoard::sendInitialGameState()
     // Clear existing lists
     m_words.clear();
     m_tileColors.clear();
-    QVector<int> cardTypes; // New: Store numerical type codes
+    QVector<int> cardTypes; 
 
     // Validate grid initialization
     if (gameGrid[0][0].word.isEmpty())
@@ -221,6 +233,8 @@ void MultiBoard::sendInitialGameState()
 
     try
     {
+
+        // Loop through grid
         for (int i = 0; i < GRID_SIZE; ++i)
         {
             for (int j = 0; j < GRID_SIZE; ++j)
@@ -247,6 +261,8 @@ void MultiBoard::sendInitialGameState()
                               m_words.join(",") + "|" +
                               typeMessage;
 
+        // Send full message to all clients
+
         sendToAll(fullMessage);
         sendToAll("TURN_UPDATE:" + m_turnOrder.first());
     }
@@ -265,7 +281,7 @@ void MultiBoard::setupUI()
     // Main horizontal layout that will hold grid area and chat box
     mainLayout = new QHBoxLayout(this);
     mainLayout->setContentsMargins(20, 20, 20, 20);
-    mainLayout->setSpacing(25);   // Increased space between grid and chat
+    mainLayout->setSpacing(25);   
     
     // Create vertical layout for the game elements (left side)
     gameVerticalLayout = new QVBoxLayout();
@@ -277,6 +293,8 @@ void MultiBoard::setupUI()
     m_playerInfoLabel->setStyleSheet("font-size: 16px; font-weight: bold; color: #fff; padding: 5px;");
     m_playerInfoLabel->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
     m_playerInfoLabel->setWordWrap(true);
+
+    // Add turn label with enhanced styling and word wrap
     
     m_turnLabel = new QLabel(this);
     m_turnLabel->setStyleSheet("font-size: 16px; font-weight: bold; color: #fff; padding: 5px;");
@@ -297,7 +315,8 @@ void MultiBoard::setupUI()
     gameVerticalLayout->addWidget(currentHint);
     
    
-        // Remaining red and blue cards
+    // Remaining red and blue cards
+
     QHBoxLayout *cardsRemainingLayout = new QHBoxLayout();
 
     redCardText = new QLabel("Red Cards Remaining: " + QString::number(redCardsRemaining));
@@ -335,6 +354,8 @@ void MultiBoard::setupUI()
 
 void MultiBoard::processChatMessage(const QString &playerName, const QString &message)
 {
+
+    // Sending out the chat messages to everyone
     if (!m_isHost)
     {
         m_clientSocket->sendTextMessage("MESSAGE: " + playerName + " | " + message);
@@ -373,6 +394,7 @@ void MultiBoard::setupBoard()
 
     try
     {
+        // Loop through grid
         for (int i = 0; i < GRID_SIZE; ++i)
         {
             for (int j = 0; j < GRID_SIZE; ++j)
@@ -413,6 +435,7 @@ void MultiBoard::setupBoard()
                     // Safe type checking
                     CardType safeType = (index < GRID_SIZE * GRID_SIZE) ? gameGrid[i][j].type : NEUTRAL;
 
+                    // Set button styles
                     switch (safeType)
                     {
                     case RED_TEAM:
@@ -431,6 +454,7 @@ void MultiBoard::setupBoard()
                         btn->setStyleSheet("background-color: #cccccc; color: black");
                     }
                 }
+                // Operative view
                 else
                 {
 
@@ -455,8 +479,11 @@ void MultiBoard::setupBoard()
 
 void MultiBoard::checkGameEnd()
 {
+    // Check if the game has ended
     users = User::instance();
 
+
+    // Red team wins
     if (redCardsRemaining == 0)
     {
         if (m_currentRole == "red_spymaster" || m_currentRole == "red_operative")
@@ -469,6 +496,8 @@ void MultiBoard::checkGameEnd()
         }
         QMessageBox::information(this, "Game Over", "Red team wins!");
     }
+
+    // Blue team wins
 
     if (blueCardsRemaining == 0)
     {
@@ -486,11 +515,16 @@ void MultiBoard::checkGameEnd()
 
 void MultiBoard::processMessage(const QString &message)
 {
-    qDebug() << "AMAMAMMA";
+
+    // Operative Turn Advance Processor
+
     if (message.startsWith("TURN_ADVANCE") && m_isHost)
     {
         advanceTurn();
     }
+
+    // Spymaster Turn Advance Processor
+
     if (message.startsWith("SPYMASTER_TURN_ADVANCE:") && m_isHost)
     {
         qDebug() << "Received TURN_ADVANCE_SPYMASTER message";
@@ -506,6 +540,8 @@ void MultiBoard::processMessage(const QString &message)
             advanceTurnSpymaster(hint, number);
         }
     }
+
+    // Board Setup Processor
 
     else if (message.startsWith("BOARD_SETUP:"))
     {
@@ -544,6 +580,9 @@ void MultiBoard::processMessage(const QString &message)
 
         setupBoard();
     }
+
+    // Tile Reveal Processor
+
     else if (message.startsWith("REVEAL:"))
     {
         QStringList coords = message.section(':', 1).split(',');
@@ -556,6 +595,9 @@ void MultiBoard::processMessage(const QString &message)
             revealTile(row, col, false);
         }
     }
+
+    // Start Game Processor
+
     else if (message.startsWith("START_GAME:"))
     {
         QString data = message.section(':', 1);
@@ -577,6 +619,9 @@ void MultiBoard::processMessage(const QString &message)
 
         return;
     }
+
+    // Turn Update Processor
+
     else if (message.startsWith("TURN_UPDATE:"))
     {
         QString newTurn = message.section(':', 1);
@@ -586,6 +631,9 @@ void MultiBoard::processMessage(const QString &message)
             m_currentTurnIndex = 0;
         updateTurnDisplay();
     }
+
+    // Hint Update Processor
+
     else if (message.startsWith("UPDATE_HINT:"))
     {
         qDebug() << "Received UPDATE_HINT message: " << message;
@@ -611,6 +659,9 @@ void MultiBoard::processMessage(const QString &message)
             qDebug() << "Invalid UPDATE_HINT format: " << message;
         }
     }
+
+    // Chat Message Processor
+
     else if (message.startsWith("MESSAGE:"))
     {
         QString sender = message.section(':', 1, 1).section('|', 0, 0).trimmed();
@@ -619,6 +670,9 @@ void MultiBoard::processMessage(const QString &message)
         // Add to chat box
         chatBox->addPlayerMessage(sender, messageText);
     }
+
+    // Card Update Processor
+
     else if (message.startsWith("RED")) {
         redCardsRemaining--;
         redCardText->setText("Red Cards Remaining: " + QString::number(redCardsRemaining));
@@ -652,6 +706,8 @@ bool MultiBoard::isMyTurn() const
         return false;
     }
 
+    // Get current team and role
+
     QString currentTeam = parts[0];
     QString currentRole = parts[1];
 
@@ -664,13 +720,18 @@ bool MultiBoard::isMyTurn() const
     // More flexible role matching
     bool isTeamMatch = (myTeam == currentTeam);
     bool isRoleMatch = myRole.contains(currentRole);
+
+    // If you have a team and role match, its your turn
     if (isTeamMatch && isRoleMatch)
     {
+        // Spymaster Display
         if (myRole.toLower() == "red_spymaster" || myRole.toLower() == "blue_spymaster")
         {
             qDebug() << "Spymaster Hint";
             hint->show();
         }
+
+        // Operative Display
         else if (myRole.toLower() == "red_operative" || myRole.toLower() == "blue_operative")
         {
             qDebug() << "Operative Hint";
@@ -679,9 +740,12 @@ bool MultiBoard::isMyTurn() const
     }
     else
     {
+        // Hide hint and guess if not your turn
         hint->hide();
         guess->hide();
     }
+
+    // return if its your turn
 
     return isTeamMatch && isRoleMatch;
 }
@@ -699,6 +763,7 @@ void MultiBoard::updateTurnDisplay()
                              .arg(team.toUpper())
                              .arg(role.toUpper()));
 
+    // Check if it's your turn, if it is it will display
     isMyTurn();
 
     // More lenient tile enabling
@@ -717,6 +782,8 @@ void MultiBoard::updateTurnDisplay()
 
 void MultiBoard::handleTileClick()
 {
+
+    // Verify it's your turn
     if (!isMyTurn())
     {
         QMessageBox::information(this, "Not Your Turn",
@@ -732,15 +799,15 @@ void MultiBoard::handleTileClick()
                                  "Only operatives can reveal tiles!");
         return;
     }
-
+    // Get the button that was clicked
     QPushButton *btn = qobject_cast<QPushButton *>(sender());
     int index = m_tiles.indexOf(btn);
     int row = index / GRID_SIZE;
     int col = index % GRID_SIZE;
-
+    // Check if the tile has already been revealed
     if (gameGrid[row][col].revealed)
         return;
-    
+    // Reveal the tile
     revealTile(row, col, true);
 
     
@@ -749,17 +816,21 @@ void MultiBoard::handleTileClick()
 
 void MultiBoard::revealTile(int row, int col, bool broadcast)
 {
+
+    // Check if the tile is within the grid
     if (row < 0 || row >= GRID_SIZE || col < 0 || col >= GRID_SIZE)
         return;
 
-
+    // Check if its the host, or if broadcasting is disabled, this is required so the message is not sent twice
     if(m_isHost || !broadcast) {
+    // Add the hint to the chat box
     QString currOperativeName = (m_currentTurnIndex == 1 || m_currentTurnIndex == 2) ? "Red Operative" : "Blue Operative";
     QString teamColor = (m_currentTurnIndex == 1 || m_currentTurnIndex == 2) ? "Red" : "Blue";
     QString hintMessage = currOperativeName + " taps " + gameGrid[row][col].word;
     chatBox->addSystemMessage(hintMessage, (m_currentTurnIndex == RED_OP || m_currentTurnIndex == BLUE_SPY) ? ChatBox::RED_TEAM : ChatBox::BLUE_TEAM);
     }
-   
+
+    // Setting the tile as revealed and disabling it
 
     gameGrid[row][col].revealed = true;
     QPushButton *btn = m_tiles.at(row * GRID_SIZE + col);
@@ -774,10 +845,13 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
     QString currentTeam = parts[0];
     QString currentRole = parts[1];
 
+    //If it is the broadcaster, send the message to the server
+
     if (!m_isHost && broadcast)
     {
         m_clientSocket->sendTextMessage(QString("REVEAL:%1,%2").arg(row).arg(col));
     }
+    //If it is the host, send the message to all clients
     else
     {
         sendToAll(QString("REVEAL:%1,%2").arg(row).arg(col));
@@ -787,13 +861,19 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
     {
         qDebug() << "Type: " << gameGrid[row][col].type;
 
+    // Set card color based on type
+
     case RED_TEAM:
 
         btn->setStyleSheet("background-color: #ff9999; color: black");
         if (m_isHost)
         {
+            // Decrement the number of red cards remaining
             redCardsRemaining--;
             sendToAll(QString("RED"));
+
+
+            // Check if the red team has won
             if (redCardsRemaining == 0)
             {
                 endGame("Red team wins!");
@@ -801,12 +881,16 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         }
         break;
     case BLUE_TEAM:
-
         btn->setStyleSheet("background-color: #9999ff; color: black");
+        
         if (m_isHost)
         {
+            // Decrement the number of blue cards remaining
             blueCardsRemaining--;
             sendToAll(QString("BLUE"));
+            
+            // Check if the blue team has won
+            
             if (blueCardsRemaining == 0)
             {
                 endGame("Blue team wins!");
@@ -814,10 +898,14 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         }
         break;
     case NEUTRAL:
+        // Set card color based on type
         btn->setStyleSheet("background-color: #f0f0f0; color: black");
         break;
     case ASSASSIN:
+        // Set card color based on type
         btn->setStyleSheet("background-color: #333333; color: white;");
+
+        // Send winning signal
         if (currentPhase == "red_operative" || currentPhase == "blue_spymaster")
         {
             endGame("Blue team wins!");
@@ -828,10 +916,12 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         }
         break;
     }
-
+    // Initial Broadcast
     if(broadcast) {
     // Check if correct guess
     bool correctCard = false;
+
+    // Check if the guess was correct
     if (currentTeam == "red" && gameGrid[row][col].type == RED_TEAM)
     {
         correctCard = true;
@@ -840,7 +930,7 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
     {
         correctCard = true;
     }
-
+    // If not correct, advance turn
     if (!correctCard)
     {
         qDebug() << "Incorrect guess";
@@ -915,6 +1005,7 @@ void MultiBoard::endGame(const QString &message)
 }
 void MultiBoard::advanceTurnSpymaster(const QString &hint, int number)
 {
+    // Client logic: send hint
     if (!m_isHost)
     {
         if (m_clientSocket && m_clientSocket->isValid())
@@ -928,7 +1019,7 @@ void MultiBoard::advanceTurnSpymaster(const QString &hint, int number)
         }
         return;
     }
-
+    // Host logic: advance turn and notify all clients
     sendToAll(QString("UPDATE_HINT:%1,%2").arg(hint).arg(number));
     displayHint(hint, number);
 
@@ -941,6 +1032,8 @@ void MultiBoard::advanceTurnSpymaster(const QString &hint, int number)
 
 void MultiBoard::advanceTurn()
 {
+
+    // Client logic: advance turn
     if (!m_isHost)
     {
         if (m_clientSocket && m_clientSocket->isValid())

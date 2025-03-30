@@ -20,7 +20,11 @@ MultiPregame::MultiPregame(QWebSocketServer *server, const QString &username, QW
 MultiPregame::MultiPregame(QWebSocket *socket, const QString &username, QWidget *parent)
     : QWidget(parent), m_clientSocket(socket), m_username(username), m_isHost(false)
 {
+    // Set up UI
+    
     setupUI();
+
+    // Connect signals
     connect(m_clientSocket, &QWebSocket::textMessageReceived, this, &MultiPregame::processMessage);
     connect(m_clientSocket, &QWebSocket::disconnected, this, &MultiPregame::socketDisconnected);
 
@@ -61,14 +65,13 @@ void MultiPregame::clearUI()
         delete item;
     }
 
-    // DON'T delete the layout object itself
-    // Instead, just set a new layout which will automatically replace the old one
+    // Replace the layout with a new one
     setLayout(new QVBoxLayout(this));
 }
 void MultiPregame::setupUI()
 {
     setFixedSize(1000, 600);
-
+    // Set up the layout
     QVBoxLayout *layout = new QVBoxLayout(this);
 
     // Player list
@@ -82,7 +85,7 @@ void MultiPregame::setupUI()
     QPushButton *blueSpymaster = new QPushButton("Blue Spymaster", this);
     QPushButton *redOperative = new QPushButton("Red Operative", this);
     QPushButton *blueOperative = new QPushButton("Blue Operative", this);
-
+    // Set button styles
     auto styleButton = [](QPushButton *btn, const QString &color)
     {
         btn->setStyleSheet(QString("background: %1; color: white; border-radius: 5px;").arg(color));
@@ -127,7 +130,7 @@ void MultiPregame::setupUI()
                                  "QPushButton:hover {"
                                  "background-color: #0000e6;"
                                  "}");
-
+    // Connect signals
     if (m_isHost)
     {
         connect(redSpymaster, &QPushButton::clicked, [this]()
@@ -139,6 +142,7 @@ void MultiPregame::setupUI()
         connect(blueOperative, &QPushButton::clicked, [this]()
                 { handleRoleSelection("ROLE:BLUE_OPERATIVE", nullptr); });
     }
+    // Client connect signals
     else
     {
         connect(redSpymaster, &QPushButton::clicked, [this]()
@@ -151,6 +155,7 @@ void MultiPregame::setupUI()
                 { m_clientSocket->sendTextMessage("ROLE:BLUE_OPERATIVE"); });
     }
 
+    // Add buttons to layout
     roleLayout->addWidget(redSpymaster);
     roleLayout->addWidget(blueSpymaster);
     roleLayout->addWidget(redOperative);
@@ -179,6 +184,7 @@ void MultiPregame::setupUI()
         QLabel *ipLabel = new QLabel(QString("Lobby IP: %1:%2").arg(ipAddress).arg(m_server->serverPort()), this);
         layout->addWidget(ipLabel);
     }
+    // Client IP Display
     else
     {
         QLabel *ipLabel = new QLabel(QString("Connected to: %1:%2")
@@ -211,12 +217,14 @@ void MultiPregame::setupUI()
 void MultiPregame::onNewConnection()
 {
     qDebug() << "New connection";
+    
+    // Check if maximum number of players has been reached
     if (m_clients.size() == 3)
     {
         QMessageBox::warning(this, "Too many players", "The maximum number of players has been reached.");
         return;
     }
-
+    // Handle new client connection
     QWebSocket *client = m_server->nextPendingConnection();
     connect(client, &QWebSocket::textMessageReceived, this, &MultiPregame::processMessage);
     connect(client, &QWebSocket::disconnected, this, &MultiPregame::socketDisconnected);
@@ -228,8 +236,7 @@ void MultiPregame::onNewConnection()
 
 void MultiPregame::processMessage(const QString &message)
 {
-    qDebug() << "WAKA WAKA ";
-
+    // Check if username is taken
     if (message.startsWith("USERNAME_TAKEN:"))
     {
         QMessageBox::warning(this, "Username Taken", "Username Taken. Please choose a different username.");
@@ -238,7 +245,7 @@ void MultiPregame::processMessage(const QString &message)
         emit backToMultiMain();
         return;
     }
-
+    // Initialize username
     if (message.startsWith("USERNAME:"))
     {
 
@@ -246,21 +253,24 @@ void MultiPregame::processMessage(const QString &message)
         qDebug() << username;
 
         QWebSocket *sender = qobject_cast<QWebSocket *>(this->sender());
-
+        // Check if username is taken
         if (m_usernames.values().contains(username) && !m_checked[sender])
         {
             sender->sendTextMessage("USERNAME_TAKEN:" + username);
             return;
         }
+        // Initialize username
         m_checked[sender] = true;
         m_usernames[sender] = username;
         if (m_isHost)
             sendLobbyUpdate();
     }
+    // Handle role selection
     else if (message.startsWith("ROLE:"))
     {
         handleRoleSelection(message, qobject_cast<QWebSocket *>(this->sender()));
     }
+    // Handle any lobby updates
     else if (message.startsWith("LOBBY_UPDATE:"))
     {
         QString playersData = message.section(':', 1);
@@ -268,11 +278,13 @@ void MultiPregame::processMessage(const QString &message)
         playerList->clear();
         playerList->addItems(players);
     }
+    // Handle role taken
     else if (message.startsWith("ROLE_TAKEN:"))
     {
         QString role = message.section(':', 1);
         QMessageBox::warning(this, "Role Taken", QString("The role %1 has already been taken.").arg(role));
     }
+    // handle start game
     else if (message.startsWith("START_GAME:"))
     {
         QString data = message.section(':', 1);
@@ -292,17 +304,20 @@ void MultiPregame::processMessage(const QString &message)
 
 void MultiPregame::sendLobbyUpdate()
 {
+    // Update player list
     QStringList players;
     players << QString("%1 (%2)").arg(m_usernames[nullptr]).arg(m_roles.value(nullptr, "Unassigned"));
-
+    
+    
+    // Add other players from clients
     for (QWebSocket *client : m_clients)
     {
         players << QString("%1 (%2)").arg(m_usernames[client]).arg(m_roles.value(client, "Unassigned"));
     }
-
     playerList->clear();
     playerList->addItems(players);
 
+    // Send lobby update
     if (m_isHost)
     {
         QString message = "LOBBY_UPDATE:" + players.join("|");
@@ -314,7 +329,8 @@ void MultiPregame::sendLobbyUpdate()
 }
 
 void MultiPregame::socketDisconnected()
-{
+{   
+    // Handle client disconnection
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
     m_clients.removeAll(client);
     m_usernames.remove(client);
@@ -325,6 +341,7 @@ void MultiPregame::socketDisconnected()
 
 void MultiPregame::startGame()
 {
+    // Check if game can be started
     if(m_clients.size() != 3) {
          QMessageBox::warning(this, "Wrong Amount of Players", "You need 4 players to start the game.");
          return;
@@ -339,14 +356,16 @@ void MultiPregame::startGame()
              return;
          }
      }
+    // Start game
 
+    // Get player roles
     QHash<QString, QString> playerRoles;
     playerRoles[m_usernames[nullptr]] = m_roles[nullptr];
     for (QWebSocket *client : m_clients)
     {
         playerRoles[m_usernames[client]] = m_roles[client];
     }
-
+    // Send start game message
     QStringList playerRoleList;
     for (auto it = playerRoles.begin(); it != playerRoles.end(); ++it)
     {
@@ -387,6 +406,7 @@ void MultiPregame::gameStarted(bool isHost, QWebSocketServer *server,
             }
         }
     }
+    // Transfer ownership to GameBoard for clients
     else
     {
         if (clientSocket)
@@ -401,6 +421,7 @@ void MultiPregame::gameStarted(bool isHost, QWebSocketServer *server,
 
 void MultiPregame::handleRoleSelection(const QString &message, QWebSocket *sender)
 {
+    // Set the selected role
     QString role = message.section(':', 1);
     if (m_roles[sender] == role)
     {
@@ -408,9 +429,10 @@ void MultiPregame::handleRoleSelection(const QString &message, QWebSocket *sende
         m_roles[sender] = role;
         sendLobbyUpdate();
     }
-
+    // Check if role is already taken
     bool roleTaken = (m_roles[nullptr] == role);
-    if (!roleTaken)
+   
+   if (!roleTaken)
     {
         for (QWebSocket *client : m_clients)
         {
@@ -421,7 +443,7 @@ void MultiPregame::handleRoleSelection(const QString &message, QWebSocket *sende
             }
         }
     }
-
+    // If role is taken, send error message
     if (roleTaken)
     {
         if (sender)
@@ -434,7 +456,7 @@ void MultiPregame::handleRoleSelection(const QString &message, QWebSocket *sende
         }
         return;
     }
-
+    // Else set role
     m_roles[sender] = role;
     sendLobbyUpdate();
 }

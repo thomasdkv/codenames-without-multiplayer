@@ -33,6 +33,7 @@ MultiMain::MultiMain(QWidget *parent)
     titleLabel->setStyleSheet("font-weight: bold; font-size: 50px; text-align: center;");
     titleLabel->move(375, 100);
 
+    // Button styling
    QString buttonStyles =
       "QPushButton {"
       "   background-color:rgb(65, 42, 213);"
@@ -44,7 +45,7 @@ MultiMain::MultiMain(QWidget *parent)
       "   font-size: 20px;"
       "}"
       "QPushButton:hover {"
-      "   background-color: rgb(54, 35, 177);"  // Hover background color
+      "   background-color: rgb(54, 35, 177);"  
       "}";
 
     // Function to create styled buttons with drop shadows
@@ -63,6 +64,7 @@ MultiMain::MultiMain(QWidget *parent)
         return button;
     };
 
+    // Create buttons
     createRoomButton = createButton("Create Room");
     createRoomButton->move(400, 300);
 
@@ -73,7 +75,7 @@ MultiMain::MultiMain(QWidget *parent)
     backButton->move(400, 450);
 
 
-
+    // Connect buttons
     connect(backButton, &QPushButton::clicked, this, &MultiMain::openMainWindow);
     connect(createRoomButton, &QPushButton::clicked, this, &MultiMain::onCreateRoomClicked);
     connect(joinRoomButton, &QPushButton::clicked, this, &MultiMain::onJoinRoomClicked);
@@ -122,6 +124,9 @@ void MultiMain::showMainWindow()
 {
     this->show();
 }
+void MultiMain::onConnected() {
+    
+}
 
 void MultiMain::onCreateRoomClicked()
 {
@@ -129,6 +134,7 @@ void MultiMain::onCreateRoomClicked()
     User *user = User::instance();
     QJsonObject jsonData = user->loadJsonFile();
 
+    // Get a list of usernames
     QStringList usernames;
     QJsonObject::const_iterator it = jsonData.constBegin();
     while (it != jsonData.constEnd())
@@ -148,6 +154,8 @@ void MultiMain::onCreateRoomClicked()
     QDialog dialog(this);
     dialog.setWindowTitle("Select Username");
 
+    // Select a username widget
+    
     QVBoxLayout layout(&dialog);
     QLabel label("Select your username:");
     QComboBox comboBox;
@@ -189,14 +197,16 @@ void MultiMain::onCreateRoomClicked()
 
 void MultiMain::onNewConnection()
 {
+    // Handle new client connection
     QWebSocket *client = m_server->nextPendingConnection();
-
     connect(client, &QWebSocket::disconnected, this, &MultiMain::socketDisconnected);
     m_clients.append(client);
 }
 
 void MultiMain::socketDisconnected()
 {
+    
+    // Handle client socket disconnection
     if (QWebSocket *client = qobject_cast<QWebSocket *>(sender()))
     {
         m_clients.removeAll(client);
@@ -207,6 +217,8 @@ void MultiMain::socketDisconnected()
 
 void MultiMain::onJoinRoomClicked()
 {
+    
+    // Input server IP and port
     bool ok;
     QString host = QInputDialog::getText(this, "Join Room",
                                          "Server IP:", QLineEdit::Normal,
@@ -277,6 +289,8 @@ void MultiMain::onJoinRoomClicked()
     m_username = username;
     m_clientSocket = new QWebSocket;
 
+
+    // Connect client socket signals
     connect(m_clientSocket, &QWebSocket::connected, this, [this]() {
         m_clientSocket->sendTextMessage("USERNAME:" + m_username);
         joinRoomButton->setEnabled(false); });
@@ -292,13 +306,11 @@ void MultiMain::onJoinRoomClicked()
     m_clientSocket->open(QUrl(QString("ws://%1:%2").arg(host).arg(port)));
 }
 
-void MultiMain::onConnected()
-{
-    // Handled in lambda
-}
+
 
 void MultiMain::onDisconnected()
 {
+    // Handle client socket disconnection
     if (m_clientSocket)
     {
         m_clientSocket->close();
@@ -309,6 +321,7 @@ void MultiMain::onDisconnected()
 
 void MultiMain::processTextMessage(QString message)
 {
+    // Send message to all clients
     if (QWebSocket *sender = qobject_cast<QWebSocket *>(this->sender()))
     {
         for (QWebSocket *client : m_clients)
