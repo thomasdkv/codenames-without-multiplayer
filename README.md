@@ -1,5 +1,9 @@
 # codenames
 
+Requirements: QT core, gui, widgets, websockets
+
+sudo apt install qtbase5-dev qtwebsockets5-dev
+
 To Run:
 
 qmake\
