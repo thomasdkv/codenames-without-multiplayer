@@ -4,6 +4,7 @@
 
 #include "../spymasterhint.h"
 #include "../operatorguess.h"
+#include "Multiplayer/multimain.h"
 #include "user.h"
 #include <QWidget>
 #include <QWebSocketServer>
@@ -66,6 +67,8 @@ private:
 
     User* users;
 
+    MultiMain* main;
+
     // Player information
     QHash<QString, QString> m_playerRoles;
     QString m_currentUsername;
@@ -87,6 +90,10 @@ private:
     QStringList m_turnOrder;
     int m_currentTurnIndex;
 
+    // Cards remaining
+    int redCardsRemaining;
+    int blueCardsRemaining;
+
     // Private methods
     void setupUI();
     void setupBoard();
@@ -103,6 +110,7 @@ private:
     void updateTurnDisplay();
     void sendToAll(const QString& message);
     void displayHint(const QString& hint, int number);
+    void endGame(const QString& message);
 
     static const int GRID_SIZE = 5;
     Card gameGrid[GRID_SIZE][GRID_SIZE];

@@ -40,7 +40,7 @@ class MainWindow : public QMainWindow {
   void openStatsWindow();
   void openCreateAccount();
   void openTutorial();
-    void openMultiMain();
+  void openMultiMain();
 
  private:
   QWidget* centralWidget;
@@ -55,7 +55,7 @@ MultiMain *multiMain;
   QPushButton* tutorialButton;
   QPushButton* statsButton;
   QPushButton* createAccountButton;
-  
+
 
   User* onlineGameWindow;
   CreateAccountWindow* createAccountWindow;

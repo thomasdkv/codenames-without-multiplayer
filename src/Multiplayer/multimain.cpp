@@ -261,6 +261,7 @@ void MultiMain::onJoinRoomClicked() {
 
     m_username = username;
     m_clientSocket = new QWebSocket;
+
     
     connect(m_clientSocket, &QWebSocket::connected, this, [this]() {
         m_clientSocket->sendTextMessage("USERNAME:" + m_username);

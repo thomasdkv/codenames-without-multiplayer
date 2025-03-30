@@ -50,11 +50,12 @@ MultiBoard::MultiBoard(bool isHost, QWebSocketServer *server, QList<QWebSocket *
     }
 
     // Setup UI
-    if(m_isHost) {
+    if (m_isHost)
+    {
         loadWordsFromFile();
         generateGameGrid();
     }
-   
+
     setupUI();
 
     // Get current player's role
@@ -161,11 +162,13 @@ void MultiBoard::generateGameGrid()
     }
 
     // Assign card types (Codenames rules: 9 for starting team, 8 for other team, 1 assassin, 7 neutral)
-    bool redStarts = QRandomGenerator::global()->bounded(2) == 0;
-    int redCards = redStarts ? 9 : 8;
-    int blueCards = redStarts ? 8 : 9;
+    int redCards = 9;
+    int blueCards = 8;
     int assassinCards = 1;
     int neutralCards = 7;
+
+    redCardsRemaining = redCards;
+    blueCardsRemaining = blueCards;
 
     QList<CardType> cardTypes;
     for (int i = 0; i < redCards; ++i)
@@ -206,14 +209,18 @@ void MultiBoard::sendInitialGameState()
     QVector<int> cardTypes; // New: Store numerical type codes
 
     // Validate grid initialization
-    if (gameGrid[0][0].word.isEmpty()) {
+    if (gameGrid[0][0].word.isEmpty())
+    {
         qWarning() << "Game grid not initialized";
         return;
     }
 
-    try {
-        for (int i = 0; i < GRID_SIZE; ++i) {
-            for (int j = 0; j < GRID_SIZE; ++j) {
+    try
+    {
+        for (int i = 0; i < GRID_SIZE; ++i)
+        {
+            for (int j = 0; j < GRID_SIZE; ++j)
+            {
                 // Store words
                 QString word = gameGrid[i][j].word.simplified();
                 m_words.append(word.isEmpty() ? "UNKNOWN" : word);
@@ -225,20 +232,22 @@ void MultiBoard::sendInitialGameState()
 
         // Convert numerical types to string
         QString typeMessage = "";
-        for (int type : cardTypes) {
+        for (int type : cardTypes)
+        {
             typeMessage += QString::number(type) + ",";
         }
         typeMessage.chop(1); // Remove trailing comma
 
         // Create full message
-        QString fullMessage = "BOARD_SETUP:" + 
-                             m_words.join(",") + "|" + 
-                             typeMessage;
+        QString fullMessage = "BOARD_SETUP:" +
+                              m_words.join(",") + "|" +
+                              typeMessage;
 
         sendToAll(fullMessage);
         sendToAll("TURN_UPDATE:" + m_turnOrder.first());
     }
-    catch (const std::exception &e) {
+    catch (const std::exception &e)
+    {
         qCritical() << "Error sending game state:" << e.what();
     }
 }
@@ -372,32 +381,27 @@ void MultiBoard::checkGameEnd()
 {
     users = User::instance();
 
-    // Implement game end checks
-    int redRemaining = 0;
-    int blueRemaining = 0;
-    
-    for (int i = 0; i < GRID_SIZE; ++i) {
-        for (int j = 0; j < GRID_SIZE; ++j) {
-            if (!gameGrid[i][j].revealed) {
-                if (gameGrid[i][j].type == RED_TEAM) redRemaining++;
-                if (gameGrid[i][j].type == BLUE_TEAM) blueRemaining++;
-            }
-        }
-    }
-    
-    if (redRemaining == 0) {
-        if (m_currentRole == "red_spymaster" || m_currentRole == "red_operative") {
+    if (redCardsRemaining == 0)
+    {
+        if (m_currentRole == "red_spymaster" || m_currentRole == "red_operative")
+        {
             users->won(m_currentUsername);
-        } else if (m_currentRole == "blue_spymaster" || m_currentRole == "blue_operative") {
+        }
+        else if (m_currentRole == "blue_spymaster" || m_currentRole == "blue_operative")
+        {
             users->lost(m_currentUsername);
         }
         QMessageBox::information(this, "Game Over", "Red team wins!");
     }
-    
-    if (blueRemaining == 0) {
-        if (m_currentRole == "blue_spymaster" || m_currentRole == "blue_operative") {
+
+    if (blueCardsRemaining == 0)
+    {
+        if (m_currentRole == "blue_spymaster" || m_currentRole == "blue_operative")
+        {
             users->won(m_currentUsername);
-        } else if (m_currentRole == "red_spymaster" || m_currentRole == "red_operative") {
+        }
+        else if (m_currentRole == "red_spymaster" || m_currentRole == "red_operative")
+        {
             users->lost(m_currentUsername);
         }
         QMessageBox::information(this, "Game Over", "Blue team wins!");
@@ -411,13 +415,15 @@ void MultiBoard::processMessage(const QString &message)
     {
         advanceTurn();
     }
-    if (message.startsWith("SPYMASTER_TURN_ADVANCE:") && m_isHost) {
+    if (message.startsWith("SPYMASTER_TURN_ADVANCE:") && m_isHost)
+    {
         qDebug() << "Received TURN_ADVANCE_SPYMASTER message";
         QString data = message.section(':', 1);
         QStringList parts = data.split(",");
         int number;
         QString hint;
-        if (parts.size() == 2) {
+        if (parts.size() == 2)
+        {
             hint = parts[0];
             number = parts[1].toInt();
             qDebug() << "Received hint:" << hint << "for" << number << "corresponding words";
@@ -425,13 +431,15 @@ void MultiBoard::processMessage(const QString &message)
         }
     }
 
-       else if (message.startsWith("BOARD_SETUP:")) {
+    else if (message.startsWith("BOARD_SETUP:"))
+    {
         QString data = message.section(':', 1);
         QStringList parts = data.split("|");
-        
-        if (parts.size() != 2 || 
-            parts[0].split(",").size() != 25 || 
-            parts[1].split(",").size() != 25) {
+
+        if (parts.size() != 2 ||
+            parts[0].split(",").size() != 25 ||
+            parts[1].split(",").size() != 25)
+        {
             qWarning() << "Invalid BOARD_SETUP message";
             return;
         }
@@ -439,13 +447,16 @@ void MultiBoard::processMessage(const QString &message)
         // Reconstruct game state
         m_words = parts[0].split(",");
         QStringList typeCodes = parts[1].split(",");
-        
+
         // Convert type codes to gameGrid
         int index = 0;
-        for (int i = 0; i < GRID_SIZE; ++i) {
-            for (int j = 0; j < GRID_SIZE; ++j) {
-                if (index >= typeCodes.size()) break;
-                
+        for (int i = 0; i < GRID_SIZE; ++i)
+        {
+            for (int j = 0; j < GRID_SIZE; ++j)
+            {
+                if (index >= typeCodes.size())
+                    break;
+
                 bool ok;
                 int type = typeCodes[index].toInt(&ok);
                 gameGrid[i][j].type = static_cast<CardType>(ok ? type : NEUTRAL);
@@ -454,12 +465,14 @@ void MultiBoard::processMessage(const QString &message)
                 index++;
             }
         }
-        
+
         setupBoard();
     }
-   else if (message.startsWith("REVEAL:")) {
+    else if (message.startsWith("REVEAL:"))
+    {
         QStringList coords = message.section(':', 1).split(',');
-        if (coords.size() == 2) {
+        if (coords.size() == 2)
+        {
             int row = coords[0].toInt();
             int col = coords[1].toInt();
             revealTile(row, col, false);
@@ -495,36 +508,40 @@ void MultiBoard::processMessage(const QString &message)
         updateTurnDisplay();
     }
     else if (message.startsWith("UPDATE_HINT:"))
-{
-    qDebug() << "Received UPDATE_HINT message: " << message;
-    QString data = message.section(':', 1).trimmed(); // Extract data after "UPDATE_HINT:"
-    QStringList parts = data.split(",", Qt::SkipEmptyParts); // Ensure no empty elements
-
-    if (parts.size() == 2)
     {
-        QString hint = parts[0].trimmed();
-        int number = parts[1].trimmed().toInt();
+        qDebug() << "Received UPDATE_HINT message: " << message;
+        QString data = message.section(':', 1).trimmed();        // Extract data after "UPDATE_HINT:"
+        QStringList parts = data.split(",", Qt::SkipEmptyParts); // Ensure no empty elements
 
-        if (!hint.isEmpty()) // Ensure hint is not empty
+        if (parts.size() == 2)
         {
-            displayHint(hint, number);
+            QString hint = parts[0].trimmed();
+            int number = parts[1].trimmed().toInt();
+
+            if (!hint.isEmpty()) // Ensure hint is not empty
+            {
+                displayHint(hint, number);
+            }
+            else
+            {
+                qDebug() << "Hint is empty or only whitespace.";
+            }
         }
         else
         {
-            qDebug() << "Hint is empty or only whitespace.";
+            qDebug() << "Invalid UPDATE_HINT format: " << message;
         }
     }
-    else
+    else if (message.startsWith("END_GAME:"))
     {
-        qDebug() << "Invalid UPDATE_HINT format: " << message;
+        QString data = message.section(':', 1);
+        endGame(data);
     }
-}
 }
 
 bool MultiBoard::isMyTurn() const
 {
     // More verbose debugging
-
 
     // Ensure we have a valid turn
     if (m_turnOrder.isEmpty() || m_currentTurnIndex < 0 ||
@@ -553,7 +570,6 @@ bool MultiBoard::isMyTurn() const
     QString myRole = m_currentRole.toLower();
 
     // Detailed debugging
-   
 
     // More flexible role matching
     bool isTeamMatch = (myTeam == currentTeam);
@@ -576,7 +592,6 @@ bool MultiBoard::isMyTurn() const
         hint->hide();
         guess->hide();
     }
-
 
     return isTeamMatch && isRoleMatch;
 }
@@ -612,31 +627,37 @@ void MultiBoard::updateTurnDisplay()
 
 void MultiBoard::handleTileClick()
 {
-    if(!isMyTurn()) {
-        QMessageBox::information(this, "Not Your Turn", 
+    if (!isMyTurn())
+    {
+        QMessageBox::information(this, "Not Your Turn",
                                  "It's not your turn to act!");
         return;
     }
-     // Verify current phase allows tile revealing
+    // Verify current phase allows tile revealing
     QString currentPhase = m_turnOrder[m_currentTurnIndex];
     QStringList parts = currentPhase.split("_");
-    if(parts.size() != 2 || parts[1] != "operative") {
-        QMessageBox::information(this, "Invalid Action", 
+    if (parts.size() != 2 || parts[1] != "operative")
+    {
+        QMessageBox::information(this, "Invalid Action",
                                  "Only operatives can reveal tiles!");
         return;
     }
 
-    QPushButton* btn = qobject_cast<QPushButton*>(sender());
+    QPushButton *btn = qobject_cast<QPushButton *>(sender());
     int index = m_tiles.indexOf(btn);
     int row = index / GRID_SIZE;
     int col = index % GRID_SIZE;
 
-    if (gameGrid[row][col].revealed) return;
+    if (gameGrid[row][col].revealed)
+        return;
 
-    if (m_isHost) {
+    if (m_isHost)
+    {
         revealTile(row, col, true);
         checkGameEnd();
-    } else {
+    }
+    else
+    {
         revealTile(row, col, false);
         m_clientSocket->sendTextMessage(QString("REVEAL:%1,%2").arg(row).arg(col));
     }
@@ -644,10 +665,11 @@ void MultiBoard::handleTileClick()
 
 void MultiBoard::revealTile(int row, int col, bool broadcast)
 {
-    if (row < 0 || row >= GRID_SIZE || col < 0 || col >= GRID_SIZE) return;
-    
+    if (row < 0 || row >= GRID_SIZE || col < 0 || col >= GRID_SIZE)
+        return;
+
     gameGrid[row][col].revealed = true;
-    QPushButton* btn = m_tiles.at(row * GRID_SIZE + col);
+    QPushButton *btn = m_tiles.at(row * GRID_SIZE + col);
     btn->setText("");
     btn->setEnabled(false);
 
@@ -660,57 +682,120 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
     QString currentRole = parts[1];
 
     // Set card color based on type
-    switch (gameGrid[row][col].type) {
+    switch (gameGrid[row][col].type)
+    {
         qDebug() << "Type: " << gameGrid[row][col].type;
-        case RED_TEAM:
-            btn->setStyleSheet("background-color: #ff9999; color: black");
-            break;
-        case BLUE_TEAM:
-            btn->setStyleSheet("background-color: #9999ff; color: black");
-            break;
-        case NEUTRAL:
-            btn->setStyleSheet("background-color: #f0f0f0; color: black");
-            break;
-        case ASSASSIN:
-            btn->setStyleSheet("background-color: #333333; color: white;");
-            break;
+    case RED_TEAM:
+        if (m_isHost)
+        {
+            redCardsRemaining--;
+            if (redCardsRemaining == 0)
+            {
+                endGame("Red team wins!");
+            }
+        }
+        btn->setStyleSheet("background-color: #ff9999; color: black");
+        break;
+    case BLUE_TEAM:
+        if (m_isHost)
+        {
+            blueCardsRemaining--;
+            if (blueCardsRemaining == 0)
+            {
+                endGame("Blue team wins!");
+            }
+        }
+        btn->setStyleSheet("background-color: #9999ff; color: black");
+        break;
+    case NEUTRAL:
+        btn->setStyleSheet("background-color: #f0f0f0; color: black");
+        break;
+    case ASSASSIN:
+        if (currentPhase == "red_operative" || currentPhase == "blue_spymaster")
+            {
+                endGame("Blue team wins!");
+            }
+            else
+            {
+                endGame("Red team wins!");
+            }
+        btn->setStyleSheet("background-color: #333333; color: white;");
+        break;
     }
 
     // Check if correct guess
     bool correctCard = false;
-    if (currentTeam == "red" && gameGrid[row][col].type == RED_TEAM) {
-        if (m_currentRole.toLower() == "red_operative") {
+    if (currentTeam == "red" && gameGrid[row][col].type == RED_TEAM)
+    {
+        if (m_currentRole.toLower() == "red_operative")
+        {
             users->hit(m_currentUsername);
         }
         correctCard = true;
-    } else if (currentTeam == "blue" && gameGrid[row][col].type == BLUE_TEAM) {
-        if (m_currentRole.toLower() == "blue_operative") {
+    }
+    else if (currentTeam == "blue" && gameGrid[row][col].type == BLUE_TEAM)
+    {
+        if (m_currentRole.toLower() == "blue_operative")
+        {
             users->hit(m_currentUsername);
         }
         correctCard = true;
     }
 
-    if (!correctCard) {
-        if (m_currentRole.toLower() == "red_operative" || m_currentRole.toLower() == "blue_operative") {
+    if (!correctCard)
+    {
+
+        if (m_currentRole.toLower() == "red_operative" || m_currentRole.toLower() == "blue_operative")
+        {
             users->miss(m_currentUsername);
         }
         sendToAll(QString("REVEAL:%1,%2").arg(row).arg(col));
-        if(broadcast)  {
+        if (broadcast)
+        {
             sendToAll(QString("TURN_ADVANCE"));
-        } else {
+        }
+        else
+        {
             advanceTurn();
         }
         return;
-    } else if (currentRole == "operative") {
+    }
+    else if (currentRole == "operative")
+    {
         // Only allow another guess if operative guessed correctly
         btn->setEnabled(false);
     }
 
-    if (broadcast) {
+    if (broadcast)
+    {
         sendToAll(QString("REVEAL:%1,%2").arg(row).arg(col));
     }
 }
 
+void MultiBoard::endGame(const QString &message)
+{
+    if (m_isHost)
+    {
+        sendToAll(QString("END_GAME:%1").arg(message));
+    }
+
+    // Disconnect from the server
+    if (m_clientSocket && !m_isHost) // Assuming m_socket is your QTcpSocket or QUdpSocket
+    {
+       m_clientSocket->close();
+    } else{
+        m_server->close();
+    }
+
+    QMessageBox::warning(this, "Won", "Game Over! " + message);
+
+    this->close();
+
+
+    // Create a new MultiMain instance after disconnecting
+    main = new MultiMain();
+    main->show();
+}
 void MultiBoard::advanceTurnSpymaster(const QString &hint, int number)
 {
     qDebug() << "Advancing turn 2";
@@ -739,8 +824,7 @@ void MultiBoard::advanceTurnSpymaster(const QString &hint, int number)
 }
 
 void MultiBoard::advanceTurn()
-{  
-    qDebug() << "Advancing turn 1";
+{
     if (!m_isHost)
     {
         if (m_clientSocket && m_clientSocket->isValid())
