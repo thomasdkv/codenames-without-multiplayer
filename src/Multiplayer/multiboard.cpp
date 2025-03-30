@@ -792,6 +792,8 @@ void MultiBoard::endGame(const QString &message) {
                    qobject_cast<MultiPregame*>(this->parent()), 
                    &MultiPregame::processMessage);
         }
+        QString winMessage = message.section(':', 1);
+        QMessageBox::warning(this, "Won", "Game Over! " + winMessage);
 
         // Add this: Force UI transition immediately
         emit goBack();  // <--- Critical missing line
@@ -816,6 +818,8 @@ void MultiBoard::endGame(const QString &message) {
                 }
             }
         }
+    QString winMessage = message.section(':', 1);
+        QMessageBox::warning(this, "Won", "Game Over! " + winMessage);
 
         // Add this: Clean up host UI
         emit goBack();  // <--- Ensure host UI transitions
