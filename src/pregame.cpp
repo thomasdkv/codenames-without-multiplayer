@@ -19,7 +19,6 @@ PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
     this->move(x, y);
   }
 
-  game = new Game();
   users = User::instance();
   createAccountWindow = CreateAccountWindow::getInstance();
 
@@ -135,7 +134,6 @@ PreGame::~PreGame() {
   // Let Qt handle widget deletion
   // changed so that qt is no longer responsible for deleting the widgets.
   delete gameBoard;
-  delete game;
 }
 
 void PreGame::populateUserDropdowns() {
@@ -184,11 +182,6 @@ void PreGame::startGame() {
     QMessageBox::critical(this, "Error", "Duplicate usernames are not allowed!");
     return;
   }
-
-  game->addPlayer(Player(redSpyMaster, ROLE::SPYMASTER, TEAM::RED));
-  game->addPlayer(Player(redOperative, ROLE::OPERATIVE, TEAM::RED));
-  game->addPlayer(Player(blueSpyMaster, ROLE::SPYMASTER, TEAM::BLUE));
-  game->addPlayer(Player(blueOperative, ROLE::OPERATIVE, TEAM::BLUE));
 
   gameBoard->setRedSpyMasterName(redSpyMaster);
   gameBoard->setRedOperativeName(redOperative);
