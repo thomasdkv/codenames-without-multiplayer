@@ -3,8 +3,8 @@
         "statistics": {
             "games_played": 0,
             "games_win": 0,
-            "guess_hit": 2,
-            "guess_total": 10
+            "guess_hit": 5,
+            "guess_total": 45048
         },
         "user_name": "Ashton"
     },
@@ -12,8 +12,8 @@
         "statistics": {
             "games_played": 120,
             "games_win": 64,
-            "guess_hit": 17,
-            "guess_total": 88
+            "guess_hit": 26,
+            "guess_total": 11739
         },
         "user_name": "blazefury"
     },

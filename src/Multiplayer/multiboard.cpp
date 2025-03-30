@@ -471,8 +471,10 @@ void MultiBoard::processMessage(const QString &message)
     else if (message.startsWith("REVEAL:"))
     {
         QStringList coords = message.section(':', 1).split(',');
+        qDebug() << coords;
         if (coords.size() == 2)
         {
+            qDebug() << "Revealing tile at (" << coords[0] << ", " << coords[1] << ")";
             int row = coords[0].toInt();
             int col = coords[1].toInt();
             revealTile(row, col, false);
@@ -656,6 +658,7 @@ void MultiBoard::handleTileClick()
 
     if (m_isHost)
     {
+
         revealTile(row, col, true);
         checkGameEnd();
     }
@@ -728,6 +731,12 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         break;
     }
 
+    if(!m_isHost && broadcast) {
+            m_clientSocket->sendTextMessage(QString("REVEAL:%1,%2").arg(row).arg(col));
+        } else {
+            sendToAll(QString("REVEAL:%1,%2").arg(row).arg(col));
+        }
+
     // Check if correct guess
     bool correctCard = false;
     if (currentTeam == "red" && gameGrid[row][col].type == RED_TEAM)
@@ -754,14 +763,11 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         {
             users->miss(m_currentUsername);
         }
-        sendToAll(QString("REVEAL:%1,%2").arg(row).arg(col));
-        if (broadcast)
+         if (!m_isHost)
         {
+            m_clientSocket->sendTextMessage(QString("TURN_ADVANCE"));
+        } else {
             sendToAll(QString("TURN_ADVANCE"));
-        }
-        else
-        {
-            advanceTurn();
         }
         return;
     }
