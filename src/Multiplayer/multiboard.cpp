@@ -119,7 +119,7 @@ void MultiBoard::handleNewConnection()
 
 void MultiBoard::loadWordsFromFile()
 {
-    QFile file(":/resources/wordlist-eng.txt");
+    QFile file("resources/wordlist-eng.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qDebug() << "failed to open wordlist-eng.text file, using fallback";
