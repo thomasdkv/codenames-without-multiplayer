@@ -183,18 +183,6 @@ void MultiMain::onNewConnection()
 {
     QWebSocket *client = m_server->nextPendingConnection();
 
-    connect(client, &QWebSocket::textMessageReceived,
-            this, [this, client](const QString &message)
-            {
-            if(message.startsWith("USERNAME:")) {
-                QString username = message.mid(9);
-                m_usernames[client] = username;
-                m_usernames_list.append(username);
-            }
-            else {
-                processTextMessage(message);
-            } });
-
     connect(client, &QWebSocket::disconnected, this, &MultiMain::socketDisconnected);
     m_clients.append(client);
 }
@@ -205,7 +193,6 @@ void MultiMain::socketDisconnected()
     {
         m_clients.removeAll(client);
         m_usernames.remove(client);
-        m_usernames_list.removeOne(m_usernames[client]);
         client->deleteLater();
     }
 }
@@ -309,7 +296,6 @@ void MultiMain::onDisconnected()
         m_clientSocket->close();
     }
     QMessageBox::warning(this, "Disconnected", "Lost connection to room");
-    backToMainWindow();
     joinRoomButton->setEnabled(true);
 }
 

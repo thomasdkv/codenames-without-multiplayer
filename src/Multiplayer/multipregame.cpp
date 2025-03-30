@@ -234,6 +234,7 @@ void MultiPregame::processMessage(const QString &message)
     {
         QMessageBox::warning(this, "Username Taken", "Username Taken. Please choose a different username.");
         m_clientSocket->close();
+        this->close();
         emit backToMultiMain();
         return;
     }
