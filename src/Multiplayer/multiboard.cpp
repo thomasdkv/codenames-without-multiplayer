@@ -26,7 +26,7 @@ MultiBoard::MultiBoard(bool isHost, QWebSocketServer *server, QList<QWebSocket *
         qWarning() << "Invalid network configuration";
         return;
     }
-
+    
     // Setup network connections
     if (m_isHost)
     {
@@ -56,6 +56,9 @@ MultiBoard::MultiBoard(bool isHost, QWebSocketServer *server, QList<QWebSocket *
         generateGameGrid();
     }
 
+    redCardsRemaining = 9;
+    blueCardsRemaining = 8;
+
     setupUI();
 
     // Get current player's role
@@ -78,8 +81,6 @@ MultiBoard::MultiBoard(bool isHost, QWebSocketServer *server, QList<QWebSocket *
     gameVerticalLayout->addWidget(guess);
     guess->hide();
 
-    
-
     connect(hint, &SpymasterHint::hintSubmitted, this, &MultiBoard::advanceTurnSpymaster);
     connect(guess, &OperatorGuess::guessSubmitted, this, &MultiBoard::advanceTurn);
     setupBoard();
@@ -99,7 +100,7 @@ void MultiBoard::displayHint(const QString &hint, int number)
         correspondingNumber = QString::number(number);
     }
     currentHint->setText("Current hint: " + hint + " (" + correspondingNumber + ")"); // Update the hint
-     // Add the hint to the chat box
+                                                                                      // Add the hint to the chat box
     QString currSpymasterName = (m_currentTurnIndex == 0) ? "Red Spymaster" : "Blue Spymaster";
     QString teamColor = (m_currentTurnIndex == 0) ? "Red" : "Blue";
     QString chatNumber = (number == 0) ? "∞" : QString::number(number);
@@ -170,8 +171,7 @@ void MultiBoard::generateGameGrid()
     int assassinCards = 1;
     int neutralCards = 7;
 
-    redCardsRemaining = redCards;
-    blueCardsRemaining = blueCards;
+   
 
     QList<CardType> cardTypes;
     for (int i = 0; i < redCards; ++i)
@@ -255,53 +255,90 @@ void MultiBoard::sendInitialGameState()
     }
 }
 
-void MultiBoard::setupUI() {
+void MultiBoard::setupUI()
+{
+    // Apply main window styles
+    setStyleSheet(" font-family: 'Segoe UI', Arial, sans-serif;");
+    
     // Main horizontal layout that will hold grid area and chat box
     mainLayout = new QHBoxLayout(this);
+    mainLayout->setContentsMargins(20, 20, 20, 20);
+    mainLayout->setSpacing(25);   // Increased space between grid and chat
     
     // Create vertical layout for the game elements (left side)
     gameVerticalLayout = new QVBoxLayout();
+    gameVerticalLayout->setSpacing(15);
     
-    // Player info and turn display
+    // Player info and turn display with improved styling
     QHBoxLayout *infoLayout = new QHBoxLayout();
     m_playerInfoLabel = new QLabel(this);
+    m_playerInfoLabel->setStyleSheet("font-size: 16px; font-weight: bold; color: #fff; padding: 5px;");
+    m_playerInfoLabel->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
+    m_playerInfoLabel->setWordWrap(true);
+    
     m_turnLabel = new QLabel(this);
+    m_turnLabel->setStyleSheet("font-size: 16px; font-weight: bold; color: #fff; padding: 5px;");
+    m_turnLabel->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
+    m_turnLabel->setWordWrap(true);
+    
     infoLayout->addWidget(m_playerInfoLabel);
     infoLayout->addStretch();
     infoLayout->addWidget(m_turnLabel);
     gameVerticalLayout->addLayout(infoLayout);
     
-    // Add current hint label between the player info and the grid
+    // Add current hint label with enhanced styling and word wrap
     currentHint = new QLabel("Current hint: ");
     currentHint->setAlignment(Qt::AlignCenter);
-    currentHint->setStyleSheet("font-weight: bold; font-size: 20px; color: black; ");
-    gameVerticalLayout->addWidget(currentHint);  // Insert it here
+    currentHint->setStyleSheet("font-weight: bold; font-size: 22px; color: #fff; padding: 10px; border-radius: 8px;");
+    currentHint->setWordWrap(true);
+    currentHint->setMinimumHeight(50);
+    gameVerticalLayout->addWidget(currentHint);
     
-    // Add grid layout to game vertical layout
+   
+        // Remaining red and blue cards
+    QHBoxLayout *cardsRemainingLayout = new QHBoxLayout();
+
+    redCardText = new QLabel("Red Cards Remaining: " + QString::number(redCardsRemaining));
+    redCardText->setStyleSheet("color: red; font-weight: bold; font-size: 16px;");
+
+    blueCardText = new QLabel("Blue Cards Remaining: " + QString::number(blueCardsRemaining));
+    blueCardText->setStyleSheet("color: blue; font-weight: bold; font-size: 16px;");
+
+    cardsRemainingLayout->addWidget(redCardText);
+    cardsRemainingLayout->addStretch();
+    cardsRemainingLayout->addWidget(blueCardText);
+    
+    gameVerticalLayout->addLayout(cardsRemainingLayout);
+    
+    // Add grid layout with spacing and styling
     m_grid = new QGridLayout();
+    m_grid->setSpacing(10);
     gameVerticalLayout->addLayout(m_grid);
     
     // Add the game vertical layout to the main horizontal layout
     mainLayout->addLayout(gameVerticalLayout);
     
-    // Add chat box to the right
+    // Add chat box to the right with styling
     chatBox = new ChatBox(m_currentUsername, ChatBox::RED_TEAM, this);
+    chatBox->setMinimumWidth(250); // Ensure chat box has enough width
     connect(chatBox, &ChatBox::massSend, this, &MultiBoard::processChatMessage);
     mainLayout->addWidget(chatBox);
     
-    // Set spacing and stretch factors
-    mainLayout->setStretch(0, 3);  // Grid takes more space
-    mainLayout->setStretch(1, 1);  // Chat box takes less space
-    mainLayout->setSpacing(20);    // Space between grid and chat
+    // Set stretch factors
+    mainLayout->setStretch(0, 7); // Grid takes more space
+    mainLayout->setStretch(1, 3); // Chat box takes reasonable space
     
     setLayout(mainLayout);
 }
 
-void MultiBoard::processChatMessage(const QString& playerName,const QString& message) {
-    if(!m_isHost) {
+void MultiBoard::processChatMessage(const QString &playerName, const QString &message)
+{
+    if (!m_isHost)
+    {
         m_clientSocket->sendTextMessage("MESSAGE: " + playerName + " | " + message);
     }
-    else {
+    else
+    {
         sendToAll("MESSAGE: " + playerName + " | " + message);
     }
 }
@@ -571,21 +608,22 @@ void MultiBoard::processMessage(const QString &message)
             qDebug() << "Invalid UPDATE_HINT format: " << message;
         }
     }
-    else if (message.startsWith("MESSAGE:")) {
+    else if (message.startsWith("MESSAGE:"))
+    {
         QString sender = message.section(':', 1, 1).section('|', 0, 0).trimmed();
         // Extract message text
         QString messageText = message.section('|', 1).trimmed();
         // Add to chat box
         chatBox->addPlayerMessage(sender, messageText);
     }
-    else if (message.startsWith("END_GAME:"))
-    {
-        qDebug() << "Received END_GAME message: " << message;
-        QString winMessage = message.section(':', 1);
-        QMessageBox::warning(this, "Won", "Game Over! " + winMessage);
-        emit goBack();
-        this->close();
-    } 
+    else if (message.startsWith("RED")) {
+        redCardsRemaining--;
+        redCardText->setText("Red Cards Remaining: " + QString::number(redCardsRemaining));
+    }
+    else if (message.startsWith("BLUE")) {
+        blueCardsRemaining--;
+        blueCardText->setText("Blue Cards Remaining: " + QString::number(blueCardsRemaining));
+    }
 }
 
 bool MultiBoard::isMyTurn() const
@@ -708,19 +746,20 @@ void MultiBoard::handleTileClick()
     }
     else
     {
-        revealTile(row, col, false);
         m_clientSocket->sendTextMessage(QString("REVEAL:%1,%2").arg(row).arg(col));
     }
-    QString currOperativeName = (m_currentTurnIndex == 1) ? "Red Operative" : "Blue Operative";
-    QString teamColor = (m_currentTurnIndex == 1) ? "Red" : "Blue";
-    QString hintMessage = currOperativeName + " taps " + gameGrid[row][col].word;
-    chatBox->addSystemMessage(hintMessage, (m_currentTurnIndex == RED_OP) ? ChatBox::RED_TEAM : ChatBox::BLUE_TEAM);
 }
 
 void MultiBoard::revealTile(int row, int col, bool broadcast)
 {
     if (row < 0 || row >= GRID_SIZE || col < 0 || col >= GRID_SIZE)
         return;
+
+
+        QString currOperativeName = (m_currentTurnIndex == 1 || m_currentTurnIndex == 2) ? "Red Operative" : "Blue Operative";
+        QString teamColor = (m_currentTurnIndex == 1 || m_currentTurnIndex == 2) ? "Red" : "Blue";
+        QString hintMessage = currOperativeName + " taps " + gameGrid[row][col].word;
+        chatBox->addSystemMessage(hintMessage, (m_currentTurnIndex == RED_OP || m_currentTurnIndex == BLUE_SPY) ? ChatBox::RED_TEAM : ChatBox::BLUE_TEAM);
 
     gameGrid[row][col].revealed = true;
     QPushButton *btn = m_tiles.at(row * GRID_SIZE + col);
@@ -735,16 +774,26 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
     QString currentTeam = parts[0];
     QString currentRole = parts[1];
 
+    if (!m_isHost && broadcast)
+    {
+        m_clientSocket->sendTextMessage(QString("REVEAL:%1,%2").arg(row).arg(col));
+    }
+    else
+    {
+        sendToAll(QString("REVEAL:%1,%2").arg(row).arg(col));
+    }
     // Set card color based on type
     switch (gameGrid[row][col].type)
     {
         qDebug() << "Type: " << gameGrid[row][col].type;
+
     case RED_TEAM:
 
         btn->setStyleSheet("background-color: #ff9999; color: black");
         if (m_isHost)
         {
             redCardsRemaining--;
+            sendToAll(QString("RED"));
             if (redCardsRemaining == 0)
             {
                 endGame("Red team wins!");
@@ -757,6 +806,7 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         if (m_isHost)
         {
             blueCardsRemaining--;
+            sendToAll(QString("BLUE"));
             if (blueCardsRemaining == 0)
             {
                 endGame("Blue team wins!");
@@ -778,12 +828,6 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         }
         break;
     }
-
-    if(!m_isHost && broadcast) {
-            m_clientSocket->sendTextMessage(QString("REVEAL:%1,%2").arg(row).arg(col));
-        } else {
-            sendToAll(QString("REVEAL:%1,%2").arg(row).arg(col));
-        }
 
     // Check if correct guess
     bool correctCard = false;
@@ -811,10 +855,12 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         {
             users->miss(m_currentUsername);
         }
-         if (!m_isHost)
+        if (!m_isHost)
         {
             m_clientSocket->sendTextMessage(QString("TURN_ADVANCE"));
-        } else {
+        }
+        else
+        {
             sendToAll(QString("TURN_ADVANCE"));
         }
         return;
@@ -852,7 +898,7 @@ void MultiBoard::endGame(const QString &message)
                     qobject_cast<MultiPregame *>(this->parent()),
                     &MultiPregame::processMessage);
         }
-        QMessageBox::warning(this, "Won", "Game Over! " + message);
+        QMessageBox::information(this, "Won", "Game Over! " + message);
 
         emit goBack();
         this->deleteLater();
@@ -881,7 +927,7 @@ void MultiBoard::endGame(const QString &message)
                 }
             }
         }
-        QMessageBox::warning(this, "Won", "Game Over! " + message);
+        QMessageBox::information(this, "Won", "Game Over! " + message);
 
         emit goBack();
         this->deleteLater();

@@ -47,6 +47,7 @@ private:
     QList<QWebSocket*> m_clients;
     QMap<QWebSocket*, QString> m_usernames;
     QMap<QWebSocket*, QString> m_roles;
+    QMap<QWebSocket*, bool> m_checked;
     
     QListWidget* playerList;
     QString m_username;

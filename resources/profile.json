@@ -3,8 +3,8 @@
         "statistics": {
             "games_played": 0,
             "games_win": 0,
-            "guess_hit": 5,
-            "guess_total": 45049
+            "guess_hit": 7,
+            "guess_total": 45052
         },
         "user_name": "Ashton"
     },
@@ -12,8 +12,8 @@
         "statistics": {
             "games_played": 120,
             "games_win": 64,
-            "guess_hit": 26,
-            "guess_total": 11740
+            "guess_hit": 31,
+            "guess_total": 11752
         },
         "user_name": "blazefury"
     },
@@ -21,8 +21,8 @@
         "statistics": {
             "games_played": 87,
             "games_win": 67,
-            "guess_hit": 0,
-            "guess_total": 52
+            "guess_hit": 4,
+            "guess_total": 57
         },
         "user_name": "cyberwolf"
     },

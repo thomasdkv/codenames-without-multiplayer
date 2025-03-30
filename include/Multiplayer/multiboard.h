@@ -94,6 +94,9 @@ private:
     SpymasterHint* hint;
     OperatorGuess* guess;
 
+    QLabel* blueCardText;
+    QLabel* redCardText;
+
 
     // Game state
     QStringList m_words;

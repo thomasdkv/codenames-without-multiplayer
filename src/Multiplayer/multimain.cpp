@@ -307,6 +307,7 @@ void MultiMain::onDisconnected()
         m_clientSocket->close();
     }
     QMessageBox::warning(this, "Disconnected", "Lost connection to room");
+    backToMainWindow();
     joinRoomButton->setEnabled(true);
 }
 
