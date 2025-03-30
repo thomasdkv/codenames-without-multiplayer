@@ -67,7 +67,7 @@ void MultiPregame::clearUI()
 }
 void MultiPregame::setupUI()
 {
-    setFixedSize(1000, 800);
+    setFixedSize(1000, 600);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
 

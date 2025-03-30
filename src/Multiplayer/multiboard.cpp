@@ -20,6 +20,7 @@ MultiBoard::MultiBoard(bool isHost, QWebSocketServer *server, QList<QWebSocket *
       m_currentTurnIndex(0),
       m_turnOrder{"red_spymaster", "red_operative", "blue_spymaster", "blue_operative"}
 {
+    
     // Ensure server and client pointers are valid
     if (!m_server && !m_clientSocket)
     {
@@ -257,6 +258,7 @@ void MultiBoard::sendInitialGameState()
 
 void MultiBoard::setupUI()
 {
+    setFixedSize(1000, 600);
     // Apply main window styles
     setStyleSheet(" font-family: 'Segoe UI', Arial, sans-serif;");
     

@@ -26,19 +26,19 @@ MultiMain::MultiMain(QWidget *parent)
     titleLabel->setAlignment(Qt::AlignCenter);
     titleLabel->setStyleSheet("font-weight: bold; font-size: 50px;");
 
-    // Button styling
-    QString buttonStyles = "QPushButton {"
-                           "   background-color: rgb(65, 42, 213);"
-                           "   color: white;"
-                           "   border-radius: 5px;"
-                           "   border: 2px solid #412AD5;"
-                           "   padding: 5px;"
-                           "   font-weight: bold;"
-                           "   font-size: 20px;"
-                           "}"
-                           "QPushButton:hover {"
-                           "   background-color: rgb(54, 35, 177);"
-                           "}";
+   QString buttonStyles =
+      "QPushButton {"
+      "   background-color:rgb(65, 42, 213);"
+      "   color: white;"
+      "   border-radius: 5px;"
+      "   border: 2px solid #412AD5;"
+      "   padding: 5px;"
+      "   font-weight: bold;"
+      "   font-size: 20px;"
+      "}"
+      "QPushButton:hover {"
+      "   background-color: rgb(54, 35, 177);"  // Hover background color
+      "}";
 
     // Function to create styled buttons with drop shadows
     auto createButton = [this, &buttonStyles](const QString &text)
