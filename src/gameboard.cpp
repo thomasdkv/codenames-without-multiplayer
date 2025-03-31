@@ -112,9 +112,8 @@ void GameBoard::generateGameGrid() {
     }
 
     // Assign card types (Codenames rules: 9 for starting team, 8 for other team, 1 assassin, 7 neutral)
-    bool redStarts = QRandomGenerator::global()->bounded(2) == 0;
-    int redCards = redStarts ? 9 : 8;
-    int blueCards = redStarts ? 8 : 9;
+    int redCards = 9;
+    int blueCards = 8;
     int assassinCards = 1;
     int neutralCards = 7;
 
