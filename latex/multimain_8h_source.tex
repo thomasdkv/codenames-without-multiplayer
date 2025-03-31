@@ -1,0 +1,77 @@
+\doxysection{multimain.\+h}
+\hypertarget{multimain_8h_source}{}\label{multimain_8h_source}\index{include/Multiplayer/multimain.h@{include/Multiplayer/multimain.h}}
+\mbox{\hyperlink{multimain_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ MULTIMAIN\_H}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ MULTIMAIN\_H}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <QWidget>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QVBoxLayout>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QLabel>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <QPushButton>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <QListWidget>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <QWebSocketServer>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <QWebSocket>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QMap>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <QComboBox>}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{user_8h}{user.h}}"{}}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_multi_main_a55b43f396db7e54d5c0d0653b23c55c9}{MultiMain}}\ :\ \textcolor{keyword}{public}\ QWidget}
+\DoxyCodeLine{00033\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00035\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_multi_main_a55b43f396db7e54d5c0d0653b23c55c9}{MultiMain}}(QWidget\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{class_multi_main_a01bb507e81fb3077b65fa7a051e3c0c8}{\string~MultiMain}}();}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_a14b8d688d6aa246d01ccdec81826497c}{showMainWindow}}();}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ signals:}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_a1301335dc917da11e4204c9d565e5591}{backToMainWindow}}();}
+\DoxyCodeLine{00074\ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_aaf0e2a2422fd7648ccacb9fca42c47a1}{enterPregameAsHost}}(QWebSocketServer*\ server,\ \textcolor{keyword}{const}\ QString\&\ username);}
+\DoxyCodeLine{00085\ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_ac205774445d5deb64f0e8e41961c196e}{enterPregameAsClient}}(QWebSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ username);}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \textcolor{keyword}{private}\ slots:}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_afe7bef8f376fe56454fca74f94aef2cd}{openMainWindow}}();}
+\DoxyCodeLine{00107\ \ \ \ \ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_aa69c6de77922c5d1cf9a718df77885da}{onCreateRoomClicked}}();}
+\DoxyCodeLine{00117\ \ \ \ \ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_a7ee01b29994c07ebd407dc2305dce122}{onJoinRoomClicked}}();}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_abc2d299bfe335010fe0a881b85a3cd48}{onNewConnection}}();}
+\DoxyCodeLine{00138\ \ \ \ \ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_acc0ec68a4b190d83c424b7e5f263b666}{processTextMessage}}(QString\ message);}
+\DoxyCodeLine{00150\ \ \ \ \ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_ae0a87e6bd8710d0726ac373987c67b07}{socketDisconnected}}();}
+\DoxyCodeLine{00160\ \ \ \ \ }
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_a63da0f1b6486012aa1718c8fdc1d533e}{onConnected}}();}
+\DoxyCodeLine{00170\ \ \ \ \ }
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_ad208ca5dc7cc59c67eb6976eb7da8481}{onDisconnected}}();}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{comment}{//\ Network\ members}}
+\DoxyCodeLine{00184\ \ \ \ \ QWebSocketServer\ *\mbox{\hyperlink{class_multi_main_a5503757149674ce83ff064db1d51cb82}{m\_server}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00186\ \ \ \ \ QWebSocket\ *\mbox{\hyperlink{class_multi_main_a8ded05cb111a011a7cd0c397271143bd}{m\_clientSocket}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00188\ \ \ \ \ QList<QWebSocket*>\ \mbox{\hyperlink{class_multi_main_a856559bf1eb95a0315774a02def2df61}{m\_clients}};}
+\DoxyCodeLine{00190\ \ \ \ \ QMap<QWebSocket*,\ QString>\ \mbox{\hyperlink{class_multi_main_a97509e032afe4bc015b5458211eed4f3}{m\_usernames}};}
+\DoxyCodeLine{00192\ \ \ \ \ QString\ \mbox{\hyperlink{class_multi_main_acf3cfd4a911cbd93461260413b32c891}{m\_username}};}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{comment}{//\ UI\ members}}
+\DoxyCodeLine{00196\ \ \ \ \ QLabel\ *\mbox{\hyperlink{class_multi_main_a94bea889e15ed2e98e28c9e94c96c889}{titleLabel}};}
+\DoxyCodeLine{00198\ \ \ \ \ QPushButton\ *\mbox{\hyperlink{class_multi_main_a03dfb5df0f970998e8ba94b407843a72}{createRoomButton}};}
+\DoxyCodeLine{00200\ \ \ \ \ QPushButton\ *\mbox{\hyperlink{class_multi_main_a3e9acb6b406c010d4f35278b16b1b517}{joinRoomButton}};}
+\DoxyCodeLine{00202\ \ \ \ \ QPushButton\ *\mbox{\hyperlink{class_multi_main_aa78fc87215da6b04fc049fe830bc13a0}{backButton}};}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_ab115377353da904540afc0fbe11745f6}{updateLobbyList}}();}
+\DoxyCodeLine{00213\ \ \ \ \ }
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_main_a587b7e3e5211b139c2d088be4b7de80e}{sendLobbyListToAll}}();}
+\DoxyCodeLine{00223\ \};}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ MULTIMAIN\_H}}
+
+\end{DoxyCode}

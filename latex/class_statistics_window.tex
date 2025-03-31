@@ -1,0 +1,117 @@
+\doxysection{Statistics\+Window Class Reference}
+\hypertarget{class_statistics_window}{}\label{class_statistics_window}\index{StatisticsWindow@{StatisticsWindow}}
+
+
+The class that shows the Statistics screen.  
+
+
+
+
+{\ttfamily \#include $<$statisticswindow.\+h$>$}
+
+Inheritance diagram for Statistics\+Window\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_statistics_window}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_statistics_window_af5740db320d09141ead7bd7ff28a5de5}\label{class_statistics_window_af5740db320d09141ead7bd7ff28a5de5} 
+void {\bfseries show} ()
+\begin{DoxyCompactList}\small\item\em show the statistics screen \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_statistics_window_aaeeb374c72cd22cbe0c791461871daa6}\label{class_statistics_window_aaeeb374c72cd22cbe0c791461871daa6} 
+void {\bfseries back\+To\+Main\+Window} ()
+\begin{DoxyCompactList}\small\item\em Go back to the main window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_statistics_window_a1f64f1f0ab2d755975acf988096a0a46}{Statistics\+Window}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Construct a new Statistics Window object. \end{DoxyCompactList}\item 
+\Hypertarget{class_statistics_window_a380e9a6974d1005b37bf8d23d40ef774}\label{class_statistics_window_a380e9a6974d1005b37bf8d23d40ef774} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Statistics\+Window} ()
+\begin{DoxyCompactList}\small\item\em Destructor for statistics screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_statistics_window_ace377471b89b0b561cec242915cdb924}\label{class_statistics_window_ace377471b89b0b561cec242915cdb924} 
+void {\bfseries go\+Back\+To\+Main} ()
+\begin{DoxyCompactList}\small\item\em to back to the main window \end{DoxyCompactList}\item 
+\Hypertarget{class_statistics_window_a828f4b2e180d82908efc57de41d0f8fb}\label{class_statistics_window_a828f4b2e180d82908efc57de41d0f8fb} 
+void {\bfseries show\+User\+Stats} ()
+\begin{DoxyCompactList}\small\item\em showing the user stats after clicking the button \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_statistics_window_a4ba00d8f61e5d8560719e596444b88f3}\label{class_statistics_window_a4ba00d8f61e5d8560719e596444b88f3} 
+void {\bfseries populate\+Drop\+Down} ()
+\begin{DoxyCompactList}\small\item\em populate the drop down button with the usernames \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_statistics_window_a026da9d0eec66cb4b9f9980e781e3a85}\label{class_statistics_window_a026da9d0eec66cb4b9f9980e781e3a85} 
+\mbox{\hyperlink{class_user}{User}} \texorpdfstring{$\ast$}{*} {\bfseries users}
+\begin{DoxyCompactList}\small\item\em the users instance \end{DoxyCompactList}\item 
+\Hypertarget{class_statistics_window_ad92b33fb23e5841b5b6becad923ea03c}\label{class_statistics_window_ad92b33fb23e5841b5b6becad923ea03c} 
+QPush\+Button \texorpdfstring{$\ast$}{*} {\bfseries back\+To\+Main\+Button}
+\begin{DoxyCompactList}\small\item\em button to click to go back to main \end{DoxyCompactList}\item 
+\Hypertarget{class_statistics_window_ab99f3b7a634ac384335897c111771804}\label{class_statistics_window_ab99f3b7a634ac384335897c111771804} 
+QCombo\+Box \texorpdfstring{$\ast$}{*} {\bfseries username\+Combo\+Box}
+\begin{DoxyCompactList}\small\item\em the drop down box of usernames \end{DoxyCompactList}\item 
+\Hypertarget{class_statistics_window_a46d11cef11130c7527a6560a6e0b4c23}\label{class_statistics_window_a46d11cef11130c7527a6560a6e0b4c23} 
+QPush\+Button \texorpdfstring{$\ast$}{*} {\bfseries show\+User\+Stats\+Button}
+\begin{DoxyCompactList}\small\item\em the button to show the user stats after choosing in drop down menu \end{DoxyCompactList}\item 
+\Hypertarget{class_statistics_window_a8a4dee68184ef0f8076cb6cd30fe874b}\label{class_statistics_window_a8a4dee68184ef0f8076cb6cd30fe874b} 
+QString {\bfseries username}
+\begin{DoxyCompactList}\small\item\em the username of the user \end{DoxyCompactList}\item 
+\Hypertarget{class_statistics_window_a7ed8ed565c48d0c7ed604453dcb27191}\label{class_statistics_window_a7ed8ed565c48d0c7ed604453dcb27191} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries username\+Title}
+\begin{DoxyCompactList}\small\item\em title of username \end{DoxyCompactList}\item 
+\Hypertarget{class_statistics_window_a5e8aa4522d185548746321f805d94bbb}\label{class_statistics_window_a5e8aa4522d185548746321f805d94bbb} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries games\+Played\+Stats}
+\begin{DoxyCompactList}\small\item\em the number of games played of the user \end{DoxyCompactList}\item 
+\Hypertarget{class_statistics_window_ab8ffa1332ab0b51c5a86a16d5bf7138e}\label{class_statistics_window_ab8ffa1332ab0b51c5a86a16d5bf7138e} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries games\+Win\+Stats}
+\begin{DoxyCompactList}\small\item\em the number of games win of the user \end{DoxyCompactList}\item 
+\Hypertarget{class_statistics_window_a4d951de6c99e664bd0e515ebb995ae2c}\label{class_statistics_window_a4d951de6c99e664bd0e515ebb995ae2c} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries games\+Win\+Rate\+Stats}
+\begin{DoxyCompactList}\small\item\em the win rate of the user \end{DoxyCompactList}\item 
+\Hypertarget{class_statistics_window_aaa5c558eeba2ceebfbe3abaad9246a3a}\label{class_statistics_window_aaa5c558eeba2ceebfbe3abaad9246a3a} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries guess\+Total\+Stats}
+\begin{DoxyCompactList}\small\item\em the number of guess total of the user \end{DoxyCompactList}\item 
+\Hypertarget{class_statistics_window_a5ac5febea338455b45ce28edb42e8849}\label{class_statistics_window_a5ac5febea338455b45ce28edb42e8849} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries guess\+Hit\+Stats}
+\begin{DoxyCompactList}\small\item\em the number of correct guess of the user \end{DoxyCompactList}\item 
+\Hypertarget{class_statistics_window_a1eaf904a956e6f5aeaf6778d077c5943}\label{class_statistics_window_a1eaf904a956e6f5aeaf6778d077c5943} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries guess\+Hit\+Rate\+Stats}
+\begin{DoxyCompactList}\small\item\em the guess hit rate of the user \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The class that shows the Statistics screen. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_statistics_window_a1f64f1f0ab2d755975acf988096a0a46}\index{StatisticsWindow@{StatisticsWindow}!StatisticsWindow@{StatisticsWindow}}
+\index{StatisticsWindow@{StatisticsWindow}!StatisticsWindow@{StatisticsWindow}}
+\doxysubsubsection{\texorpdfstring{StatisticsWindow()}{StatisticsWindow()}}
+{\footnotesize\ttfamily \label{class_statistics_window_a1f64f1f0ab2d755975acf988096a0a46} 
+Statistics\+Window\+::\+Statistics\+Window (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Construct a new Statistics Window object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & the parent of the statistics window screen \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{statisticswindow_8h}{statisticswindow.\+h}}\end{DoxyCompactItemize}

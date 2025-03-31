@@ -320,10 +320,10 @@ void MultiBoard::setupUI()
     QHBoxLayout *cardsRemainingLayout = new QHBoxLayout();
 
     redCardText = new QLabel("Red Cards Remaining: " + QString::number(redCardsRemaining));
-    redCardText->setStyleSheet("color: red; font-weight: bold; font-size: 16px;");
+    redCardText->setStyleSheet("color: #ff9999; font-weight: bold; font-size: 16px;");
 
     blueCardText = new QLabel("Blue Cards Remaining: " + QString::number(blueCardsRemaining));
-    blueCardText->setStyleSheet("color: blue; font-weight: bold; font-size: 16px;");
+    blueCardText->setStyleSheet("color: #9999ff; font-weight: bold; font-size: 16px;");
 
     cardsRemainingLayout->addWidget(redCardText);
     cardsRemainingLayout->addStretch();

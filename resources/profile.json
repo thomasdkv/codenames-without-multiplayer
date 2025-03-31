@@ -57,8 +57,8 @@
         "statistics": {
             "games_played": 0,
             "games_win": 0,
-            "guess_hit": 0,
-            "guess_total": 0
+            "guess_hit": 1,
+            "guess_total": 2
         },
         "user_name": "dd"
     },

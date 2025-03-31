@@ -1,0 +1,49 @@
+\doxysection{tutorial.\+h}
+\hypertarget{tutorial_8h_source}{}\label{tutorial_8h_source}\index{include/tutorial.h@{include/tutorial.h}}
+\mbox{\hyperlink{tutorial_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ TUTORIAL\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ TUTORIAL\_H}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <QMainWindow>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <QWidget>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QVBoxLayout>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QLabel>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <QCloseEvent>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <QPushButton>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <QGraphicsDropShadowEffect>}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_tutorial_ac988a21cc958e8feb362ad6df3f66468}{Tutorial}}\ :\ \textcolor{keyword}{public}\ QMainWindow\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_tutorial_ac988a21cc958e8feb362ad6df3f66468}{Tutorial}}(QWidget\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{class_tutorial_a6a7f12f75952c7d801c12aed8179f510}{\string~Tutorial}}();}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ signals:}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_tutorial_adcd4d78438d08c592c8caadffa3ce089}{tutorialClosed}}();}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_tutorial_aa7e2cfa62f4db4764600341f04615068}{closeEvent}}(QCloseEvent*\ event)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{private}\ slots:}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_tutorial_a4380c9eda4293d6ee2b768eb9fa9b3c5}{onContinueClicked}}();}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_tutorial_ad426951f0c15f8fb9164af368c0f37c4}{updateContinueButtonPosition}}();}
+\DoxyCodeLine{00060\ \ \ \ \ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_tutorial_ae98ee550a2c8b062652091f9ef637fe1}{resetTutorial}}();}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ QWidget*\ \mbox{\hyperlink{class_tutorial_a707a281b594310921a2a251057f74323}{centralWidget}};\ }
+\DoxyCodeLine{00067\ \ \ \ \ QLabel*\ \mbox{\hyperlink{class_tutorial_a54964c4894a8cbfeeb194976e521fb66}{titleLabel}};\ }
+\DoxyCodeLine{00068\ \ \ \ \ QLabel*\ \mbox{\hyperlink{class_tutorial_ab4d6bd181e1bc735c2147807448c5994}{textBox}};\ }
+\DoxyCodeLine{00069\ \ \ \ \ QPushButton*\ \mbox{\hyperlink{class_tutorial_a0550361f9ce790e0128018f98c7be869}{continueButton}};\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_tutorial_ac45108629c0f02b8b4a1ad939fb3c468}{clickCount}};\ }
+\DoxyCodeLine{00071\ \};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TUTORIAL\_H}}
+
+\end{DoxyCode}

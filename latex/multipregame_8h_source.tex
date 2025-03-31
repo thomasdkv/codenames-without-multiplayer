@@ -1,0 +1,76 @@
+\doxysection{multipregame.\+h}
+\hypertarget{multipregame_8h_source}{}\label{multipregame_8h_source}\index{include/Multiplayer/multipregame.h@{include/Multiplayer/multipregame.h}}
+\mbox{\hyperlink{multipregame_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ MULTIPREGAME\_H}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ MULTIPREGAME\_H}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <QWidget>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QWebSocketServer>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QWebSocket>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <QListWidget>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <QVBoxLayout>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <QLabel>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <QPushButton>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QInputDialog>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <QMessageBox>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <QNetworkInterface>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <QLoggingCategory>}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_multi_pregame_a1aa26e75a37a82f3d3148f3778fb6f5b}{MultiPregame}}\ :\ \textcolor{keyword}{public}\ QWidget\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00034\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{class_multi_pregame_a1aa26e75a37a82f3d3148f3778fb6f5b}{MultiPregame}}(QWebSocketServer*\ server,\ \textcolor{keyword}{const}\ QString\&\ username,\ QWidget*\ parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00048\ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{class_multi_pregame_a723ea2499d3746f8b279c36be66d6786}{MultiPregame}}(QWebSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ username,\ QWidget*\ parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00062\ \ \ \ \ }
+\DoxyCodeLine{00070\ \ \ \ \ \mbox{\hyperlink{class_multi_pregame_a7aa334d7fbfc7497932a95ebbef202fe}{\string~MultiPregame}}();}
+\DoxyCodeLine{00071\ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_a4bf820169550d9afe821c31d205092bc}{clearUI}}();}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ signals:}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_a87099942adfd012a94ef3e7edba0fbc0}{backToMultiMain}}();}
+\DoxyCodeLine{00090\ \ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_aeca0ed31ecad80ae917c9ac98a4d4a64}{enterPregameAsHost}}(QWebSocketServer*\ server,\ \textcolor{keyword}{const}\ QString\&\ username);}
+\DoxyCodeLine{00101\ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_ad362b1f54f89ff6a9b2540e0f7de49bf}{enterPregameAsClient}}(QWebSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ username);}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{keyword}{public}\ slots:}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_aaf75f2122e097f00fc2689ddb03ccb6b}{onNewConnection}}();}
+\DoxyCodeLine{00124\ \ \ \ \ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_ac67350e7f2fd7f5a804c5c16c1a31df3}{processMessage}}(\textcolor{keyword}{const}\ QString\&\ message);}
+\DoxyCodeLine{00137\ \ \ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_a357f03cfcf8c0c9a8ff84e0b8e407141}{socketDisconnected}}();}
+\DoxyCodeLine{00147\ \ \ \ \ }
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_a315cb9c5c7b292094985e0a9ac9c2b59}{startGame}}();}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_afaed404249d2b9ff0f4796e163d4e8c3}{resetUIState}}();}
+\DoxyCodeLine{00169\ \ \ \ \ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_a493339efebfd8de00bdbac2299da12a5}{setupUI}}();}
+\DoxyCodeLine{00179\ \ \ \ \ }
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_a06f0c0df5c015b8bc3cc40e6abd8d47c}{sendLobbyUpdate}}();}
+\DoxyCodeLine{00189\ \ \ \ \ }
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_a82812febbe4b0a385b9a5d36dc7bd4d5}{handleRoleSelection}}(\textcolor{keyword}{const}\ QString\&\ message,\ QWebSocket*\ sender);}
+\DoxyCodeLine{00202\ \ \ \ \ }
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_a03ca0127c89c8975c8afe832ab429808}{gameStarted}}(\textcolor{keywordtype}{bool}\ isHost,\ QWebSocketServer*\ server,\ \textcolor{keyword}{const}\ QList<QWebSocket*>\&\ clients,\ QWebSocket*\ clientSocket,\ \textcolor{keyword}{const}\ QHash<QString,\ QString>\&\ playerRoles);}
+\DoxyCodeLine{00218\ \ \ \ \ }
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_multi_pregame_a2d1f422c0c5dccf8eae6270119cb5064}{showPregame}}();}
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00230\ \ \ \ \ QWebSocketServer*\ \mbox{\hyperlink{class_multi_pregame_a13c2b0e16b52e0fd82d86284b57de864}{m\_server}}\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ }
+\DoxyCodeLine{00232\ \ \ \ \ QWebSocket*\ \mbox{\hyperlink{class_multi_pregame_a31b90659afe075a2baffe71e07a9f876}{m\_clientSocket}}\ =\ \textcolor{keyword}{nullptr};\ \ \ \ }
+\DoxyCodeLine{00234\ \ \ \ \ QList<QWebSocket*>\ \mbox{\hyperlink{class_multi_pregame_a49e1c3c856a073c10c7face250c29bb4}{m\_clients}};\ \ \ \ \ }
+\DoxyCodeLine{00236\ \ \ \ \ QMap<QWebSocket*,\ QString>\ \mbox{\hyperlink{class_multi_pregame_a6fddc085cfb73247b487374e9e17702a}{m\_usernames}};\ \ \ }
+\DoxyCodeLine{00238\ \ \ \ \ QMap<QWebSocket*,\ QString>\ \mbox{\hyperlink{class_multi_pregame_abc5e39b59e12177b28b6b0ec0199ceae}{m\_roles}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00240\ \ \ \ \ QMap<QWebSocket*,\ bool>\ \mbox{\hyperlink{class_multi_pregame_a76392b76eae0a4decaf1cffe5dd457f4}{m\_checked}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00241\ \ \ \ \ }
+\DoxyCodeLine{00243\ \ \ \ \ QListWidget*\ \mbox{\hyperlink{class_multi_pregame_ab7823285342dc87432d4b361616fe71e}{playerList}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00245\ \ \ \ \ QString\ \mbox{\hyperlink{class_multi_pregame_a3a53c7ed5191bd318e990c8d46192ad8}{m\_username}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_multi_pregame_aa7a1c5b4d603c3764588f89b7aec2e55}{m\_isHost}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00248\ \};}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00250\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ MULTIPREGAME\_H}}
+
+\end{DoxyCode}

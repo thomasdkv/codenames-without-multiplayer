@@ -1,0 +1,446 @@
+\doxysection{User Class Reference}
+\hypertarget{class_user}{}\label{class_user}\index{User@{User}}
+
+
+\doxylink{class_user}{User} class to handle local log in and loading/storing json files. This is a singleton class.  
+
+
+
+
+{\ttfamily \#include $<$user.\+h$>$}
+
+Inheritance diagram for User\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_user}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_user_ac8a201055d02b313721e56c4c0f6af82}\label{class_user_ac8a201055d02b313721e56c4c0f6af82} 
+void {\bfseries show} ()
+\begin{DoxyCompactList}\small\item\em show the current screen \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_user_aa64d4399cc4c4b82471e6f4a4ef2334a}\label{class_user_aa64d4399cc4c4b82471e6f4a4ef2334a} 
+void {\bfseries back\+To\+Main\+Menu} ()
+\begin{DoxyCompactList}\small\item\em signal to go to main menu \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_user_ac00b72ad64eb4149f7b21b9f5468c2b2}\label{class_user_ac00b72ad64eb4149f7b21b9f5468c2b2} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+User} ()
+\begin{DoxyCompactList}\small\item\em Destructor of user class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_user_acee4af06972e8447a6d3dc8c43157ead}{update\+Games\+Played}} (const QString \&username, const unsigned int \&new\+Games\+Played)
+\begin{DoxyCompactList}\small\item\em Update the number of games played by a user. \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_user_ae14d708e14862ebb44070598464ef814}{get\+Games\+Played}} (const QString \&username) const
+\begin{DoxyCompactList}\small\item\em Get the number of games played by a user. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_user_ac935df40802efdf0fadccbd2785e7fae}{update\+Wins}} (const QString \&username, const unsigned int \&new\+Wins)
+\begin{DoxyCompactList}\small\item\em Update the number of wins a user has. \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_user_a68bab610831df0afbe85ff64e7a26d4b}{get\+Wins}} (const QString \&username) const
+\begin{DoxyCompactList}\small\item\em Get the number of wins the user has. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_user_a95050cbbfe5d2fa471670f2b32c4e47a}{get\+Win\+Rate}} (const QString \&username) const
+\begin{DoxyCompactList}\small\item\em Get the win rate of the user (games\+\_\+win/games\+\_\+played) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_user_a7f8244323a551cd7a71e29c8409c224f}{update\+Guess\+Total}} (const QString \&username, const unsigned int \&new\+Guess\+Total)
+\begin{DoxyCompactList}\small\item\em Update the total of guesses the user has. \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_user_a9e2faca100825c48c2a2e342b32c1a84}{get\+Guess\+Total}} (const QString \&username) const
+\begin{DoxyCompactList}\small\item\em Get the total number of guesses the user has. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_user_af741fd31360b68a8465f68c22bcca727}{update\+Guess\+Hit}} (const QString \&username, const unsigned int \&new\+Guess\+Hit)
+\begin{DoxyCompactList}\small\item\em Update the number times the user guess correctly. \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_user_a4b4e4f9f645759746250ad46da7e9397}{get\+Guess\+Hit}} (const QString \&username) const
+\begin{DoxyCompactList}\small\item\em Get the number of times the user guess correctly. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_user_a5871b047464bf174343e90efa481b6b5}{get\+Hit\+Rate}} (const QString \&username)
+\begin{DoxyCompactList}\small\item\em Get the rate the user guess correctly (guess\+\_\+hit/guess\+\_\+total) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_user_adf8ac2b163093243f2fb352642c6d1a0}{rename\+User}} (const QString \&old\+Username, const QString \&new\+Username)
+\begin{DoxyCompactList}\small\item\em Rename the user. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_user_a76e60bbd0c717b6d12ac809a871576f5}{won}} (const QString \&username)
+\begin{DoxyCompactList}\small\item\em Change the games played total and games played win of the user when they won. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_user_a2be39e92a5e633b47f4612d765cb559f}{lost}} (const QString \&username)
+\begin{DoxyCompactList}\small\item\em Change the games played total of the user when they lost. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_user_a618097dc515f336ca448dd6dda1e502b}{hit}} (const QString \&username)
+\begin{DoxyCompactList}\small\item\em Change the guess total and guess hit of the user when they guess correctly. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_user_a2c829fe05e0ee6ab157681184415672a}{miss}} (const QString \&username)
+\begin{DoxyCompactList}\small\item\em Change the guess total of the user when they guess incorrectly. \end{DoxyCompactList}\item 
+QJson\+Object \mbox{\hyperlink{class_user_a9b9bf6e176092ce3951c51dcfaeb971d}{load\+Json\+File}} ()
+\begin{DoxyCompactList}\small\item\em loading the info of the users \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_user}{User}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_user_a90accb4d0631cad4bc3948c1e734035f}{instance}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Getting the instance of user. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_user_a17675be11debe0a5bc2017edd7743449}\label{class_user_a17675be11debe0a5bc2017edd7743449} 
+void {\bfseries handle\+Login} ()
+\begin{DoxyCompactList}\small\item\em log in the user \end{DoxyCompactList}\item 
+\Hypertarget{class_user_aa289b9704b2fbe893b860aa7bbca4bf5}\label{class_user_aa289b9704b2fbe893b860aa7bbca4bf5} 
+void {\bfseries refresh\+User\+Dropdown} ()
+\begin{DoxyCompactList}\small\item\em refresh user info in the drop down menu \end{DoxyCompactList}\item 
+\Hypertarget{class_user_a07f894c637743f507bc94367061548a6}\label{class_user_a07f894c637743f507bc94367061548a6} 
+void {\bfseries handle\+Create\+Account} ()
+\begin{DoxyCompactList}\small\item\em create user account \end{DoxyCompactList}\item 
+\Hypertarget{class_user_ae75dfa8a41a8033cd68587cf986a1d15}\label{class_user_ae75dfa8a41a8033cd68587cf986a1d15} 
+void {\bfseries show\+Main\+Menu} ()
+\begin{DoxyCompactList}\small\item\em show the main menu \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_user_a639ec66bbba4434768055c6ee80c2061}{User}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Constructor of the \doxylink{class_user}{User} instance. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_user_a37c20a1b6ff3436d7769750329dfbfca}{populate\+Username\+Combo\+Box}} (const QJson\+Object \&json\+Object)
+\begin{DoxyCompactList}\small\item\em update the usernames in the drop down when creating new users \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_user_a32bb6e45be3f23cf846bd5751b908620}\label{class_user_a32bb6e45be3f23cf846bd5751b908620} 
+\mbox{\hyperlink{class_create_account_window}{Create\+Account\+Window}} \texorpdfstring{$\ast$}{*} {\bfseries create\+Account\+Window}
+\begin{DoxyCompactList}\small\item\em variable that stores the create account window \end{DoxyCompactList}\item 
+\Hypertarget{class_user_a355eb2e1478338ac9c2bd71c11ee925b}\label{class_user_a355eb2e1478338ac9c2bd71c11ee925b} 
+QString {\bfseries json\+File\+Path} = "{}resources/profile.\+json"{}
+\begin{DoxyCompactList}\small\item\em the path of the users info \end{DoxyCompactList}\item 
+\Hypertarget{class_user_a00590737bfdc030f104c0e56e4e503bc}\label{class_user_a00590737bfdc030f104c0e56e4e503bc} 
+QPush\+Button \texorpdfstring{$\ast$}{*} {\bfseries back\+Button}
+\begin{DoxyCompactList}\small\item\em the button to go back \end{DoxyCompactList}\item 
+\Hypertarget{class_user_ab1cec3ff86aec76e5404498d6d14bb3d}\label{class_user_ab1cec3ff86aec76e5404498d6d14bb3d} 
+QPush\+Button \texorpdfstring{$\ast$}{*} {\bfseries create\+Account\+Button}
+\begin{DoxyCompactList}\small\item\em the button to create account \end{DoxyCompactList}\item 
+\Hypertarget{class_user_a48da3836e3d64dfd56627b852d59e031}\label{class_user_a48da3836e3d64dfd56627b852d59e031} 
+QCombo\+Box \texorpdfstring{$\ast$}{*} {\bfseries username\+Combo\+Box}
+\begin{DoxyCompactList}\small\item\em the drop down box of the usernames of the users \end{DoxyCompactList}\item 
+\Hypertarget{class_user_a6a45e683ba9564645a34b6b8a997fe12}\label{class_user_a6a45e683ba9564645a34b6b8a997fe12} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries json\+Content\+Label}
+\begin{DoxyCompactList}\small\item\em the text to show the debug \end{DoxyCompactList}\item 
+\Hypertarget{class_user_a4e7cd85c01809c3153ae1d9090159979}\label{class_user_a4e7cd85c01809c3153ae1d9090159979} 
+QPush\+Button \texorpdfstring{$\ast$}{*} {\bfseries login\+Button}
+\begin{DoxyCompactList}\small\item\em the button to log in \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{class_user}{User} class to handle local log in and loading/storing json files. This is a singleton class. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_user_a639ec66bbba4434768055c6ee80c2061}\index{User@{User}!User@{User}}
+\index{User@{User}!User@{User}}
+\doxysubsubsection{\texorpdfstring{User()}{User()}}
+{\footnotesize\ttfamily \label{class_user_a639ec66bbba4434768055c6ee80c2061} 
+User\+::\+User (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [private]}}
+
+
+
+Constructor of the \doxylink{class_user}{User} instance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & the parent of \doxylink{class_user}{User} class \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_user_ae14d708e14862ebb44070598464ef814}\index{User@{User}!getGamesPlayed@{getGamesPlayed}}
+\index{getGamesPlayed@{getGamesPlayed}!User@{User}}
+\doxysubsubsection{\texorpdfstring{getGamesPlayed()}{getGamesPlayed()}}
+{\footnotesize\ttfamily \label{class_user_ae14d708e14862ebb44070598464ef814} 
+unsigned int User\+::get\+Games\+Played (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the number of games played by a user. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & username of the user \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily unsigned int} the number of games played 
+\end{DoxyReturn}
+\Hypertarget{class_user_a4b4e4f9f645759746250ad46da7e9397}\index{User@{User}!getGuessHit@{getGuessHit}}
+\index{getGuessHit@{getGuessHit}!User@{User}}
+\doxysubsubsection{\texorpdfstring{getGuessHit()}{getGuessHit()}}
+{\footnotesize\ttfamily \label{class_user_a4b4e4f9f645759746250ad46da7e9397} 
+unsigned int User\+::get\+Guess\+Hit (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the number of times the user guess correctly. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & username of the user \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily unsigned int} the number of times the user guess correctly 
+\end{DoxyReturn}
+\Hypertarget{class_user_a9e2faca100825c48c2a2e342b32c1a84}\index{User@{User}!getGuessTotal@{getGuessTotal}}
+\index{getGuessTotal@{getGuessTotal}!User@{User}}
+\doxysubsubsection{\texorpdfstring{getGuessTotal()}{getGuessTotal()}}
+{\footnotesize\ttfamily \label{class_user_a9e2faca100825c48c2a2e342b32c1a84} 
+unsigned int User\+::get\+Guess\+Total (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the total number of guesses the user has. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & username of the user \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily unsigned int} the total number of guesses the user has 
+\end{DoxyReturn}
+\Hypertarget{class_user_a5871b047464bf174343e90efa481b6b5}\index{User@{User}!getHitRate@{getHitRate}}
+\index{getHitRate@{getHitRate}!User@{User}}
+\doxysubsubsection{\texorpdfstring{getHitRate()}{getHitRate()}}
+{\footnotesize\ttfamily \label{class_user_a5871b047464bf174343e90efa481b6b5} 
+float User\+::get\+Hit\+Rate (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{}\end{DoxyParamCaption})}
+
+
+
+Get the rate the user guess correctly (guess\+\_\+hit/guess\+\_\+total) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & username of the user \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily float} the rate the user guess correctly (guess\+\_\+hit/guess\+\_\+total) 
+\end{DoxyReturn}
+\Hypertarget{class_user_a95050cbbfe5d2fa471670f2b32c4e47a}\index{User@{User}!getWinRate@{getWinRate}}
+\index{getWinRate@{getWinRate}!User@{User}}
+\doxysubsubsection{\texorpdfstring{getWinRate()}{getWinRate()}}
+{\footnotesize\ttfamily \label{class_user_a95050cbbfe5d2fa471670f2b32c4e47a} 
+float User\+::get\+Win\+Rate (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the win rate of the user (games\+\_\+win/games\+\_\+played) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & the username of a user \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily float} win rate of the user (games\+\_\+win/games\+\_\+played) 
+\end{DoxyReturn}
+\Hypertarget{class_user_a68bab610831df0afbe85ff64e7a26d4b}\index{User@{User}!getWins@{getWins}}
+\index{getWins@{getWins}!User@{User}}
+\doxysubsubsection{\texorpdfstring{getWins()}{getWins()}}
+{\footnotesize\ttfamily \label{class_user_a68bab610831df0afbe85ff64e7a26d4b} 
+unsigned int User\+::get\+Wins (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the number of wins the user has. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & username of the user \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily unsigned int} the number of wins the user has 
+\end{DoxyReturn}
+\Hypertarget{class_user_a618097dc515f336ca448dd6dda1e502b}\index{User@{User}!hit@{hit}}
+\index{hit@{hit}!User@{User}}
+\doxysubsubsection{\texorpdfstring{hit()}{hit()}}
+{\footnotesize\ttfamily \label{class_user_a618097dc515f336ca448dd6dda1e502b} 
+void User\+::hit (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{}\end{DoxyParamCaption})}
+
+
+
+Change the guess total and guess hit of the user when they guess correctly. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & username of the user \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_user_a90accb4d0631cad4bc3948c1e734035f}\index{User@{User}!instance@{instance}}
+\index{instance@{instance}!User@{User}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \label{class_user_a90accb4d0631cad4bc3948c1e734035f} 
+static \mbox{\hyperlink{class_user}{User}} \texorpdfstring{$\ast$}{*} User\+::instance (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Getting the instance of user. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & parent of the \doxylink{class_user}{User} class \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily User\texorpdfstring{$\ast$}{*}} \doxylink{class_user}{User} instance 
+\end{DoxyReturn}
+\Hypertarget{class_user_a9b9bf6e176092ce3951c51dcfaeb971d}\index{User@{User}!loadJsonFile@{loadJsonFile}}
+\index{loadJsonFile@{loadJsonFile}!User@{User}}
+\doxysubsubsection{\texorpdfstring{loadJsonFile()}{loadJsonFile()}}
+{\footnotesize\ttfamily \label{class_user_a9b9bf6e176092ce3951c51dcfaeb971d} 
+QJson\+Object User\+::load\+Json\+File (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+loading the info of the users 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily QJson\+Object} the info of the user in json format 
+\end{DoxyReturn}
+\Hypertarget{class_user_a2be39e92a5e633b47f4612d765cb559f}\index{User@{User}!lost@{lost}}
+\index{lost@{lost}!User@{User}}
+\doxysubsubsection{\texorpdfstring{lost()}{lost()}}
+{\footnotesize\ttfamily \label{class_user_a2be39e92a5e633b47f4612d765cb559f} 
+void User\+::lost (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{}\end{DoxyParamCaption})}
+
+
+
+Change the games played total of the user when they lost. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & username of the user \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_user_a2c829fe05e0ee6ab157681184415672a}\index{User@{User}!miss@{miss}}
+\index{miss@{miss}!User@{User}}
+\doxysubsubsection{\texorpdfstring{miss()}{miss()}}
+{\footnotesize\ttfamily \label{class_user_a2c829fe05e0ee6ab157681184415672a} 
+void User\+::miss (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{}\end{DoxyParamCaption})}
+
+
+
+Change the guess total of the user when they guess incorrectly. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & username of the user \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_user_a37c20a1b6ff3436d7769750329dfbfca}\index{User@{User}!populateUsernameComboBox@{populateUsernameComboBox}}
+\index{populateUsernameComboBox@{populateUsernameComboBox}!User@{User}}
+\doxysubsubsection{\texorpdfstring{populateUsernameComboBox()}{populateUsernameComboBox()}}
+{\footnotesize\ttfamily \label{class_user_a37c20a1b6ff3436d7769750329dfbfca} 
+void User\+::populate\+Username\+Combo\+Box (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{json\+Object}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+update the usernames in the drop down when creating new users 
+
+
+\begin{DoxyParams}{Parameters}
+{\em json\+Object} & the json of the users \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_user_adf8ac2b163093243f2fb352642c6d1a0}\index{User@{User}!renameUser@{renameUser}}
+\index{renameUser@{renameUser}!User@{User}}
+\doxysubsubsection{\texorpdfstring{renameUser()}{renameUser()}}
+{\footnotesize\ttfamily \label{class_user_adf8ac2b163093243f2fb352642c6d1a0} 
+void User\+::rename\+User (\begin{DoxyParamCaption}\item[{const QString \&}]{old\+Username}{, }\item[{const QString \&}]{new\+Username}{}\end{DoxyParamCaption})}
+
+
+
+Rename the user. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em old\+Username} & old username of the user \\
+\hline
+{\em new\+Username} & new username of the user \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_user_acee4af06972e8447a6d3dc8c43157ead}\index{User@{User}!updateGamesPlayed@{updateGamesPlayed}}
+\index{updateGamesPlayed@{updateGamesPlayed}!User@{User}}
+\doxysubsubsection{\texorpdfstring{updateGamesPlayed()}{updateGamesPlayed()}}
+{\footnotesize\ttfamily \label{class_user_acee4af06972e8447a6d3dc8c43157ead} 
+void User\+::update\+Games\+Played (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{, }\item[{const unsigned int \&}]{new\+Games\+Played}{}\end{DoxyParamCaption})}
+
+
+
+Update the number of games played by a user. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & username of the user \\
+\hline
+{\em new\+Games\+Played} & the new number of games played by a user \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_user_af741fd31360b68a8465f68c22bcca727}\index{User@{User}!updateGuessHit@{updateGuessHit}}
+\index{updateGuessHit@{updateGuessHit}!User@{User}}
+\doxysubsubsection{\texorpdfstring{updateGuessHit()}{updateGuessHit()}}
+{\footnotesize\ttfamily \label{class_user_af741fd31360b68a8465f68c22bcca727} 
+void User\+::update\+Guess\+Hit (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{, }\item[{const unsigned int \&}]{new\+Guess\+Hit}{}\end{DoxyParamCaption})}
+
+
+
+Update the number times the user guess correctly. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & username of the user \\
+\hline
+{\em new\+Guess\+Hit} & the number of times the user guess correctly \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_user_a7f8244323a551cd7a71e29c8409c224f}\index{User@{User}!updateGuessTotal@{updateGuessTotal}}
+\index{updateGuessTotal@{updateGuessTotal}!User@{User}}
+\doxysubsubsection{\texorpdfstring{updateGuessTotal()}{updateGuessTotal()}}
+{\footnotesize\ttfamily \label{class_user_a7f8244323a551cd7a71e29c8409c224f} 
+void User\+::update\+Guess\+Total (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{, }\item[{const unsigned int \&}]{new\+Guess\+Total}{}\end{DoxyParamCaption})}
+
+
+
+Update the total of guesses the user has. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & username of the user \\
+\hline
+{\em new\+Guess\+Total} & the new total number of guesses the user has \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_user_ac935df40802efdf0fadccbd2785e7fae}\index{User@{User}!updateWins@{updateWins}}
+\index{updateWins@{updateWins}!User@{User}}
+\doxysubsubsection{\texorpdfstring{updateWins()}{updateWins()}}
+{\footnotesize\ttfamily \label{class_user_ac935df40802efdf0fadccbd2785e7fae} 
+void User\+::update\+Wins (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{, }\item[{const unsigned int \&}]{new\+Wins}{}\end{DoxyParamCaption})}
+
+
+
+Update the number of wins a user has. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & username of the user \\
+\hline
+{\em new\+Wins} & the new number of wins the user has \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_user_a76e60bbd0c717b6d12ac809a871576f5}\index{User@{User}!won@{won}}
+\index{won@{won}!User@{User}}
+\doxysubsubsection{\texorpdfstring{won()}{won()}}
+{\footnotesize\ttfamily \label{class_user_a76e60bbd0c717b6d12ac809a871576f5} 
+void User\+::won (\begin{DoxyParamCaption}\item[{const QString \&}]{username}{}\end{DoxyParamCaption})}
+
+
+
+Change the games played total and games played win of the user when they won. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & username of the user \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{user_8h}{user.\+h}}\end{DoxyCompactItemize}

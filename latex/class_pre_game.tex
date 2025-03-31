@@ -1,0 +1,207 @@
+\doxysection{Pre\+Game Class Reference}
+\hypertarget{class_pre_game}{}\label{class_pre_game}\index{PreGame@{PreGame}}
+
+
+The \doxylink{class_pre_game}{Pre\+Game} class provides the interface for setting up a new game This includes selecting players for each team and role before starting the game.  
+
+
+
+
+{\ttfamily \#include $<$pregame.\+h$>$}
+
+Inheritance diagram for Pre\+Game\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_pre_game}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pre_game_a642b86e10ca1cd2bb7e80c444aa5a4ae}\label{class_pre_game_a642b86e10ca1cd2bb7e80c444aa5a4ae} 
+void {\bfseries show} ()
+\begin{DoxyCompactList}\small\item\em Shows the pregame setup window and initializes user dropdowns. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pre_game_abcd771610d425f00d22c452c95f03398}\label{class_pre_game_abcd771610d425f00d22c452c95f03398} 
+void {\bfseries back\+To\+Main\+Window} ()
+\begin{DoxyCompactList}\small\item\em Signal emitted when user wants to return to main window Connected to main window to show it again. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_a580aefd957b22d6ce5dfcd0c12ee1a6c}\label{class_pre_game_a580aefd957b22d6ce5dfcd0c12ee1a6c} 
+void {\bfseries start} ()
+\begin{DoxyCompactList}\small\item\em Signal emitted when all players are selected and game is ready to start Connected to game initialization in the game controller. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_aa4a944faf3f7854a6b395c5c3ee8ff01}\label{class_pre_game_aa4a944faf3f7854a6b395c5c3ee8ff01} 
+void {\bfseries update} ()
+\begin{DoxyCompactList}\small\item\em Signal emitted when user list needs to be refreshed This happens after a new account is created. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_pre_game_a5ff9df8ed9c7e78b44838cfbe5f43494}{Pre\+Game}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Construct a new Pre Game object. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_abb6b2afab2e54ab2ae93cb22e181346e}\label{class_pre_game_abb6b2afab2e54ab2ae93cb22e181346e} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Pre\+Game} ()
+\begin{DoxyCompactList}\small\item\em Destroy the Pre Game object and clean up resources. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_pre_game_a3c54a487e6d020e7886f1a5c45de38d9}{get\+Red\+Team\+Spy\+Master\+Nickname}} () const
+\begin{DoxyCompactList}\small\item\em Get the Red Team Spy Master Nickname. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_pre_game_a3eaed6d2089a023aad12a2fe2e2db285}{get\+Red\+Team\+Operative\+Nickname}} () const
+\begin{DoxyCompactList}\small\item\em Get the Red Team Operative Nickname. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_pre_game_a3203d71f6e8f73cef7809cb553b30836}{get\+Blue\+Team\+Spy\+Master\+Nickname}} () const
+\begin{DoxyCompactList}\small\item\em Get the Blue Team Spy Master Nickname. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_pre_game_ac99bc5afa991b04169ca4161391a68f6}{get\+Blue\+Team\+Operative\+Nickname}} () const
+\begin{DoxyCompactList}\small\item\em Get the Blue Team Operative Nickname. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pre_game_aa9328b6d01814b343f7227ca0a974e58}\label{class_pre_game_aa9328b6d01814b343f7227ca0a974e58} 
+void {\bfseries go\+Back\+To\+Main} ()
+\begin{DoxyCompactList}\small\item\em Returns to the main menu screen Connected to the back button\textquotesingle{}s clicked signal. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_a5b35d7625eab5b5833008121079dc96d}\label{class_pre_game_a5b35d7625eab5b5833008121079dc96d} 
+void {\bfseries start\+Game} ()
+\begin{DoxyCompactList}\small\item\em Starts the game with the selected players Validates player selections and emits start signal if valid. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_a6219637edd00dc0edb2a270b2cddcb25}\label{class_pre_game_a6219637edd00dc0edb2a270b2cddcb25} 
+void {\bfseries handle\+Game\+End} ()
+\begin{DoxyCompactList}\small\item\em Handles cleanup after a game has ended Prepares the UI for a potential new game. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_a15911f9cd80de2274496547342bf0a01}\label{class_pre_game_a15911f9cd80de2274496547342bf0a01} 
+void {\bfseries open\+Create\+Account} ()
+\begin{DoxyCompactList}\small\item\em Opens the account creation window Connected to the create account button\textquotesingle{}s clicked signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pre_game_abeb73a350524507d3792a46edac08d01}\label{class_pre_game_abeb73a350524507d3792a46edac08d01} 
+void {\bfseries populate\+User\+Dropdowns} ()
+\begin{DoxyCompactList}\small\item\em Populates the user selection dropdown menus with available users This is called when the window is shown to ensure the latest user list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pre_game_a01a2bfd40a32b5023aedb1d2687d36f1}\label{class_pre_game_a01a2bfd40a32b5023aedb1d2687d36f1} 
+\mbox{\hyperlink{class_user}{User}} \texorpdfstring{$\ast$}{*} {\bfseries users}
+\begin{DoxyCompactList}\small\item\em Pointer to \doxylink{class_user}{User} objects containing player information Used to populate the dropdown menus. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_af802527ae9587ab6e1a18a2b0a0c3a00}\label{class_pre_game_af802527ae9587ab6e1a18a2b0a0c3a00} 
+QString\+List {\bfseries usernames}
+\begin{DoxyCompactList}\small\item\em List of available usernames for player selection Populated from the users database. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_ac46441ad3c2c8bab03f49a29b4c282dd}\label{class_pre_game_ac46441ad3c2c8bab03f49a29b4c282dd} 
+\mbox{\hyperlink{class_create_account_window}{Create\+Account\+Window}} \texorpdfstring{$\ast$}{*} {\bfseries create\+Account\+Window}
+\begin{DoxyCompactList}\small\item\em Pointer to the account creation window Initialized when create account button is clicked. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_ad886b0f1fecb50165f94a11566a9f1ce}\label{class_pre_game_ad886b0f1fecb50165f94a11566a9f1ce} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries label}
+\begin{DoxyCompactList}\small\item\em Title label for the pregame screen. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_a9993923c043d88a9f6b894e118eb748d}\label{class_pre_game_a9993923c043d88a9f6b894e118eb748d} 
+QPush\+Button \texorpdfstring{$\ast$}{*} {\bfseries back\+Button}
+\begin{DoxyCompactList}\small\item\em Button to return to the main menu. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_a233f5eb206d5fc49f87943b1c48bc0db}\label{class_pre_game_a233f5eb206d5fc49f87943b1c48bc0db} 
+QPush\+Button \texorpdfstring{$\ast$}{*} {\bfseries create\+Account\+Button}
+\begin{DoxyCompactList}\small\item\em Button to open the account creation window. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_ab8d7a23565269b27eb569de5aca58174}\label{class_pre_game_ab8d7a23565269b27eb569de5aca58174} 
+QPush\+Button \texorpdfstring{$\ast$}{*} {\bfseries start\+Button}
+\begin{DoxyCompactList}\small\item\em Button to start the game with selected players. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_a40c0b27cf5a49533dd0b129b58914130}\label{class_pre_game_a40c0b27cf5a49533dd0b129b58914130} 
+QCombo\+Box \texorpdfstring{$\ast$}{*} {\bfseries red\+Team\+Spy\+Master\+Combo\+Box}
+\begin{DoxyCompactList}\small\item\em Dropdown menu for selecting the Red Team\textquotesingle{}s Spy Master. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_a20870d91aebbc647d4bf8d0b5bc8a6dc}\label{class_pre_game_a20870d91aebbc647d4bf8d0b5bc8a6dc} 
+QCombo\+Box \texorpdfstring{$\ast$}{*} {\bfseries red\+Team\+Operative\+Combo\+Box}
+\begin{DoxyCompactList}\small\item\em Dropdown menu for selecting the Red Team\textquotesingle{}s Operative. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_a2aa4d1433cf5634805685f6bd825797d}\label{class_pre_game_a2aa4d1433cf5634805685f6bd825797d} 
+QCombo\+Box \texorpdfstring{$\ast$}{*} {\bfseries blue\+Team\+Spy\+Master\+Combo\+Box}
+\begin{DoxyCompactList}\small\item\em Dropdown menu for selecting the Blue Team\textquotesingle{}s Spy Master. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_ab7342fb7b79c41b3452de3dadbb0d520}\label{class_pre_game_ab7342fb7b79c41b3452de3dadbb0d520} 
+QCombo\+Box \texorpdfstring{$\ast$}{*} {\bfseries blue\+Team\+Operative\+Combo\+Box}
+\begin{DoxyCompactList}\small\item\em Dropdown menu for selecting the Blue Team\textquotesingle{}s Operative. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_a8e2da0552fa67595e09f95262e1cec4b}\label{class_pre_game_a8e2da0552fa67595e09f95262e1cec4b} 
+QVBox\+Layout \texorpdfstring{$\ast$}{*} {\bfseries layout}
+\begin{DoxyCompactList}\small\item\em Main vertical layout for the entire pregame screen. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_adc326f5e97ab429e402abfe9e22e5511}\label{class_pre_game_adc326f5e97ab429e402abfe9e22e5511} 
+QHBox\+Layout \texorpdfstring{$\ast$}{*} {\bfseries teams\+Layout}
+\begin{DoxyCompactList}\small\item\em Horizontal layout to contain both team selection areas. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_ac5779af472f05415bf680f4f7be86e25}\label{class_pre_game_ac5779af472f05415bf680f4f7be86e25} 
+QVBox\+Layout \texorpdfstring{$\ast$}{*} {\bfseries red\+Team\+Layout}
+\begin{DoxyCompactList}\small\item\em Vertical layout for the Red Team\textquotesingle{}s player selections. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_a5e85a1e78d6216d6f0d125f4faa34fc0}\label{class_pre_game_a5e85a1e78d6216d6f0d125f4faa34fc0} 
+QVBox\+Layout \texorpdfstring{$\ast$}{*} {\bfseries blue\+Team\+Layout}
+\begin{DoxyCompactList}\small\item\em Vertical layout for the Blue Team\textquotesingle{}s player selections. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_ac53c23ab04abf356ddec3559ef346fed}\label{class_pre_game_ac53c23ab04abf356ddec3559ef346fed} 
+QHBox\+Layout \texorpdfstring{$\ast$}{*} {\bfseries buttons\+Layout}
+\begin{DoxyCompactList}\small\item\em Horizontal layout for the navigation buttons. \end{DoxyCompactList}\item 
+\Hypertarget{class_pre_game_a30dd40cd25a6f60218ff06a4e516646f}\label{class_pre_game_a30dd40cd25a6f60218ff06a4e516646f} 
+\mbox{\hyperlink{class_game_board}{Game\+Board}} \texorpdfstring{$\ast$}{*} {\bfseries game\+Board}
+\begin{DoxyCompactList}\small\item\em Pointer to the game board that will be shown after game starts. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \doxylink{class_pre_game}{Pre\+Game} class provides the interface for setting up a new game This includes selecting players for each team and role before starting the game. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_pre_game_a5ff9df8ed9c7e78b44838cfbe5f43494}\index{PreGame@{PreGame}!PreGame@{PreGame}}
+\index{PreGame@{PreGame}!PreGame@{PreGame}}
+\doxysubsubsection{\texorpdfstring{PreGame()}{PreGame()}}
+{\footnotesize\ttfamily \label{class_pre_game_a5ff9df8ed9c7e78b44838cfbe5f43494} 
+Pre\+Game\+::\+Pre\+Game (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Construct a new Pre Game object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & Optional parent widget for memory management purposes \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_pre_game_ac99bc5afa991b04169ca4161391a68f6}\index{PreGame@{PreGame}!getBlueTeamOperativeNickname@{getBlueTeamOperativeNickname}}
+\index{getBlueTeamOperativeNickname@{getBlueTeamOperativeNickname}!PreGame@{PreGame}}
+\doxysubsubsection{\texorpdfstring{getBlueTeamOperativeNickname()}{getBlueTeamOperativeNickname()}}
+{\footnotesize\ttfamily \label{class_pre_game_ac99bc5afa991b04169ca4161391a68f6} 
+QString Pre\+Game\+::get\+Blue\+Team\+Operative\+Nickname (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the Blue Team Operative Nickname. 
+
+\begin{DoxyReturn}{Returns}
+QString The nickname of the selected Blue Team Operative 
+\end{DoxyReturn}
+\Hypertarget{class_pre_game_a3203d71f6e8f73cef7809cb553b30836}\index{PreGame@{PreGame}!getBlueTeamSpyMasterNickname@{getBlueTeamSpyMasterNickname}}
+\index{getBlueTeamSpyMasterNickname@{getBlueTeamSpyMasterNickname}!PreGame@{PreGame}}
+\doxysubsubsection{\texorpdfstring{getBlueTeamSpyMasterNickname()}{getBlueTeamSpyMasterNickname()}}
+{\footnotesize\ttfamily \label{class_pre_game_a3203d71f6e8f73cef7809cb553b30836} 
+QString Pre\+Game\+::get\+Blue\+Team\+Spy\+Master\+Nickname (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the Blue Team Spy Master Nickname. 
+
+\begin{DoxyReturn}{Returns}
+QString The nickname of the selected Blue Team Spy Master 
+\end{DoxyReturn}
+\Hypertarget{class_pre_game_a3eaed6d2089a023aad12a2fe2e2db285}\index{PreGame@{PreGame}!getRedTeamOperativeNickname@{getRedTeamOperativeNickname}}
+\index{getRedTeamOperativeNickname@{getRedTeamOperativeNickname}!PreGame@{PreGame}}
+\doxysubsubsection{\texorpdfstring{getRedTeamOperativeNickname()}{getRedTeamOperativeNickname()}}
+{\footnotesize\ttfamily \label{class_pre_game_a3eaed6d2089a023aad12a2fe2e2db285} 
+QString Pre\+Game\+::get\+Red\+Team\+Operative\+Nickname (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the Red Team Operative Nickname. 
+
+\begin{DoxyReturn}{Returns}
+QString The nickname of the selected Red Team Operative 
+\end{DoxyReturn}
+\Hypertarget{class_pre_game_a3c54a487e6d020e7886f1a5c45de38d9}\index{PreGame@{PreGame}!getRedTeamSpyMasterNickname@{getRedTeamSpyMasterNickname}}
+\index{getRedTeamSpyMasterNickname@{getRedTeamSpyMasterNickname}!PreGame@{PreGame}}
+\doxysubsubsection{\texorpdfstring{getRedTeamSpyMasterNickname()}{getRedTeamSpyMasterNickname()}}
+{\footnotesize\ttfamily \label{class_pre_game_a3c54a487e6d020e7886f1a5c45de38d9} 
+QString Pre\+Game\+::get\+Red\+Team\+Spy\+Master\+Nickname (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the Red Team Spy Master Nickname. 
+
+\begin{DoxyReturn}{Returns}
+QString The nickname of the selected Red Team Spy Master 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{pregame_8h}{pregame.\+h}}\end{DoxyCompactItemize}

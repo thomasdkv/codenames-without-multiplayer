@@ -1,0 +1,113 @@
+\doxysection{Tutorial Class Reference}
+\hypertarget{class_tutorial}{}\label{class_tutorial}\index{Tutorial@{Tutorial}}
+
+
+The tutorial window that guides users through the game mechanics.  
+
+
+
+
+{\ttfamily \#include $<$tutorial.\+h$>$}
+
+Inheritance diagram for Tutorial\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_tutorial}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_tutorial_adcd4d78438d08c592c8caadffa3ce089}\label{class_tutorial_adcd4d78438d08c592c8caadffa3ce089} 
+void {\bfseries tutorial\+Closed} ()
+\begin{DoxyCompactList}\small\item\em Signal emitted when the tutorial is closed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_tutorial_ac988a21cc958e8feb362ad6df3f66468}{Tutorial}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_tutorial}{Tutorial}. \end{DoxyCompactList}\item 
+\Hypertarget{class_tutorial_a6a7f12f75952c7d801c12aed8179f510}\label{class_tutorial_a6a7f12f75952c7d801c12aed8179f510} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Tutorial} ()
+\begin{DoxyCompactList}\small\item\em Destructor for \doxylink{class_tutorial}{Tutorial}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_tutorial_aa7e2cfa62f4db4764600341f04615068}{close\+Event}} (QClose\+Event \texorpdfstring{$\ast$}{*}event) override
+\begin{DoxyCompactList}\small\item\em Handles the close event. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_tutorial_a4380c9eda4293d6ee2b768eb9fa9b3c5}\label{class_tutorial_a4380c9eda4293d6ee2b768eb9fa9b3c5} 
+void {\bfseries on\+Continue\+Clicked} ()
+\begin{DoxyCompactList}\small\item\em Handles the continue button click event. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_tutorial_ad426951f0c15f8fb9164af368c0f37c4}\label{class_tutorial_ad426951f0c15f8fb9164af368c0f37c4} 
+void {\bfseries update\+Continue\+Button\+Position} ()
+\begin{DoxyCompactList}\small\item\em Updates the position of the continue button. \end{DoxyCompactList}\item 
+\Hypertarget{class_tutorial_ae98ee550a2c8b062652091f9ef637fe1}\label{class_tutorial_ae98ee550a2c8b062652091f9ef637fe1} 
+void {\bfseries reset\+Tutorial} ()
+\begin{DoxyCompactList}\small\item\em Resets the tutorial to its initial state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_tutorial_a707a281b594310921a2a251057f74323}\label{class_tutorial_a707a281b594310921a2a251057f74323} 
+QWidget \texorpdfstring{$\ast$}{*} {\bfseries central\+Widget}
+\begin{DoxyCompactList}\small\item\em Pointer to the central widget. \end{DoxyCompactList}\item 
+\Hypertarget{class_tutorial_a54964c4894a8cbfeeb194976e521fb66}\label{class_tutorial_a54964c4894a8cbfeeb194976e521fb66} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries title\+Label}
+\begin{DoxyCompactList}\small\item\em Label for the tutorial title. \end{DoxyCompactList}\item 
+\Hypertarget{class_tutorial_ab4d6bd181e1bc735c2147807448c5994}\label{class_tutorial_ab4d6bd181e1bc735c2147807448c5994} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries text\+Box}
+\begin{DoxyCompactList}\small\item\em Label for displaying tutorial text. \end{DoxyCompactList}\item 
+\Hypertarget{class_tutorial_a0550361f9ce790e0128018f98c7be869}\label{class_tutorial_a0550361f9ce790e0128018f98c7be869} 
+QPush\+Button \texorpdfstring{$\ast$}{*} {\bfseries continue\+Button}
+\begin{DoxyCompactList}\small\item\em Button for continuing through the tutorial. \end{DoxyCompactList}\item 
+\Hypertarget{class_tutorial_ac45108629c0f02b8b4a1ad939fb3c468}\label{class_tutorial_ac45108629c0f02b8b4a1ad939fb3c468} 
+int {\bfseries click\+Count}
+\begin{DoxyCompactList}\small\item\em Counter for continue button clicks. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The tutorial window that guides users through the game mechanics. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_tutorial_ac988a21cc958e8feb362ad6df3f66468}\index{Tutorial@{Tutorial}!Tutorial@{Tutorial}}
+\index{Tutorial@{Tutorial}!Tutorial@{Tutorial}}
+\doxysubsubsection{\texorpdfstring{Tutorial()}{Tutorial()}}
+{\footnotesize\ttfamily \label{class_tutorial_ac988a21cc958e8feb362ad6df3f66468} 
+Tutorial\+::\+Tutorial (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructor for \doxylink{class_tutorial}{Tutorial}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & The parent widget (default is nullptr). \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_tutorial_aa7e2cfa62f4db4764600341f04615068}\index{Tutorial@{Tutorial}!closeEvent@{closeEvent}}
+\index{closeEvent@{closeEvent}!Tutorial@{Tutorial}}
+\doxysubsubsection{\texorpdfstring{closeEvent()}{closeEvent()}}
+{\footnotesize\ttfamily \label{class_tutorial_aa7e2cfa62f4db4764600341f04615068} 
+void Tutorial\+::close\+Event (\begin{DoxyParamCaption}\item[{QClose\+Event \texorpdfstring{$\ast$}{*}}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+
+Handles the close event. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event} & Pointer to the close event. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{tutorial_8h}{tutorial.\+h}}\end{DoxyCompactItemize}

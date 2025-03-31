@@ -58,8 +58,18 @@ void GameBoard::setBlueOperativeName(const QString& name) {
 }
 
 void GameBoard::updateTeamLabels() {
-    redTeamLabel->setText("Red Team - Spymaster: " + redSpyMasterName + ", Operative: " + redOperativeName);
-    blueTeamLabel->setText("Blue Team - Spymaster: " + blueSpyMasterName +  ", Operative: " + blueOperativeName);
+ redTeamLabel->setText(
+    "<b>Red Team</b><br>"
+    "<b>Spymaster:</b> <span style='color: white;'>" + redSpyMasterName + "</span><br>"
+    "<b>Operative:</b> <span style='color: white;'>" + redOperativeName + "</span>"
+);
+
+blueTeamLabel->setText(
+    "<b>Blue Team</b><br>"
+    "<b>Spymaster:</b> <span style='color: white;'>" + blueSpyMasterName + "</span><br>"
+    "<b>Operative:</b> <span style='color: white;'>" + blueOperativeName + "</span>"
+);
+
 }
 
 void GameBoard::loadWordsFromFile() {
@@ -145,14 +155,30 @@ void GameBoard::setupUI() {
     QVBoxLayout* gameVerticalLayout = new QVBoxLayout();
     
     // Team info
-    redTeamLabel = new QLabel("Red Team - Spymaster: " + redSpyMasterName + 
-                            ", Operative: " + redOperativeName);
-    blueTeamLabel = new QLabel("Blue Team - Spymaster: " + blueSpyMasterName + 
-                             ", Operative: " + blueOperativeName);
+    redTeamLabel = new QLabel(
+        "<b>Red Team</b><br>"
+        "<b>Spymaster:</b> " + redSpyMasterName + "<br>"
+        "<b>Operative:</b> " + redOperativeName
+    );
+
+    blueTeamLabel = new QLabel(
+        "<b>Blue Team</b><br>"
+        "<b>Spymaster:</b> " + blueSpyMasterName + "<br>"
+        "<b>Operative:</b> " + blueOperativeName
+    );
     currentTurnLabel = new QLabel("Current Turn: " + redSpyMasterName);
+
+
+    redTeamLabel->setStyleSheet("color: #ff9999;  font-size: 16px;");
+    blueTeamLabel->setStyleSheet("color: #9999ff;  font-size: 16px;");
+    currentTurnLabel->setStyleSheet("color: white;  font-size: 20px; font-weight: bold;");
         
     redScoreLabel = new QLabel("Red Cards Remaining: " + QString::number(redCardsRemaining));
+    redScoreLabel->setStyleSheet("color: #ff9999; font-weight: bold; font-size: 16px;");
+
     blueScoreLabel = new QLabel("Blue Cards remaining: " + QString::number(blueCardsRemaining));
+    blueScoreLabel->setStyleSheet("color: #9999ff; font-weight: bold; font-size: 16px;");
+
 
     // Implement score layout
     QHBoxLayout* scoreLayout = new QHBoxLayout();
@@ -173,7 +199,7 @@ void GameBoard::setupUI() {
     // Implement current hint label
     currentHint = new QLabel("Current hint: ");
     currentHint->setAlignment(Qt::AlignCenter);
-    currentHint->setStyleSheet("font-weight: bold; font-size: 20px; color: black; ");
+    currentHint->setStyleSheet("font-weight: bold; font-size: 20px; color: white; ");
     gameVerticalLayout->insertWidget(2, currentHint);
 
     // Grid setup

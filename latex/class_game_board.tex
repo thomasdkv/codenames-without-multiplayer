@@ -1,0 +1,588 @@
+\doxysection{Game\+Board Class Reference}
+\hypertarget{class_game_board}{}\label{class_game_board}\index{GameBoard@{GameBoard}}
+
+
+A class representing the game board for the Spy Master game.  
+
+
+
+
+{\ttfamily \#include $<$gameboard.\+h$>$}
+
+Inheritance diagram for Game\+Board\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_game_board}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_game_board_1_1_card}{Card}}
+\begin{DoxyCompactList}\small\item\em Structure representing a card in the game grid. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_game_board_ac9be6bddf4d99ac0990541fb48030198}{show}} ()
+\begin{DoxyCompactList}\small\item\em Displays the game board. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_a87c5a3324159e80502641c261f1e124e}{display\+Hint}} (const QString \&hint, int number)
+\begin{DoxyCompactList}\small\item\em Displays a hint on the game board. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_a2a3cbadc8c773cafcfaaf34f06963aee}{display\+Guess}} ()
+\begin{DoxyCompactList}\small\item\em Displays a guess on the game board. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_game_board_a0a6b29da093b00f1edce268fbbe422bd}{game\+Ended}} ()
+\begin{DoxyCompactList}\small\item\em Emitted when the game ends. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_game_board_af1764339605028918479c25cf4ee02a8}{Game\+Board}} (const QString \&red\+Spy\+Master, const QString \&red\+Operative, const QString \&blue\+Spy\+Master, const QString \&blue\+Operative, QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_game_board}{Game\+Board} class. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_game_board_a48e19b4953c87cc5eea1f9152d09499e}{\texorpdfstring{$\sim$}{\string~}\+Game\+Board}} ()
+\begin{DoxyCompactList}\small\item\em Destructor for the \doxylink{class_game_board}{Game\+Board} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_a990410e050306ca04b899a936b5e2467}{set\+Red\+Spy\+Master\+Name}} (const QString \&name)
+\begin{DoxyCompactList}\small\item\em Sets the names of the red team\textquotesingle{}s spymaster and operative. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_ad6f279b41024f943f48fcde9017cae18}{set\+Red\+Operative\+Name}} (const QString \&name)
+\begin{DoxyCompactList}\small\item\em Sets the names of the red team\textquotesingle{}s operative. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_ad59f8cb0838ac6be82ff2e5fabbe6ac5}{set\+Blue\+Spy\+Master\+Name}} (const QString \&name)
+\begin{DoxyCompactList}\small\item\em Sets the names of the blue team\textquotesingle{}s spymaster and operative. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_a8d4817a8edf743ddb1575fcb083c34d9}{set\+Blue\+Operative\+Name}} (const QString \&name)
+\begin{DoxyCompactList}\small\item\em Sets the names of the blue team\textquotesingle{}s operative. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_a161db400a83816fb10a44e5daaee5369}{update\+Team\+Labels}} ()
+\begin{DoxyCompactList}\small\item\em Updates the labels displaying team information. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_game_board_aab23966186c486718f8b6df862bba23f}\label{class_game_board_aab23966186c486718f8b6df862bba23f} 
+enum \mbox{\hyperlink{class_game_board_aab23966186c486718f8b6df862bba23f}{Card\+Type}} \{ {\bfseries RED\+\_\+\+TEAM}
+, {\bfseries BLUE\+\_\+\+TEAM}
+, {\bfseries NEUTRAL}
+, {\bfseries ASSASSIN}
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration for card types. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_aec83cc766dd742f1d26988fcc161d355}\label{class_game_board_aec83cc766dd742f1d26988fcc161d355} 
+enum \mbox{\hyperlink{class_game_board_aec83cc766dd742f1d26988fcc161d355}{Turn}} \{ {\bfseries RED\+\_\+\+SPY}
+, {\bfseries RED\+\_\+\+OP}
+, {\bfseries BLUE\+\_\+\+SPY}
+, {\bfseries BLUE\+\_\+\+OP}
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration representing the different turn states in the game board. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_game_board_a428cb557d2b39565d040a046b2946abd}{load\+Words\+From\+File}} ()
+\begin{DoxyCompactList}\small\item\em Loads words from a file and generates the game grid. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_a1d0648c5a6f6ce0d81f1115957ad86ec}{generate\+Game\+Grid}} ()
+\begin{DoxyCompactList}\small\item\em Generates the game grid. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_a8629a58b327428fd995dac2982d3170b}{setup\+UI}} ()
+\begin{DoxyCompactList}\small\item\em Sets up the UI for the game board. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_ad040091cc83d1baa6d1579ca30f527fb}{next\+Turn}} ()
+\begin{DoxyCompactList}\small\item\em Switches to the next turn. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_a8fe2b60f9217fdc9d9cff6b0a1c7c690}{on\+Card\+Clicked}} (int row, int col)
+\begin{DoxyCompactList}\small\item\em Handles a card click event. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_af305d65c50e661027ecd036d1f749c6b}{on\+Continue\+Clicked}} ()
+\begin{DoxyCompactList}\small\item\em Handles the continue button click event. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_a777e110150857a9f55e60ba85731dfd4}{show\+Transition}} ()
+\begin{DoxyCompactList}\small\item\em Displays a transition screen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_a1c8fea21d9ca6593885647b54014b291}{update\+Scores}} ()
+\begin{DoxyCompactList}\small\item\em Updates the scores of the teams. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_aef9467995201000a4c75c2ef27357ed3}{check\+Game\+End}} ()
+\begin{DoxyCompactList}\small\item\em Checks if the game has ended. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_a63206b13877ffde23b03fdbaff2b9dfc}{end\+Game}} (const QString \&message)
+\begin{DoxyCompactList}\small\item\em Ends the game and displays a message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_board_a8b9962b67e312131c8ed539eca95327e}{reset\+Game}} ()
+\begin{DoxyCompactList}\small\item\em Resets the game state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_game_board_ab5d50f2561ddf30d4fd6556a7ffcc2ca}\label{class_game_board_ab5d50f2561ddf30d4fd6556a7ffcc2ca} 
+int {\bfseries current\+Turn}
+\begin{DoxyCompactList}\small\item\em Structure representing a turn in the game board. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a407c3628a24423c333bb3afc79c64d9e}\label{class_game_board_a407c3628a24423c333bb3afc79c64d9e} 
+int {\bfseries red\+Cards\+Remaining}
+\begin{DoxyCompactList}\small\item\em The number of remaining cards for each team. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_ab3226f5ed4adb1053bc362ba7fe808ac}\label{class_game_board_ab3226f5ed4adb1053bc362ba7fe808ac} 
+int {\bfseries blue\+Cards\+Remaining}
+\begin{DoxyCompactList}\small\item\em The number of remaining cards for each team. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a80d8fa9eb127a3abd530649c8c436774}\label{class_game_board_a80d8fa9eb127a3abd530649c8c436774} 
+int {\bfseries max\+Guesses} =0
+\begin{DoxyCompactList}\small\item\em The maximum number of guesses allowed in a turn. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a985fefe7f8d9eab3c001d8e080e9aff4}\label{class_game_board_a985fefe7f8d9eab3c001d8e080e9aff4} 
+int {\bfseries current\+Guesses} =0
+\begin{DoxyCompactList}\small\item\em The number of guesses made in the current turn. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a78989c73f7fd91b7b434eaf3cd489c03}\label{class_game_board_a78989c73f7fd91b7b434eaf3cd489c03} 
+QString {\bfseries red\+Spy\+Master\+Name}
+\begin{DoxyCompactList}\small\item\em The names of the spymaster for the red team. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a1a9e6a8d7028506d3b03399dce714fdb}\label{class_game_board_a1a9e6a8d7028506d3b03399dce714fdb} 
+QString {\bfseries red\+Operative\+Name}
+\begin{DoxyCompactList}\small\item\em The names of the operative for the blue team. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a96d2d270e95f099099d9f5a23675d6c1}\label{class_game_board_a96d2d270e95f099099d9f5a23675d6c1} 
+QString {\bfseries blue\+Spy\+Master\+Name}
+\begin{DoxyCompactList}\small\item\em The names of the spymaster for the blue team. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a2c5f3a1e3ff2e64baf49218761bca460}\label{class_game_board_a2c5f3a1e3ff2e64baf49218761bca460} 
+QString {\bfseries blue\+Operative\+Name}
+\begin{DoxyCompactList}\small\item\em The names of the operative for the blue team. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a4a60730f73ee44dd462314b267c41f9a}\label{class_game_board_a4a60730f73ee44dd462314b267c41f9a} 
+\mbox{\hyperlink{struct_game_board_1_1_card}{Card}} {\bfseries game\+Grid} \mbox{[}\mbox{\hyperlink{class_game_board_afdb0b0f5289fcbbcc23c5a845e656e14}{GRID\+\_\+\+SIZE}}\mbox{]}\mbox{[}\mbox{\hyperlink{class_game_board_afdb0b0f5289fcbbcc23c5a845e656e14}{GRID\+\_\+\+SIZE}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em The game grid. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a5d5c423ffea6a4003199cb6ab9c4da33}\label{class_game_board_a5d5c423ffea6a4003199cb6ab9c4da33} 
+QString\+List {\bfseries word\+List}
+\begin{DoxyCompactList}\small\item\em The list of words. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a914e1aa99a5e137121ed49a6171ce9fa}\label{class_game_board_a914e1aa99a5e137121ed49a6171ce9fa} 
+QGrid\+Layout \texorpdfstring{$\ast$}{*} {\bfseries grid\+Layout}
+\begin{DoxyCompactList}\small\item\em The grid layout for the game board. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_aa5d7699d347b3be35d09dfe7cb7f2716}\label{class_game_board_aa5d7699d347b3be35d09dfe7cb7f2716} 
+QPush\+Button \texorpdfstring{$\ast$}{*} {\bfseries cards} \mbox{[}\mbox{\hyperlink{class_game_board_afdb0b0f5289fcbbcc23c5a845e656e14}{GRID\+\_\+\+SIZE}}\mbox{]}\mbox{[}\mbox{\hyperlink{class_game_board_afdb0b0f5289fcbbcc23c5a845e656e14}{GRID\+\_\+\+SIZE}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em The buttons representing the cards in the game grid. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a9b07ec368239548438bc5de74d2f241b}\label{class_game_board_a9b07ec368239548438bc5de74d2f241b} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries red\+Team\+Label}
+\begin{DoxyCompactList}\small\item\em The labels for red team information. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a50ce8dc376e7f4661fc080c38d955851}\label{class_game_board_a50ce8dc376e7f4661fc080c38d955851} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries blue\+Team\+Label}
+\begin{DoxyCompactList}\small\item\em The label for blue team information. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a838b8bc7e4b32495f6d5ebb304795d2f}\label{class_game_board_a838b8bc7e4b32495f6d5ebb304795d2f} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries current\+Turn\+Label}
+\begin{DoxyCompactList}\small\item\em The label for the current turn. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a651a207cc15123dfd423894b30a00744}\label{class_game_board_a651a207cc15123dfd423894b30a00744} 
+\mbox{\hyperlink{class_spymaster_hint}{Spymaster\+Hint}} \texorpdfstring{$\ast$}{*} {\bfseries spymaster\+Hint}
+\begin{DoxyCompactList}\small\item\em The widget for the spymaster hint. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_adbd731f56679c532908b8f5a9e49c57d}\label{class_game_board_adbd731f56679c532908b8f5a9e49c57d} 
+\mbox{\hyperlink{class_operator_guess}{Operator\+Guess}} \texorpdfstring{$\ast$}{*} {\bfseries operator\+Guess}
+\begin{DoxyCompactList}\small\item\em The widget for the operator guess. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a9ad48d34ceda7f20908056a77d208152}\label{class_game_board_a9ad48d34ceda7f20908056a77d208152} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries current\+Hint}
+\begin{DoxyCompactList}\small\item\em The label for the current hint. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a727bf8c97f78410f700b2ad3f65a5355}\label{class_game_board_a727bf8c97f78410f700b2ad3f65a5355} 
+QString {\bfseries corresponding\+Number}
+\begin{DoxyCompactList}\small\item\em The label for the corresponding number. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_adb21c61d51cd8a051a1b34afc2e04860}\label{class_game_board_adb21c61d51cd8a051a1b34afc2e04860} 
+\mbox{\hyperlink{class_transition}{Transition}} \texorpdfstring{$\ast$}{*} {\bfseries transition}
+\begin{DoxyCompactList}\small\item\em The transition screen widget. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_ae116c4a5f4fe280638aec7d377048966}\label{class_game_board_ae116c4a5f4fe280638aec7d377048966} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries red\+Score\+Label}
+\begin{DoxyCompactList}\small\item\em The label for red team score. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a236f41162980b8270ac09c677200b24a}\label{class_game_board_a236f41162980b8270ac09c677200b24a} 
+QLabel \texorpdfstring{$\ast$}{*} {\bfseries blue\+Score\+Label}
+\begin{DoxyCompactList}\small\item\em The label for blue team score. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a84d0e5eb0e427f8701c06c33c8612ca8}\label{class_game_board_a84d0e5eb0e427f8701c06c33c8612ca8} 
+\mbox{\hyperlink{class_chat_box}{Chat\+Box}} \texorpdfstring{$\ast$}{*} {\bfseries chat\+Box}
+\begin{DoxyCompactList}\small\item\em The chat box widget. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a0ebbb675eb6cffbc98ee493dee008d73}\label{class_game_board_a0ebbb675eb6cffbc98ee493dee008d73} 
+QString {\bfseries current\+Player\+Name}
+\begin{DoxyCompactList}\small\item\em The name of the current player. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a51037f1b84a565a8bf66838484a83e1f}\label{class_game_board_a51037f1b84a565a8bf66838484a83e1f} 
+\mbox{\hyperlink{class_chat_box_a92631ec75ea4f68ce29007858b32bcb7}{Chat\+Box\+::\+Team}} {\bfseries current\+Player\+Team}
+\begin{DoxyCompactList}\small\item\em The team of the current player. \end{DoxyCompactList}\item 
+\Hypertarget{class_game_board_a5186d1098e51e52645ceba4c528de526}\label{class_game_board_a5186d1098e51e52645ceba4c528de526} 
+\mbox{\hyperlink{class_user}{User}} \texorpdfstring{$\ast$}{*} {\bfseries users}
+\begin{DoxyCompactList}\small\item\em The list of users in the game. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_game_board_afdb0b0f5289fcbbcc23c5a845e656e14}\label{class_game_board_afdb0b0f5289fcbbcc23c5a845e656e14} 
+static const int {\bfseries GRID\+\_\+\+SIZE} = 5
+\begin{DoxyCompactList}\small\item\em The size of the game grid. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class representing the game board for the Spy Master game. 
+
+The \doxylink{class_game_board}{Game\+Board} class is responsible for displaying the game board and handling user interactions. It includes methods for loading words from a file, generating the game grid, setting up the UI, card clicks, card reveals and turns, and handling game end conditions. The game board also includes a stacked layout for transitions between screens. Codenames is a game which involves two teams (red and blue) with spymasters giving hints and operators making guesses.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_game_board_af1764339605028918479c25cf4ee02a8}\index{GameBoard@{GameBoard}!GameBoard@{GameBoard}}
+\index{GameBoard@{GameBoard}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{GameBoard()}{GameBoard()}}
+{\footnotesize\ttfamily \label{class_game_board_af1764339605028918479c25cf4ee02a8} 
+Game\+Board\+::\+Game\+Board (\begin{DoxyParamCaption}\item[{const QString \&}]{red\+Spy\+Master}{, }\item[{const QString \&}]{red\+Operative}{, }\item[{const QString \&}]{blue\+Spy\+Master}{, }\item[{const QString \&}]{blue\+Operative}{, }\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructor for the \doxylink{class_game_board}{Game\+Board} class. 
+
+Initializes the game board with the provided team names and sets up the UI. It also loads words from a file and generates the game grid which is displayed on the UI.
+
+
+\begin{DoxyParams}{Parameters}
+{\em red\+Spy\+Master} & The name of the red team\textquotesingle{}s spymaster. \\
+\hline
+{\em red\+Operative} & The name of the red team\textquotesingle{}s operative. \\
+\hline
+{\em blue\+Spy\+Master} & The name of the blue team\textquotesingle{}s spymaster. \\
+\hline
+{\em blue\+Operative} & The name of the blue team\textquotesingle{}s operative. \\
+\hline
+{\em parent} & Optional parent widget.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a48e19b4953c87cc5eea1f9152d09499e}\index{GameBoard@{GameBoard}!````~GameBoard@{\texorpdfstring{$\sim$}{\string~}GameBoard}}
+\index{````~GameBoard@{\texorpdfstring{$\sim$}{\string~}GameBoard}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}GameBoard()}{\string~GameBoard()}}
+{\footnotesize\ttfamily \label{class_game_board_a48e19b4953c87cc5eea1f9152d09499e} 
+Game\+Board\+::\texorpdfstring{$\sim$}{\string~}\+Game\+Board (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Destructor for the \doxylink{class_game_board}{Game\+Board} class. 
+
+Cleans up resources used by the game board.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_board_aef9467995201000a4c75c2ef27357ed3}\index{GameBoard@{GameBoard}!checkGameEnd@{checkGameEnd}}
+\index{checkGameEnd@{checkGameEnd}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{checkGameEnd()}{checkGameEnd()}}
+{\footnotesize\ttfamily \label{class_game_board_aef9467995201000a4c75c2ef27357ed3} 
+void Game\+Board\+::check\+Game\+End (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Checks if the game has ended. 
+
+Checks if the game has ended based on the current state of the game.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a2a3cbadc8c773cafcfaaf34f06963aee}\index{GameBoard@{GameBoard}!displayGuess@{displayGuess}}
+\index{displayGuess@{displayGuess}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{displayGuess}{displayGuess}}
+{\footnotesize\ttfamily \label{class_game_board_a2a3cbadc8c773cafcfaaf34f06963aee} 
+void Game\+Board\+::display\+Guess (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+
+Displays a guess on the game board. 
+
+Displays a guess on the game board for the current turn and updates the UI.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a87c5a3324159e80502641c261f1e124e}\index{GameBoard@{GameBoard}!displayHint@{displayHint}}
+\index{displayHint@{displayHint}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{displayHint}{displayHint}}
+{\footnotesize\ttfamily \label{class_game_board_a87c5a3324159e80502641c261f1e124e} 
+void Game\+Board\+::display\+Hint (\begin{DoxyParamCaption}\item[{const QString \&}]{hint}{, }\item[{int}]{number}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+
+Displays a hint on the game board. 
+
+Displays a hint on the game board for the current turn and updates the UI.
+
+
+\begin{DoxyParams}{Parameters}
+{\em hint} & The hint to be displayed. \\
+\hline
+{\em number} & The number of words associated with the hint.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a63206b13877ffde23b03fdbaff2b9dfc}\index{GameBoard@{GameBoard}!endGame@{endGame}}
+\index{endGame@{endGame}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{endGame()}{endGame()}}
+{\footnotesize\ttfamily \label{class_game_board_a63206b13877ffde23b03fdbaff2b9dfc} 
+void Game\+Board\+::end\+Game (\begin{DoxyParamCaption}\item[{const QString \&}]{message}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Ends the game and displays a message. 
+
+Ends the game and displays a message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to be displayed.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a0a6b29da093b00f1edce268fbbe422bd}\index{GameBoard@{GameBoard}!gameEnded@{gameEnded}}
+\index{gameEnded@{gameEnded}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{gameEnded}{gameEnded}}
+{\footnotesize\ttfamily \label{class_game_board_a0a6b29da093b00f1edce268fbbe422bd} 
+void Game\+Board\+::game\+Ended (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+
+
+Emitted when the game ends. 
+
+Signals that the game has ended and the game board should be closed.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a1d0648c5a6f6ce0d81f1115957ad86ec}\index{GameBoard@{GameBoard}!generateGameGrid@{generateGameGrid}}
+\index{generateGameGrid@{generateGameGrid}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{generateGameGrid()}{generateGameGrid()}}
+{\footnotesize\ttfamily \label{class_game_board_a1d0648c5a6f6ce0d81f1115957ad86ec} 
+void Game\+Board\+::generate\+Game\+Grid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Generates the game grid. 
+
+Generates the game grid based on the loaded words.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a428cb557d2b39565d040a046b2946abd}\index{GameBoard@{GameBoard}!loadWordsFromFile@{loadWordsFromFile}}
+\index{loadWordsFromFile@{loadWordsFromFile}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{loadWordsFromFile()}{loadWordsFromFile()}}
+{\footnotesize\ttfamily \label{class_game_board_a428cb557d2b39565d040a046b2946abd} 
+void Game\+Board\+::load\+Words\+From\+File (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Loads words from a file and generates the game grid. 
+
+Loads words from a file and generates the game grid.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_ad040091cc83d1baa6d1579ca30f527fb}\index{GameBoard@{GameBoard}!nextTurn@{nextTurn}}
+\index{nextTurn@{nextTurn}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{nextTurn()}{nextTurn()}}
+{\footnotesize\ttfamily \label{class_game_board_ad040091cc83d1baa6d1579ca30f527fb} 
+void Game\+Board\+::next\+Turn (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Switches to the next turn. 
+
+Switches to the next turn and updates the UI.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a8fe2b60f9217fdc9d9cff6b0a1c7c690}\index{GameBoard@{GameBoard}!onCardClicked@{onCardClicked}}
+\index{onCardClicked@{onCardClicked}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{onCardClicked()}{onCardClicked()}}
+{\footnotesize\ttfamily \label{class_game_board_a8fe2b60f9217fdc9d9cff6b0a1c7c690} 
+void Game\+Board\+::on\+Card\+Clicked (\begin{DoxyParamCaption}\item[{int}]{row}{, }\item[{int}]{col}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles a card click event. 
+
+Handles a card click event and updates the UI.
+
+
+\begin{DoxyParams}{Parameters}
+{\em row} & The row of the clicked card. \\
+\hline
+{\em col} & The column of the clicked card.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_af305d65c50e661027ecd036d1f749c6b}\index{GameBoard@{GameBoard}!onContinueClicked@{onContinueClicked}}
+\index{onContinueClicked@{onContinueClicked}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{onContinueClicked()}{onContinueClicked()}}
+{\footnotesize\ttfamily \label{class_game_board_af305d65c50e661027ecd036d1f749c6b} 
+void Game\+Board\+::on\+Continue\+Clicked (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles the continue button click event. 
+
+Handles the continue button click event and updates the UI.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a8b9962b67e312131c8ed539eca95327e}\index{GameBoard@{GameBoard}!resetGame@{resetGame}}
+\index{resetGame@{resetGame}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{resetGame()}{resetGame()}}
+{\footnotesize\ttfamily \label{class_game_board_a8b9962b67e312131c8ed539eca95327e} 
+void Game\+Board\+::reset\+Game (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Resets the game state. 
+
+Resets the game state to the initial state.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a8d4817a8edf743ddb1575fcb083c34d9}\index{GameBoard@{GameBoard}!setBlueOperativeName@{setBlueOperativeName}}
+\index{setBlueOperativeName@{setBlueOperativeName}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{setBlueOperativeName()}{setBlueOperativeName()}}
+{\footnotesize\ttfamily \label{class_game_board_a8d4817a8edf743ddb1575fcb083c34d9} 
+void Game\+Board\+::set\+Blue\+Operative\+Name (\begin{DoxyParamCaption}\item[{const QString \&}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Sets the names of the blue team\textquotesingle{}s operative. 
+
+Sets the names of the blue team\textquotesingle{}s operative and updates the team labels.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the blue team\textquotesingle{}s operative.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_ad59f8cb0838ac6be82ff2e5fabbe6ac5}\index{GameBoard@{GameBoard}!setBlueSpyMasterName@{setBlueSpyMasterName}}
+\index{setBlueSpyMasterName@{setBlueSpyMasterName}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{setBlueSpyMasterName()}{setBlueSpyMasterName()}}
+{\footnotesize\ttfamily \label{class_game_board_ad59f8cb0838ac6be82ff2e5fabbe6ac5} 
+void Game\+Board\+::set\+Blue\+Spy\+Master\+Name (\begin{DoxyParamCaption}\item[{const QString \&}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Sets the names of the blue team\textquotesingle{}s spymaster and operative. 
+
+Sets the names of the blue team\textquotesingle{}s spymaster and operative and updates the team labels.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the blue team\textquotesingle{}s spymaster.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_ad6f279b41024f943f48fcde9017cae18}\index{GameBoard@{GameBoard}!setRedOperativeName@{setRedOperativeName}}
+\index{setRedOperativeName@{setRedOperativeName}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{setRedOperativeName()}{setRedOperativeName()}}
+{\footnotesize\ttfamily \label{class_game_board_ad6f279b41024f943f48fcde9017cae18} 
+void Game\+Board\+::set\+Red\+Operative\+Name (\begin{DoxyParamCaption}\item[{const QString \&}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Sets the names of the red team\textquotesingle{}s operative. 
+
+Sets the names of the red team\textquotesingle{}s operative and updates the team labels.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the red team\textquotesingle{}s operative.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a990410e050306ca04b899a936b5e2467}\index{GameBoard@{GameBoard}!setRedSpyMasterName@{setRedSpyMasterName}}
+\index{setRedSpyMasterName@{setRedSpyMasterName}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{setRedSpyMasterName()}{setRedSpyMasterName()}}
+{\footnotesize\ttfamily \label{class_game_board_a990410e050306ca04b899a936b5e2467} 
+void Game\+Board\+::set\+Red\+Spy\+Master\+Name (\begin{DoxyParamCaption}\item[{const QString \&}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Sets the names of the red team\textquotesingle{}s spymaster and operative. 
+
+Sets the names of the red team\textquotesingle{}s spymaster and operative.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the red team\textquotesingle{}s spymaster.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a8629a58b327428fd995dac2982d3170b}\index{GameBoard@{GameBoard}!setupUI@{setupUI}}
+\index{setupUI@{setupUI}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{setupUI()}{setupUI()}}
+{\footnotesize\ttfamily \label{class_game_board_a8629a58b327428fd995dac2982d3170b} 
+void Game\+Board\+::setup\+UI (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sets up the UI for the game board. 
+
+Sets up the UI for the game board, including the layout, labels, and buttons.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_ac9be6bddf4d99ac0990541fb48030198}\index{GameBoard@{GameBoard}!show@{show}}
+\index{show@{show}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{show}{show}}
+{\footnotesize\ttfamily \label{class_game_board_ac9be6bddf4d99ac0990541fb48030198} 
+void Game\+Board\+::show (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+
+Displays the game board. 
+
+Displays the game board and sets up the UI.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a777e110150857a9f55e60ba85731dfd4}\index{GameBoard@{GameBoard}!showTransition@{showTransition}}
+\index{showTransition@{showTransition}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{showTransition()}{showTransition()}}
+{\footnotesize\ttfamily \label{class_game_board_a777e110150857a9f55e60ba85731dfd4} 
+void Game\+Board\+::show\+Transition (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Displays a transition screen. 
+
+Displays a transition screen and updates the UI.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a1c8fea21d9ca6593885647b54014b291}\index{GameBoard@{GameBoard}!updateScores@{updateScores}}
+\index{updateScores@{updateScores}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{updateScores()}{updateScores()}}
+{\footnotesize\ttfamily \label{class_game_board_a1c8fea21d9ca6593885647b54014b291} 
+void Game\+Board\+::update\+Scores (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Updates the scores of the teams. 
+
+Updates the scores of the teams based on the current state of the game.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+\Hypertarget{class_game_board_a161db400a83816fb10a44e5daaee5369}\index{GameBoard@{GameBoard}!updateTeamLabels@{updateTeamLabels}}
+\index{updateTeamLabels@{updateTeamLabels}!GameBoard@{GameBoard}}
+\doxysubsubsection{\texorpdfstring{updateTeamLabels()}{updateTeamLabels()}}
+{\footnotesize\ttfamily \label{class_game_board_a161db400a83816fb10a44e5daaee5369} 
+void Game\+Board\+::update\+Team\+Labels (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Updates the labels displaying team information. 
+
+Updates the labels displaying team information, such as team names and scores.
+
+\begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{gameboard_8h}{gameboard.\+h}}\end{DoxyCompactItemize}

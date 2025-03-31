@@ -30,9 +30,8 @@ ChatBox::~ChatBox() {
 // Function to add a system message to the chat display
 void ChatBox::addSystemMessage(const QString& message, Team team) {
     // Set the team color and background color based on the team
-    QString nameColor = (team == BLUE_TEAM) ? "blue" : "red";
-    QColor bgColor = (team == BLUE_TEAM) ? QColor(103, 103, 255, 51) : QColor(255, 103, 103, 51);
-    
+    QString nameColor = (team == BLUE_TEAM) ? "#6666cc" : "#cc6666";
+    QColor bgColor = (team == BLUE_TEAM) ? QColor("#ddddff") : QColor("#ffdddd");    
     // Create a new text cursor at the end of the document to insert the message
     QTextCursor cursor = chatDisplay->textCursor();
     cursor.movePosition(QTextCursor::End);

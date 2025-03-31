@@ -1,0 +1,226 @@
+\doxysection{Chat\+Box Class Reference}
+\hypertarget{class_chat_box}{}\label{class_chat_box}\index{ChatBox@{ChatBox}}
+
+
+A widget for the chat feature in the game.  
+
+
+
+
+{\ttfamily \#include $<$chatbox.\+h$>$}
+
+Inheritance diagram for Chat\+Box\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_chat_box}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_chat_box_a92631ec75ea4f68ce29007858b32bcb7}{Team}} \{ {\bfseries RED\+\_\+\+TEAM}
+, {\bfseries BLUE\+\_\+\+TEAM}
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration for the two teams in the game. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_chat_box_a96d840943674124827c2bee668877031}{send\+Message}} ()
+\begin{DoxyCompactList}\small\item\em Sends a message from the chat input. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_chat_box_a06d17f4d605e33459beb4b965190a5cf}{mass\+Send}} (const QString \&\mbox{\hyperlink{class_chat_box_a9b3ddab7902e12c13b98d05da8610cb9}{player\+Name}}, const QString \&message)
+\begin{DoxyCompactList}\small\item\em Signal emitted when a message is sent. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_chat_box_a562c6508806796253ddb480dab9ea520}{Chat\+Box}} (const QString \&\mbox{\hyperlink{class_chat_box_a9b3ddab7902e12c13b98d05da8610cb9}{player\+Name}}, \mbox{\hyperlink{class_chat_box_a92631ec75ea4f68ce29007858b32bcb7}{Team}} \mbox{\hyperlink{class_chat_box_a3cf7c2d14eb04d21b45d07fa39ec4b9b}{team}}, QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_chat_box}{Chat\+Box} class. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_chat_box_a292b8b0e7c8791d04cedd93369739e2b}{\texorpdfstring{$\sim$}{\string~}\+Chat\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Destructor for the \doxylink{class_chat_box}{Chat\+Box} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_chat_box_a48dce3d033d0126b8b836446bad6e52a}{add\+System\+Message}} (const QString \&message, \mbox{\hyperlink{class_chat_box_a92631ec75ea4f68ce29007858b32bcb7}{Team}} \mbox{\hyperlink{class_chat_box_a3cf7c2d14eb04d21b45d07fa39ec4b9b}{team}})
+\begin{DoxyCompactList}\small\item\em Adds a system message to the chat display. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_chat_box_affe217dc3ce85a3d60b7018bc6f9ec4f}{add\+Player\+Message}} (const QString \&\mbox{\hyperlink{class_chat_box_a9b3ddab7902e12c13b98d05da8610cb9}{player\+Name}}, const QString \&message)
+\begin{DoxyCompactList}\small\item\em Adds a player message to the chat display. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_chat_box_a6123723a277962ecdb3f4be5b6e8c5d4}{set\+Player\+Name}} (const QString \&name)
+\begin{DoxyCompactList}\small\item\em Sets the player name for the chat box. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_chat_box_aeb1158b6284633a6e559e699bcc5f660}{clear\+Chat}} ()
+\begin{DoxyCompactList}\small\item\em Clears the chat display. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_chat_box_a2154e1711b994b3cb9738bcbed5e04df}{limit\+Reached\+Message}} ()
+\begin{DoxyCompactList}\small\item\em Displays a message when the guess limit is reached. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_chat_box_a3cf7c2d14eb04d21b45d07fa39ec4b9b}\label{class_chat_box_a3cf7c2d14eb04d21b45d07fa39ec4b9b} 
+\mbox{\hyperlink{class_chat_box_a92631ec75ea4f68ce29007858b32bcb7}{Team}} {\bfseries team}
+\begin{DoxyCompactList}\small\item\em The team of the player using this chat box. \end{DoxyCompactList}\item 
+\Hypertarget{class_chat_box_af76dfa5c854d068d92c061618b73698d}\label{class_chat_box_af76dfa5c854d068d92c061618b73698d} 
+QText\+Edit \texorpdfstring{$\ast$}{*} {\bfseries chat\+Display}
+\begin{DoxyCompactList}\small\item\em The text edit widget for displaying chat messages. \end{DoxyCompactList}\item 
+\Hypertarget{class_chat_box_a9386a36568cc7d09f6346f6c3a61c49b}\label{class_chat_box_a9386a36568cc7d09f6346f6c3a61c49b} 
+QLine\+Edit \texorpdfstring{$\ast$}{*} {\bfseries chat\+Input}
+\begin{DoxyCompactList}\small\item\em The line edit widget for inputting chat messages. \end{DoxyCompactList}\item 
+\Hypertarget{class_chat_box_ac6c9e94a987db5d066cc5a2184abffae}\label{class_chat_box_ac6c9e94a987db5d066cc5a2184abffae} 
+QPush\+Button \texorpdfstring{$\ast$}{*} {\bfseries send\+Button}
+\begin{DoxyCompactList}\small\item\em The button to send chat messages. \end{DoxyCompactList}\item 
+\Hypertarget{class_chat_box_a9b3ddab7902e12c13b98d05da8610cb9}\label{class_chat_box_a9b3ddab7902e12c13b98d05da8610cb9} 
+QString {\bfseries player\+Name}
+\begin{DoxyCompactList}\small\item\em The name of the player using this chat box. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A widget for the chat feature in the game. 
+
+This class contains a QText\+Edit for displaying chat messages, a QLine\+Edit for inputting messages, and a QPush\+Button to send messages. It allows players to communicate with each other during the game. It also includes functionality to display system messages and player messages with different styles based on operative guesses and spymaster hints for each team. \begin{DoxyAuthor}{Author}
+Group 9 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{class_chat_box_a92631ec75ea4f68ce29007858b32bcb7}\index{ChatBox@{ChatBox}!Team@{Team}}
+\index{Team@{Team}!ChatBox@{ChatBox}}
+\doxysubsubsection{\texorpdfstring{Team}{Team}}
+{\footnotesize\ttfamily \label{class_chat_box_a92631ec75ea4f68ce29007858b32bcb7} 
+enum \mbox{\hyperlink{class_chat_box_a92631ec75ea4f68ce29007858b32bcb7}{Chat\+Box\+::\+Team}}}
+
+
+
+Enumeration for the two teams in the game. 
+
+This enum is used to differentiate between the two teams (red and blue) in the game. It is used to style the chat messages and system messages based on the team. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_chat_box_a562c6508806796253ddb480dab9ea520}\index{ChatBox@{ChatBox}!ChatBox@{ChatBox}}
+\index{ChatBox@{ChatBox}!ChatBox@{ChatBox}}
+\doxysubsubsection{\texorpdfstring{ChatBox()}{ChatBox()}}
+{\footnotesize\ttfamily \label{class_chat_box_a562c6508806796253ddb480dab9ea520} 
+Chat\+Box\+::\+Chat\+Box (\begin{DoxyParamCaption}\item[{const QString \&}]{player\+Name}{, }\item[{\mbox{\hyperlink{class_chat_box_a92631ec75ea4f68ce29007858b32bcb7}{Team}}}]{team}{, }\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructor for the \doxylink{class_chat_box}{Chat\+Box} class. 
+
+This constructor sets up the layout and initializes the widgets. It connects the button to the send\+Message slot and the Line\+Edit to the send\+Message slot. 
+\begin{DoxyParams}{Parameters}
+{\em player\+Name} & The name of the player using this chat box. \\
+\hline
+{\em team} & The team of the player (red or blue). \\
+\hline
+{\em parent} & The parent widget. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_chat_box_a292b8b0e7c8791d04cedd93369739e2b}\index{ChatBox@{ChatBox}!````~ChatBox@{\texorpdfstring{$\sim$}{\string~}ChatBox}}
+\index{````~ChatBox@{\texorpdfstring{$\sim$}{\string~}ChatBox}!ChatBox@{ChatBox}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ChatBox()}{\string~ChatBox()}}
+{\footnotesize\ttfamily \label{class_chat_box_a292b8b0e7c8791d04cedd93369739e2b} 
+Chat\+Box\+::\texorpdfstring{$\sim$}{\string~}\+Chat\+Box (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Destructor for the \doxylink{class_chat_box}{Chat\+Box} class. 
+
+This destructor cleans up the resources used by the class. It does not need to explicitly delete the widgets as they are managed by Qt\textquotesingle{}s parent-\/child system. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_chat_box_affe217dc3ce85a3d60b7018bc6f9ec4f}\index{ChatBox@{ChatBox}!addPlayerMessage@{addPlayerMessage}}
+\index{addPlayerMessage@{addPlayerMessage}!ChatBox@{ChatBox}}
+\doxysubsubsection{\texorpdfstring{addPlayerMessage()}{addPlayerMessage()}}
+{\footnotesize\ttfamily \label{class_chat_box_affe217dc3ce85a3d60b7018bc6f9ec4f} 
+void Chat\+Box\+::add\+Player\+Message (\begin{DoxyParamCaption}\item[{const QString \&}]{player\+Name}{, }\item[{const QString \&}]{message}{}\end{DoxyParamCaption})}
+
+
+
+Adds a player message to the chat display. 
+
+This function adds a player message to the chat box for both local play and online play. 
+\begin{DoxyParams}{Parameters}
+{\em player\+Name} & The name of the player sending the message. \\
+\hline
+{\em message} & The message text. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_chat_box_a48dce3d033d0126b8b836446bad6e52a}\index{ChatBox@{ChatBox}!addSystemMessage@{addSystemMessage}}
+\index{addSystemMessage@{addSystemMessage}!ChatBox@{ChatBox}}
+\doxysubsubsection{\texorpdfstring{addSystemMessage()}{addSystemMessage()}}
+{\footnotesize\ttfamily \label{class_chat_box_a48dce3d033d0126b8b836446bad6e52a} 
+void Chat\+Box\+::add\+System\+Message (\begin{DoxyParamCaption}\item[{const QString \&}]{message}{, }\item[{\mbox{\hyperlink{class_chat_box_a92631ec75ea4f68ce29007858b32bcb7}{Team}}}]{team}{}\end{DoxyParamCaption})}
+
+
+
+Adds a system message to the chat display. 
+
+This function adds a system message to the chat box, printing the operative guesses and spymaster hints for each team. It styles the message based on the team and the type of message. 
+\begin{DoxyParams}{Parameters}
+{\em message} & The system message text. \\
+\hline
+{\em team} & The team associated with the message (red or blue). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_chat_box_aeb1158b6284633a6e559e699bcc5f660}\index{ChatBox@{ChatBox}!clearChat@{clearChat}}
+\index{clearChat@{clearChat}!ChatBox@{ChatBox}}
+\doxysubsubsection{\texorpdfstring{clearChat()}{clearChat()}}
+{\footnotesize\ttfamily \label{class_chat_box_aeb1158b6284633a6e559e699bcc5f660} 
+void Chat\+Box\+::clear\+Chat (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Clears the chat display. 
+
+This function clears all messages from the chat display so the chat is empty for new games. \Hypertarget{class_chat_box_a2154e1711b994b3cb9738bcbed5e04df}\index{ChatBox@{ChatBox}!limitReachedMessage@{limitReachedMessage}}
+\index{limitReachedMessage@{limitReachedMessage}!ChatBox@{ChatBox}}
+\doxysubsubsection{\texorpdfstring{limitReachedMessage()}{limitReachedMessage()}}
+{\footnotesize\ttfamily \label{class_chat_box_a2154e1711b994b3cb9738bcbed5e04df} 
+void Chat\+Box\+::limit\+Reached\+Message (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Displays a message when the guess limit is reached. 
+
+This function displays a message indicating that the operative has reached the limit for their guesses, meaning they cannot make any more guesses and must end their turn. \Hypertarget{class_chat_box_a06d17f4d605e33459beb4b965190a5cf}\index{ChatBox@{ChatBox}!massSend@{massSend}}
+\index{massSend@{massSend}!ChatBox@{ChatBox}}
+\doxysubsubsection{\texorpdfstring{massSend}{massSend}}
+{\footnotesize\ttfamily \label{class_chat_box_a06d17f4d605e33459beb4b965190a5cf} 
+void Chat\+Box\+::mass\+Send (\begin{DoxyParamCaption}\item[{const QString \&}]{player\+Name}{, }\item[{const QString \&}]{message}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+
+
+Signal emitted when a message is sent. 
+
+This signal is emitted when the user sends a message from the chat input field. It carries the player name and the message text as parameters. 
+\begin{DoxyParams}{Parameters}
+{\em player\+Name} & The name of the player sending the message. \\
+\hline
+{\em message} & The message text. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_chat_box_a96d840943674124827c2bee668877031}\index{ChatBox@{ChatBox}!sendMessage@{sendMessage}}
+\index{sendMessage@{sendMessage}!ChatBox@{ChatBox}}
+\doxysubsubsection{\texorpdfstring{sendMessage}{sendMessage}}
+{\footnotesize\ttfamily \label{class_chat_box_a96d840943674124827c2bee668877031} 
+void Chat\+Box\+::send\+Message (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+
+Sends a message from the chat input. 
+
+This function retrieves the text from the chat input field and emits a signal to send the message. It also clears the input field after sending the message. \Hypertarget{class_chat_box_a6123723a277962ecdb3f4be5b6e8c5d4}\index{ChatBox@{ChatBox}!setPlayerName@{setPlayerName}}
+\index{setPlayerName@{setPlayerName}!ChatBox@{ChatBox}}
+\doxysubsubsection{\texorpdfstring{setPlayerName()}{setPlayerName()}}
+{\footnotesize\ttfamily \label{class_chat_box_a6123723a277962ecdb3f4be5b6e8c5d4} 
+void Chat\+Box\+::set\+Player\+Name (\begin{DoxyParamCaption}\item[{const QString \&}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Sets the player name for the chat box. 
+
+This function sets the player name for the chat box, which is used to identify the sender of messages. 
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the player. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{chatbox_8h}{chatbox.\+h}}\end{DoxyCompactItemize}
