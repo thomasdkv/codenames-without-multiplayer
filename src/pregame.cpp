@@ -1,17 +1,21 @@
+/**
+ * @file pregame.cpp
+ * @author Team 9 - UWO CS 3307
+ * @brief CPP file for the PreGame class which handles the game setup screen
+ * @version 0.1
+ * @date 2025-03-30
+ *
+ * @copyright Copyright (c) 2025
+ *
+ */
+
 #include "pregame.h"
-#include <QScreen>
-#include <QGuiApplication>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QPushButton>
-#include <QComboBox>
 
 PreGame::PreGame(QWidget* parent) : QWidget(parent), gameBoard(nullptr) {
   this->setFixedSize(1000, 800);
 
   // Center the window on the screen
-  QScreen *screen = QGuiApplication::primaryScreen();
+  QScreen* screen = QGuiApplication::primaryScreen();
   if (screen) {
     QRect screenGeometry = screen->geometry();
     int x = (screenGeometry.width() - this->width()) / 2;
@@ -170,16 +174,14 @@ void PreGame::startGame() {
   QString blueSpyMaster = blueTeamSpyMasterComboBox->currentText();
   QString blueOperative = blueTeamOperativeComboBox->currentText();
 
-  QStringList selectedUsernames = {
-    redSpyMaster,
-    redOperative,
-    blueSpyMaster,
-    blueOperative
-  };
+  QStringList selectedUsernames = {redSpyMaster, redOperative, blueSpyMaster,
+                                   blueOperative};
 
-  QSet<QString> uniqueUsernames(selectedUsernames.begin(), selectedUsernames.end());
+  QSet<QString> uniqueUsernames(selectedUsernames.begin(),
+                                selectedUsernames.end());
   if (uniqueUsernames.size() < selectedUsernames.size()) {
-    QMessageBox::critical(this, "Error", "Duplicate usernames are not allowed!");
+    QMessageBox::critical(this, "Error",
+                          "Duplicate usernames are not allowed!");
     return;
   }
 

@@ -52,6 +52,7 @@ SpymasterHint::~SpymasterHint() {
     // Deconstructor for the SpymasterHint class, does nothing
 }
 
+// Reset the spymaster hint input fields
 void SpymasterHint::reset() {
     hintLineEdit->clear();
     numberSpinBox->clear();

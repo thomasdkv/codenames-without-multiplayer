@@ -1,3 +1,15 @@
+/**
+ * @file createaccountwindow.cpp
+ * @author Team 9 - UWO CS 3307
+ * @brief CPP file for the CreateAccountWindow class which handles user
+ * account creation
+ * @version 0.1
+ * @date 2025-03-30
+ *
+ * @copyright Copyright (c) 2025
+ *
+ */
+
 #include "createaccountwindow.h"
 
 CreateAccountWindow* CreateAccountWindow::instance = nullptr;
@@ -28,8 +40,6 @@ CreateAccountWindow::CreateAccountWindow(QWidget* parent) : QWidget(parent) {
   // Set up the window
   setWindowTitle("Create Account");
   this->setFixedSize(1000, 800);
-
-
 
   // Create title label
   QLabel* titleLabel = new QLabel("Create Account", this);

@@ -27,7 +27,9 @@ ChatBox::~ChatBox() {
     // Deconstructor for the ChatBox class, does nothing
 }
 
+// Function to add a system message to the chat display
 void ChatBox::addSystemMessage(const QString& message, Team team) {
+    // Set the team color and background color based on the team
     QString nameColor = (team == BLUE_TEAM) ? "blue" : "red";
     QColor bgColor = (team == BLUE_TEAM) ? QColor(103, 103, 255, 51) : QColor(255, 103, 103, 51);
     
@@ -58,6 +60,7 @@ void ChatBox::addSystemMessage(const QString& message, Team team) {
     chatDisplay->ensureCursorVisible();
 }
 
+// Function to add a player message to the chat display
 void ChatBox::addPlayerMessage(const QString& playerName, const QString& message) {
     // Create clean HTML-formatted message
     QString formattedMessage = QString("<b>&lt;%1&gt;</b> %2")
@@ -76,6 +79,8 @@ void ChatBox::addPlayerMessage(const QString& playerName, const QString& message
     chatDisplay->setTextCursor(cursor);
 }
 
+// Function to send a message from the chat input to the chat display, for multiplayer, it sends the message to 
+// the server and for local play, it adds the message to the chat display
 void ChatBox::sendMessage() {
     // Get the text from the chat input
     QString message = chatInput->text().trimmed();
@@ -89,15 +94,17 @@ void ChatBox::sendMessage() {
     emit(massSend(playerName, message));
 }
 
+// Function to set the player name for the chat box
 void ChatBox::setPlayerName(const QString& name) {
     playerName = name;
 }
 
+// Function to clear the chat display
 void ChatBox::clearChat() {
-    // Clear the chat display
     chatDisplay->clear();
 }
 
+// Function to display a message when the guess limit is reached
 void ChatBox::limitReachedMessage() {
     // Create clean HTML-formatted message
     QString formattedMessage = QString("<b>Guess Limit Reached</b>");
