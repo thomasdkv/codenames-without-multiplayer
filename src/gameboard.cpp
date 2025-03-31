@@ -1,10 +1,4 @@
 #include "gameboard.h"
-#include <QFile>
-#include <QTextStream>
-#include <QRandomGenerator>
-#include <QVBoxLayout>
-#include <QDebug>
-#include <QMessageBox>
 
 GameBoard::GameBoard(const QString& redSpyMaster, const QString& redOperative,
                     const QString& blueSpyMaster, const QString& blueOperative,

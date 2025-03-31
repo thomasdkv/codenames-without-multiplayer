@@ -6,68 +6,73 @@
 #ifndef TUTORIAL_H
 #define TUTORIAL_H
 
-#include <QMainWindow>
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QLabel>
 #include <QCloseEvent>
-#include <QPushButton>
+#include <QDebug>
+#include <QDir>
+#include <QFile>
 #include <QGraphicsDropShadowEffect>
+#include <QGuiApplication>
+#include <QLabel>
+#include <QMainWindow>
+#include <QPushButton>
+#include <QScreen>
+#include <QVBoxLayout>
+#include <QWidget>
 
 /**
  * @class Tutorial
  * @brief The tutorial window that guides users through the game mechanics.
  */
 class Tutorial : public QMainWindow {
-    Q_OBJECT
+  Q_OBJECT
 
-public:
-    /**
-     * @brief Constructor for Tutorial.
-     * @param parent The parent widget (default is nullptr).
-     */
-    explicit Tutorial(QWidget *parent = nullptr);
-    
-    /**
-     * @brief Destructor for Tutorial.
-     */
-    ~Tutorial();
+ public:
+  /**
+   * @brief Constructor for Tutorial.
+   * @param parent The parent widget (default is nullptr).
+   */
+  explicit Tutorial(QWidget* parent = nullptr);
 
-signals:
-    /**
-     * @brief Signal emitted when the tutorial is closed.
-     */
-    void tutorialClosed();
+  /**
+   * @brief Destructor for Tutorial.
+   */
+  ~Tutorial();
 
-protected:
-    /**
-     * @brief Handles the close event.
-     * @param event Pointer to the close event.
-     */
-    void closeEvent(QCloseEvent* event) override;
+ signals:
+  /**
+   * @brief Signal emitted when the tutorial is closed.
+   */
+  void tutorialClosed();
 
-private slots:
-    /**
-     * @brief Handles the continue button click event.
-     */
-    void onContinueClicked();
+ protected:
+  /**
+   * @brief Handles the close event.
+   * @param event Pointer to the close event.
+   */
+  void closeEvent(QCloseEvent* event) override;
 
-private:
-    /**
-     * @brief Updates the position of the continue button.
-     */
-    void updateContinueButtonPosition();
-    
-    /**
-     * @brief Resets the tutorial to its initial state.
-     */
-    void resetTutorial();
-    
-    QWidget* centralWidget; ///< Pointer to the central widget.
-    QLabel* titleLabel; ///< Label for the tutorial title.
-    QLabel* textBox; ///< Label for displaying tutorial text.
-    QPushButton* continueButton; ///< Button for continuing through the tutorial.
-    int clickCount; ///< Counter for continue button clicks.
+ private slots:
+  /**
+   * @brief Handles the continue button click event.
+   */
+  void onContinueClicked();
+
+ private:
+  /**
+   * @brief Updates the position of the continue button.
+   */
+  void updateContinueButtonPosition();
+
+  /**
+   * @brief Resets the tutorial to its initial state.
+   */
+  void resetTutorial();
+
+  QWidget* centralWidget;       ///< Pointer to the central widget.
+  QLabel* titleLabel;           ///< Label for the tutorial title.
+  QLabel* textBox;              ///< Label for displaying tutorial text.
+  QPushButton* continueButton;  ///< Button for continuing through the tutorial.
+  int clickCount;               ///< Counter for continue button clicks.
 };
 
-#endif // TUTORIAL_H
+#endif  // TUTORIAL_H

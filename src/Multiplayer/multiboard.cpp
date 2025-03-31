@@ -1,11 +1,4 @@
 #include "Multiplayer/multiboard.h"
-#include <QRandomGenerator>
-#include <QMessageBox>
-#include <QDebug>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QPushButton>
 
 MultiBoard::MultiBoard(bool isHost, QWebSocketServer *server, QList<QWebSocket *> clients,
                        QWebSocket *clientSocket, const QHash<QString, QString> &playerRoles,

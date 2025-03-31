@@ -1,12 +1,4 @@
 #include "Multiplayer/multipregame.h"
-#include "Multiplayer/multiboard.h"
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QPushButton>
-#include <QInputDialog>
-#include <QMessageBox>
-#include <QNetworkInterface>
-#include <QLoggingCategory>
 
 MultiPregame::MultiPregame(QWebSocketServer *server, const QString &username, QWidget *parent)
     : QWidget(parent), m_server(server), m_isHost(true)

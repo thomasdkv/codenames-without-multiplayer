@@ -20,8 +20,7 @@ Inheritance diagram for Main\+Window\+:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for Main\+Window\+:
-\nopagebreak
+Collaboration diagram for Main\+Window\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -59,13 +58,13 @@ void \mbox{\hyperlink{classMainWindow_a92173c88d0000beac9fee60ca282f039}{open\+M
 \begin{DoxyCompactItemize}
 \item 
 QWidget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_ad3bde47a75b6c59146d6aff1752d077f}{central\+Widget}}
-\begin{DoxyCompactList}\small\item\em Pointer to the central widget, which holds all main UI elements. \end{DoxyCompactList}\item 
+\item 
 QVBox\+Layout \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a80f08e92412c47b1479adaa2cdaf71fa}{layout}}
 \begin{DoxyCompactList}\small\item\em Layout for organizing the widgets vertically. \end{DoxyCompactList}\item 
 QLabel \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a515c68313ee1a241a284a06f7d9bf5e4}{title\+Label}}
 \begin{DoxyCompactList}\small\item\em Label displaying the application title. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classPreGame}{Pre\+Game}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_afb3ba0c17506fc12aeb1306e2ac978b0}{pre\+Game\+Window}}
-\begin{DoxyCompactList}\small\item\em Pointer to the \doxylink{classPreGame}{Pre\+Game} window for local gameplay setup. \end{DoxyCompactList}\item 
+\item 
 \mbox{\hyperlink{classMultiMain}{Multi\+Main}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a3f7a4129a70943e9c26208da947af03f}{multi\+Main}}
 \begin{DoxyCompactList}\small\item\em Pointer to the Multiplayer main window. \end{DoxyCompactList}\item 
 QPush\+Button \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_ac4fe8087690a54d0da0b2208706de7cc}{local\+Play\+Button}}
@@ -79,13 +78,13 @@ QPush\+Button \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a46a9c
 QPush\+Button \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_aa54f889dc6bfbbbff1d8fe874080b684}{create\+Account\+Button}}
 \begin{DoxyCompactList}\small\item\em Button for opening the account creation window. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classUser}{User}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a626c22cc6509364550381ea5f214eb00}{online\+Game\+Window}}
-\begin{DoxyCompactList}\small\item\em Pointer to the online game window where users can play multiplayer. \end{DoxyCompactList}\item 
+\item 
 \mbox{\hyperlink{classCreateAccountWindow}{Create\+Account\+Window}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a32d22fcfdef5140581a77f1429a6ef47}{create\+Account\+Window}}
 \begin{DoxyCompactList}\small\item\em Pointer to the account creation window. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classStatisticsWindow}{Statistics\+Window}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a846c3cac9f8c999a1a006b66f645477a}{stats\+Window}}
 \begin{DoxyCompactList}\small\item\em Pointer to the statistics window displaying game stats. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classTutorial}{Tutorial}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a3b08179d3a9d363064cc2b53f3a32e64}{tutorial\+Window}}
-\begin{DoxyCompactList}\small\item\em Pointer to the tutorial window explaining the game mechanics. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -199,11 +198,7 @@ Displays the main window.
 {\footnotesize\ttfamily \label{classMainWindow_ad3bde47a75b6c59146d6aff1752d077f} 
 QWidget\texorpdfstring{$\ast$}{*} Main\+Window\+::central\+Widget\hspace{0.3cm}{\ttfamily [private]}}
 
-
-
-Pointer to the central widget, which holds all main UI elements. 
-
-\Hypertarget{classMainWindow_aa54f889dc6bfbbbff1d8fe874080b684}\index{MainWindow@{MainWindow}!createAccountButton@{createAccountButton}}
+Pointer to the central widget, which holds all main UI elements. \Hypertarget{classMainWindow_aa54f889dc6bfbbbff1d8fe874080b684}\index{MainWindow@{MainWindow}!createAccountButton@{createAccountButton}}
 \index{createAccountButton@{createAccountButton}!MainWindow@{MainWindow}}
 \doxysubsubsection{\texorpdfstring{createAccountButton}{createAccountButton}}
 {\footnotesize\ttfamily \label{classMainWindow_aa54f889dc6bfbbbff1d8fe874080b684} 
@@ -259,11 +254,7 @@ Pointer to the Multiplayer main window.
 {\footnotesize\ttfamily \label{classMainWindow_a626c22cc6509364550381ea5f214eb00} 
 \mbox{\hyperlink{classUser}{User}}\texorpdfstring{$\ast$}{*} Main\+Window\+::online\+Game\+Window\hspace{0.3cm}{\ttfamily [private]}}
 
-
-
-Pointer to the online game window where users can play multiplayer. 
-
-\Hypertarget{classMainWindow_a74661a53c731e62b7749ab1d34d9f541}\index{MainWindow@{MainWindow}!onlinePlayButton@{onlinePlayButton}}
+Pointer to the online game window where users can play multiplayer. \Hypertarget{classMainWindow_a74661a53c731e62b7749ab1d34d9f541}\index{MainWindow@{MainWindow}!onlinePlayButton@{onlinePlayButton}}
 \index{onlinePlayButton@{onlinePlayButton}!MainWindow@{MainWindow}}
 \doxysubsubsection{\texorpdfstring{onlinePlayButton}{onlinePlayButton}}
 {\footnotesize\ttfamily \label{classMainWindow_a74661a53c731e62b7749ab1d34d9f541} 
@@ -279,11 +270,7 @@ Button for starting an online game.
 {\footnotesize\ttfamily \label{classMainWindow_afb3ba0c17506fc12aeb1306e2ac978b0} 
 \mbox{\hyperlink{classPreGame}{Pre\+Game}}\texorpdfstring{$\ast$}{*} Main\+Window\+::pre\+Game\+Window\hspace{0.3cm}{\ttfamily [private]}}
 
-
-
-Pointer to the \doxylink{classPreGame}{Pre\+Game} window for local gameplay setup. 
-
-\Hypertarget{classMainWindow_a46a9c7616e68668947433769965a9c52}\index{MainWindow@{MainWindow}!statsButton@{statsButton}}
+Pointer to the \doxylink{classPreGame}{Pre\+Game} window for local gameplay setup. \Hypertarget{classMainWindow_a46a9c7616e68668947433769965a9c52}\index{MainWindow@{MainWindow}!statsButton@{statsButton}}
 \index{statsButton@{statsButton}!MainWindow@{MainWindow}}
 \doxysubsubsection{\texorpdfstring{statsButton}{statsButton}}
 {\footnotesize\ttfamily \label{classMainWindow_a46a9c7616e68668947433769965a9c52} 
@@ -329,11 +316,7 @@ Button for opening the tutorial.
 {\footnotesize\ttfamily \label{classMainWindow_a3b08179d3a9d363064cc2b53f3a32e64} 
 \mbox{\hyperlink{classTutorial}{Tutorial}}\texorpdfstring{$\ast$}{*} Main\+Window\+::tutorial\+Window\hspace{0.3cm}{\ttfamily [private]}}
 
-
-
 Pointer to the tutorial window explaining the game mechanics. 
-
-
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
