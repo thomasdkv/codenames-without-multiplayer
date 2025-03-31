@@ -1,16 +1,4 @@
 #include "Multiplayer/multimain.h"
-#include "Multiplayer/multipregame.h"
-#include "Multiplayer/multiboard.h"
-#include <QGraphicsDropShadowEffect>
-#include <QPixmap>
-#include <QPalette>
-#include <QInputDialog>
-#include <QNetworkInterface>
-#include <QMessageBox>
-#include <QScreen>
-#include <QGuiApplication>
-#include <QVBoxLayout>
-#include <QPushButton>
 
 MultiMain::MultiMain(QWidget *parent)
     : QWidget(parent)

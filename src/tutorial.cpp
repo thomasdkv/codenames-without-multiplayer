@@ -1,14 +1,4 @@
 #include "tutorial.h"
-#include <QLabel>
-#include <QCloseEvent>
-#include <QVBoxLayout>
-#include <QDebug>
-#include <QDir>
-#include <QFile>
-#include <QPushButton>
-#include <QGraphicsDropShadowEffect>
-#include <QScreen>
-#include <QGuiApplication>
 
 Tutorial::Tutorial(QWidget *parent)
     : QMainWindow(parent), clickCount(0) {
