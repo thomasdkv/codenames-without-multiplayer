@@ -1,0 +1,73 @@
+\doxysection{statisticswindow.\+h}
+\hypertarget{statisticswindow_8h_source}{}\label{statisticswindow_8h_source}\index{include/statisticswindow.h@{include/statisticswindow.h}}
+\mbox{\hyperlink{statisticswindow_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ STATISTICS\_WINDOW\_H}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ STATISTICS\_WINDOW\_H}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <QComboBox>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <QGuiApplication>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QHBoxLayout>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <QLabel>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <QPushButton>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <QScreen>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <QVBoxLayout>}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{user_8h}{user.h}}"{}}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classUser}{User}};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classStatisticsWindow_a1f64f1f0ab2d755975acf988096a0a46}{StatisticsWindow}}\ :\ \textcolor{keyword}{public}\ QWidget\ \{}
+\DoxyCodeLine{00033\ \ \ Q\_OBJECT}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ signals:}
+\DoxyCodeLine{00040\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classStatisticsWindow_aaeeb374c72cd22cbe0c791461871daa6}{backToMainWindow}}();}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00048\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classStatisticsWindow_a1f64f1f0ab2d755975acf988096a0a46}{StatisticsWindow}}(QWidget*\ parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00054\ \ \ \mbox{\hyperlink{classStatisticsWindow_a380e9a6974d1005b37bf8d23d40ef774}{\string~StatisticsWindow}}();}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \textcolor{keyword}{public}\ slots:}
+\DoxyCodeLine{00061\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classStatisticsWindow_af5740db320d09141ead7bd7ff28a5de5}{show}}();}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00068\ \ \ \mbox{\hyperlink{classUser}{User}}*\ \mbox{\hyperlink{classStatisticsWindow_a026da9d0eec66cb4b9f9980e781e3a85}{users}};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00074\ \ \ QPushButton*\ \mbox{\hyperlink{classStatisticsWindow_ad92b33fb23e5841b5b6becad923ea03c}{backToMainButton}};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00080\ \ \ QComboBox*\ \mbox{\hyperlink{classStatisticsWindow_ab99f3b7a634ac384335897c111771804}{usernameComboBox}};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00086\ \ \ QPushButton*\ \mbox{\hyperlink{classStatisticsWindow_a46d11cef11130c7527a6560a6e0b4c23}{showUserStatsButton}};}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00092\ \ \ QString\ \mbox{\hyperlink{classStatisticsWindow_a8a4dee68184ef0f8076cb6cd30fe874b}{username}};}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00098\ \ \ QLabel*\ \mbox{\hyperlink{classStatisticsWindow_a7ed8ed565c48d0c7ed604453dcb27191}{usernameTitle}};}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00104\ \ \ QLabel*\ \mbox{\hyperlink{classStatisticsWindow_a5e8aa4522d185548746321f805d94bbb}{gamesPlayedStats}};}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00110\ \ \ QLabel*\ \mbox{\hyperlink{classStatisticsWindow_ab8ffa1332ab0b51c5a86a16d5bf7138e}{gamesWinStats}};}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00116\ \ \ QLabel*\ \mbox{\hyperlink{classStatisticsWindow_a4d951de6c99e664bd0e515ebb995ae2c}{gamesWinRateStats}};}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00122\ \ \ QLabel*\ \mbox{\hyperlink{classStatisticsWindow_aaa5c558eeba2ceebfbe3abaad9246a3a}{guessTotalStats}};}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00128\ \ \ QLabel*\ \mbox{\hyperlink{classStatisticsWindow_a5ac5febea338455b45ce28edb42e8849}{guessHitStats}};}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00134\ \ \ QLabel*\ \mbox{\hyperlink{classStatisticsWindow_a1eaf904a956e6f5aeaf6778d077c5943}{guessHitRateStats}};}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00141\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classStatisticsWindow_a4ba00d8f61e5d8560719e596444b88f3}{populateDropDown}}();}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \textcolor{keyword}{private}\ slots:}
+\DoxyCodeLine{00148\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classStatisticsWindow_ace377471b89b0b561cec242915cdb924}{goBackToMain}}();}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00154\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classStatisticsWindow_a828f4b2e180d82908efc57de41d0f8fb}{showUserStats}}();}
+\DoxyCodeLine{00155\ \};}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

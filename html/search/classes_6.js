@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['transition_0',['Transition',['../class_transition.html',1,'']]],
-  ['tutorial_1',['Tutorial',['../class_tutorial.html',1,'']]]
+  ['transition_0',['Transition',['../classTransition.html',1,'']]],
+  ['tutorial_1',['Tutorial',['../classTutorial.html',1,'']]]
 ];

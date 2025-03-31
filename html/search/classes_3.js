@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operatorguess_0',['OperatorGuess',['../class_operator_guess.html',1,'']]]
+  ['operatorguess_0',['OperatorGuess',['../classOperatorGuess.html',1,'']]]
 ];
