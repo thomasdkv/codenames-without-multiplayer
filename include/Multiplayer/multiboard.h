@@ -153,6 +153,8 @@ signals:
      * 
      * @details Indicates that the player wants to leave the current game
      * and return to the main menu or lobby.
+     * 
+     * @author Group 9
      */
     void goBack();
 

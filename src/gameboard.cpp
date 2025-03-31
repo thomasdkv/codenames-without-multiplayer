@@ -21,17 +21,21 @@ GameBoard::GameBoard(const QString& redSpyMaster, const QString& redOperative,
       currentGuesses(0)
 {
     
+    // Set the window title and fixed size
     setWindowTitle("Codenames - Game Board");
     setFixedSize(1200, 800);
     
+    // Load words from the file and generate the game grid
     loadWordsFromFile();
     generateGameGrid();
     setupUI();
 }
 
+// Destructor for the GameBoard class
 GameBoard::~GameBoard() {}
 
 void GameBoard::show() {
+    // 
     resetGame();
     QWidget::show();
     qDebug() << "GameBoard shown";
@@ -59,6 +63,7 @@ void GameBoard::updateTeamLabels() {
 }
 
 void GameBoard::loadWordsFromFile() {
+    // Load words from file
     QFile file(":/resources/wordlist-eng.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "failed to open wordlist-eng.text file, using fallback";
@@ -71,6 +76,7 @@ void GameBoard::loadWordsFromFile() {
         return;
     }
 
+    // Read words from file
     QTextStream in(&file);
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed();
@@ -102,9 +108,11 @@ void GameBoard::generateGameGrid() {
     int assassinCards = 1;
     int neutralCards = 7;
 
+    // Set remaining card counts
     redCardsRemaining = redCards;
     blueCardsRemaining = blueCards;
 
+    // Assign card types
     QList<CardType> cardTypes;
     for (int i = 0; i < redCards; ++i) cardTypes.append(RED_TEAM);
     for (int i = 0; i < blueCards; ++i) cardTypes.append(BLUE_TEAM);
@@ -170,14 +178,16 @@ void GameBoard::setupUI() {
 
     // Grid setup
     gridLayout = new QGridLayout();
+
+    // Create cards and add them to the grid
     for (int i = 0; i < GRID_SIZE; ++i) {
         for (int j = 0; j < GRID_SIZE; ++j) {
             cards[i][j] = new QPushButton(gameGrid[i][j].word);
             cards[i][j]->setFixedSize(120, 80);
             gridLayout->addWidget(cards[i][j], i, j);
             qDebug() << "card at" << i << j << "set to" << gameGrid[i][j].word;
-            // For now, we'll show the card type in the background (for testing)
-            // In a real game, this would be hidden from operatives
+
+            // Set card styles
             switch (gameGrid[i][j].type) {
                 case RED_TEAM:
                     cards[i][j]->setStyleSheet("background-color: #ff9999; color: black");
@@ -298,7 +308,8 @@ void GameBoard::onCardClicked(int row, int col) {
         redCardsRemaining--;
         updateScores();
         qDebug() << "Red team card selected. Red cards remaining:" << redCardsRemaining;
-    } else if (gameGrid[row][col].type == BLUE_TEAM) {
+    } 
+    else if (gameGrid[row][col].type == BLUE_TEAM) {
         blueCardsRemaining--;
         updateScores();
         qDebug() << "Blue team card selected. Blue cards remaining:" << blueCardsRemaining;
@@ -451,6 +462,7 @@ void GameBoard::nextTurn() {
 void GameBoard::onContinueClicked() {
     transition->hide();
 
+    // Reveal the board for spymaster
     if (currentTurn == RED_SPY || currentTurn == BLUE_SPY) {
         currentHint->setText("Current hint: ");
         for (int i = 0; i < GRID_SIZE; ++i) {
@@ -472,6 +484,7 @@ void GameBoard::onContinueClicked() {
                 }            
             }
         }
+        // Show spymaster widget
         spymasterHint->setEnabled(true);
         spymasterHint->show();
         operatorGuess->setEnabled(false);
@@ -492,6 +505,7 @@ void GameBoard::onContinueClicked() {
 void GameBoard::showTransition() {
     QString nextSpymasterName;
 
+    // Determine the name of the next spymaster
     if (currentTurn == RED_SPY) {
         nextSpymasterName = redSpyMasterName;
     } 
@@ -503,6 +517,7 @@ void GameBoard::showTransition() {
         return;
     }
 
+    // Disable the board
     for (int i = 0; i < GRID_SIZE; ++i) {
         for (int j = 0; j < GRID_SIZE; ++j) {
             cards[i][j]->setEnabled(false);
@@ -511,10 +526,10 @@ void GameBoard::showTransition() {
             }
         }
     }
+
+    // Hide the spymaster widget and show the operator guess widget
     spymasterHint->setEnabled(false);
     operatorGuess->setEnabled(false);
-    // I'm not sure if we want to show spymasterhint and operatorguess on transition screen. I thought it would be nicer
-    // if it didn't show.
     spymasterHint->setVisible(false);
     operatorGuess->setVisible(false);
 
@@ -528,7 +543,10 @@ void GameBoard::updateScores() {
 }
 
 void GameBoard::checkGameEnd() {
+    // Check if the game has ended
     users = User::instance();
+
+    // Red team wins
     if (redCardsRemaining == 0) {
         users->won(redSpyMasterName);
         users->won(redOperativeName);
@@ -538,6 +556,7 @@ void GameBoard::checkGameEnd() {
 
         return;
     }
+    // Blue team wins
     if (blueCardsRemaining == 0) {
         users->won(blueSpyMasterName);
         users->won(blueOperativeName);
@@ -548,6 +567,7 @@ void GameBoard::checkGameEnd() {
         return;
     }
 
+    // Check if the assassin card has been revealed
     for (int i = 0; i < GRID_SIZE; ++i) {
         for (int j = 0; j < GRID_SIZE; ++j) {
             if (gameGrid[i][j].revealed && gameGrid[i][j].type == ASSASSIN) {
@@ -599,6 +619,7 @@ void GameBoard::endGame(const QString& message) {
 
 void GameBoard::resetGame() {
 
+    // Load words from file
     loadWordsFromFile();
     generateGameGrid();
 
