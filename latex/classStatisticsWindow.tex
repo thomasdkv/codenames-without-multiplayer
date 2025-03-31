@@ -2,7 +2,7 @@
 \hypertarget{classStatisticsWindow}{}\label{classStatisticsWindow}\index{StatisticsWindow@{StatisticsWindow}}
 
 
-The class that shows the Statistics screen.  
+The class that shows the Statistics screen Displays game statistics for selected users including win rates and guess accuracy.  
 
 
 
@@ -33,62 +33,62 @@ Collaboration diagram for Statistics\+Window\+:
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{classStatisticsWindow_af5740db320d09141ead7bd7ff28a5de5}{show}} ()
-\begin{DoxyCompactList}\small\item\em show the statistics screen \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em show the statistics screen Makes the statistics UI visible and updates data \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{classStatisticsWindow_aaeeb374c72cd22cbe0c791461871daa6}{back\+To\+Main\+Window}} ()
-\begin{DoxyCompactList}\small\item\em Go back to the main window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Go back to the main window Signal emitted when user chooses to return to main menu. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classStatisticsWindow_a1f64f1f0ab2d755975acf988096a0a46}{Statistics\+Window}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
-\begin{DoxyCompactList}\small\item\em Construct a new Statistics Window object. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Construct a new Statistics Window object Initializes UI components and connects signals/slots. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classStatisticsWindow_a380e9a6974d1005b37bf8d23d40ef774}{\texorpdfstring{$\sim$}{\string~}\+Statistics\+Window}} ()
-\begin{DoxyCompactList}\small\item\em Destructor for statistics screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Destructor for statistics screen Cleans up resources when \doxylink{classStatisticsWindow}{Statistics\+Window} is destroyed. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Private Slots}
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{classStatisticsWindow_ace377471b89b0b561cec242915cdb924}{go\+Back\+To\+Main}} ()
-\begin{DoxyCompactList}\small\item\em to back to the main window \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em to back to the main window Slot triggered when back button is clicked \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classStatisticsWindow_a828f4b2e180d82908efc57de41d0f8fb}{show\+User\+Stats}} ()
-\begin{DoxyCompactList}\small\item\em showing the user stats after clicking the button \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em showing the user stats after clicking the button Slot that retrieves and displays statistics for selected user \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{classStatisticsWindow_a4ba00d8f61e5d8560719e596444b88f3}{populate\+Drop\+Down}} ()
-\begin{DoxyCompactList}\small\item\em populate the drop down button with the usernames \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em populate the drop down button with the usernames Fetches user list from \doxylink{classUser}{User} singleton and fills dropdown menu \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classUser}{User}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classStatisticsWindow_a026da9d0eec66cb4b9f9980e781e3a85}{users}}
-\begin{DoxyCompactList}\small\item\em the users instance \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em the users instance Singleton reference to access user data and statistics \end{DoxyCompactList}\item 
 QPush\+Button \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classStatisticsWindow_ad92b33fb23e5841b5b6becad923ea03c}{back\+To\+Main\+Button}}
-\begin{DoxyCompactList}\small\item\em button to click to go back to main \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em button to click to go back to main UI navigation element to return to main menu \end{DoxyCompactList}\item 
 QCombo\+Box \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classStatisticsWindow_ab99f3b7a634ac384335897c111771804}{username\+Combo\+Box}}
-\begin{DoxyCompactList}\small\item\em the drop down box of usernames \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em the drop down box of usernames Selection widget for choosing which user\textquotesingle{}s statistics to display \end{DoxyCompactList}\item 
 QPush\+Button \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classStatisticsWindow_a46d11cef11130c7527a6560a6e0b4c23}{show\+User\+Stats\+Button}}
-\begin{DoxyCompactList}\small\item\em the button to show the user stats after choosing in drop down menu \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em the button to show the user stats after choosing in drop down menu Triggers update of statistics display for selected user \end{DoxyCompactList}\item 
 QString \mbox{\hyperlink{classStatisticsWindow_a8a4dee68184ef0f8076cb6cd30fe874b}{username}}
-\begin{DoxyCompactList}\small\item\em the username of the user \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em the username of the user Stores the currently selected username \end{DoxyCompactList}\item 
 QLabel \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classStatisticsWindow_a7ed8ed565c48d0c7ed604453dcb27191}{username\+Title}}
-\begin{DoxyCompactList}\small\item\em title of username \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em title of username Display label showing selected user\textquotesingle{}s name \end{DoxyCompactList}\item 
 QLabel \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classStatisticsWindow_a5e8aa4522d185548746321f805d94bbb}{games\+Played\+Stats}}
-\begin{DoxyCompactList}\small\item\em the number of games played of the user \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em the number of games played of the user Display label showing total games played statistic \end{DoxyCompactList}\item 
 QLabel \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classStatisticsWindow_ab8ffa1332ab0b51c5a86a16d5bf7138e}{games\+Win\+Stats}}
-\begin{DoxyCompactList}\small\item\em the number of games win of the user \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em the number of games win of the user Display label showing total games won statistic \end{DoxyCompactList}\item 
 QLabel \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classStatisticsWindow_a4d951de6c99e664bd0e515ebb995ae2c}{games\+Win\+Rate\+Stats}}
-\begin{DoxyCompactList}\small\item\em the win rate of the user \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em the win rate of the user Display label showing win percentage (wins/games played) \end{DoxyCompactList}\item 
 QLabel \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classStatisticsWindow_aaa5c558eeba2ceebfbe3abaad9246a3a}{guess\+Total\+Stats}}
-\begin{DoxyCompactList}\small\item\em the number of guess total of the user \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em the number of guess total of the user Display label showing total guesses made statistic \end{DoxyCompactList}\item 
 QLabel \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classStatisticsWindow_a5ac5febea338455b45ce28edb42e8849}{guess\+Hit\+Stats}}
-\begin{DoxyCompactList}\small\item\em the number of correct guess of the user \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em the number of correct guess of the user Display label showing correct guesses statistic \end{DoxyCompactList}\item 
 QLabel \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classStatisticsWindow_a1eaf904a956e6f5aeaf6778d077c5943}{guess\+Hit\+Rate\+Stats}}
-\begin{DoxyCompactList}\small\item\em the guess hit rate of the user \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em the guess hit rate of the user Display label showing guess accuracy percentage (hits/total) \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-The class that shows the Statistics screen. 
+The class that shows the Statistics screen Displays game statistics for selected users including win rates and guess accuracy. 
 
 \doxysubsection{Constructor \& Destructor Documentation}
 \Hypertarget{classStatisticsWindow_a1f64f1f0ab2d755975acf988096a0a46}\index{StatisticsWindow@{StatisticsWindow}!StatisticsWindow@{StatisticsWindow}}
@@ -99,11 +99,11 @@ Statistics\+Window\+::\+Statistics\+Window (\begin{DoxyParamCaption}\item[{QWidg
 
 
 
-Construct a new Statistics Window object. 
+Construct a new Statistics Window object Initializes UI components and connects signals/slots. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em parent} & the parent of the statistics window screen \\
+{\em parent} & the parent of the statistics window screen for widget hierarchy \\
 \hline
 \end{DoxyParams}
 \Hypertarget{classStatisticsWindow_a380e9a6974d1005b37bf8d23d40ef774}\index{StatisticsWindow@{StatisticsWindow}!````~StatisticsWindow@{\texorpdfstring{$\sim$}{\string~}StatisticsWindow}}
@@ -114,7 +114,7 @@ Statistics\+Window\+::\texorpdfstring{$\sim$}{\string~}\+Statistics\+Window (\be
 
 
 
-Destructor for statistics screen. 
+Destructor for statistics screen Cleans up resources when \doxylink{classStatisticsWindow}{Statistics\+Window} is destroyed. 
 
 
 
@@ -127,7 +127,7 @@ void Statistics\+Window\+::back\+To\+Main\+Window (\begin{DoxyParamCaption}{}{}\
 
 
 
-Go back to the main window. 
+Go back to the main window Signal emitted when user chooses to return to main menu. 
 
 \Hypertarget{classStatisticsWindow_ace377471b89b0b561cec242915cdb924}\index{StatisticsWindow@{StatisticsWindow}!goBackToMain@{goBackToMain}}
 \index{goBackToMain@{goBackToMain}!StatisticsWindow@{StatisticsWindow}}
@@ -137,7 +137,7 @@ void Statistics\+Window\+::go\+Back\+To\+Main (\begin{DoxyParamCaption}{}{}\end{
 
 
 
-to back to the main window 
+to back to the main window Slot triggered when back button is clicked 
 
 \Hypertarget{classStatisticsWindow_a4ba00d8f61e5d8560719e596444b88f3}\index{StatisticsWindow@{StatisticsWindow}!populateDropDown@{populateDropDown}}
 \index{populateDropDown@{populateDropDown}!StatisticsWindow@{StatisticsWindow}}
@@ -147,7 +147,7 @@ void Statistics\+Window\+::populate\+Drop\+Down (\begin{DoxyParamCaption}{}{}\en
 
 
 
-populate the drop down button with the usernames 
+populate the drop down button with the usernames Fetches user list from \doxylink{classUser}{User} singleton and fills dropdown menu 
 
 \Hypertarget{classStatisticsWindow_af5740db320d09141ead7bd7ff28a5de5}\index{StatisticsWindow@{StatisticsWindow}!show@{show}}
 \index{show@{show}!StatisticsWindow@{StatisticsWindow}}
@@ -157,7 +157,7 @@ void Statistics\+Window\+::show (\begin{DoxyParamCaption}{}{}\end{DoxyParamCapti
 
 
 
-show the statistics screen 
+show the statistics screen Makes the statistics UI visible and updates data 
 
 \Hypertarget{classStatisticsWindow_a828f4b2e180d82908efc57de41d0f8fb}\index{StatisticsWindow@{StatisticsWindow}!showUserStats@{showUserStats}}
 \index{showUserStats@{showUserStats}!StatisticsWindow@{StatisticsWindow}}
@@ -167,7 +167,7 @@ void Statistics\+Window\+::show\+User\+Stats (\begin{DoxyParamCaption}{}{}\end{D
 
 
 
-showing the user stats after clicking the button 
+showing the user stats after clicking the button Slot that retrieves and displays statistics for selected user 
 
 
 
@@ -180,7 +180,7 @@ QPush\+Button\texorpdfstring{$\ast$}{*} Statistics\+Window\+::back\+To\+Main\+Bu
 
 
 
-button to click to go back to main 
+button to click to go back to main UI navigation element to return to main menu 
 
 \Hypertarget{classStatisticsWindow_a5e8aa4522d185548746321f805d94bbb}\index{StatisticsWindow@{StatisticsWindow}!gamesPlayedStats@{gamesPlayedStats}}
 \index{gamesPlayedStats@{gamesPlayedStats}!StatisticsWindow@{StatisticsWindow}}
@@ -190,7 +190,7 @@ QLabel\texorpdfstring{$\ast$}{*} Statistics\+Window\+::games\+Played\+Stats\hspa
 
 
 
-the number of games played of the user 
+the number of games played of the user Display label showing total games played statistic 
 
 \Hypertarget{classStatisticsWindow_a4d951de6c99e664bd0e515ebb995ae2c}\index{StatisticsWindow@{StatisticsWindow}!gamesWinRateStats@{gamesWinRateStats}}
 \index{gamesWinRateStats@{gamesWinRateStats}!StatisticsWindow@{StatisticsWindow}}
@@ -200,7 +200,7 @@ QLabel\texorpdfstring{$\ast$}{*} Statistics\+Window\+::games\+Win\+Rate\+Stats\h
 
 
 
-the win rate of the user 
+the win rate of the user Display label showing win percentage (wins/games played) 
 
 \Hypertarget{classStatisticsWindow_ab8ffa1332ab0b51c5a86a16d5bf7138e}\index{StatisticsWindow@{StatisticsWindow}!gamesWinStats@{gamesWinStats}}
 \index{gamesWinStats@{gamesWinStats}!StatisticsWindow@{StatisticsWindow}}
@@ -210,7 +210,7 @@ QLabel\texorpdfstring{$\ast$}{*} Statistics\+Window\+::games\+Win\+Stats\hspace{
 
 
 
-the number of games win of the user 
+the number of games win of the user Display label showing total games won statistic 
 
 \Hypertarget{classStatisticsWindow_a1eaf904a956e6f5aeaf6778d077c5943}\index{StatisticsWindow@{StatisticsWindow}!guessHitRateStats@{guessHitRateStats}}
 \index{guessHitRateStats@{guessHitRateStats}!StatisticsWindow@{StatisticsWindow}}
@@ -220,7 +220,7 @@ QLabel\texorpdfstring{$\ast$}{*} Statistics\+Window\+::guess\+Hit\+Rate\+Stats\h
 
 
 
-the guess hit rate of the user 
+the guess hit rate of the user Display label showing guess accuracy percentage (hits/total) 
 
 \Hypertarget{classStatisticsWindow_a5ac5febea338455b45ce28edb42e8849}\index{StatisticsWindow@{StatisticsWindow}!guessHitStats@{guessHitStats}}
 \index{guessHitStats@{guessHitStats}!StatisticsWindow@{StatisticsWindow}}
@@ -230,7 +230,7 @@ QLabel\texorpdfstring{$\ast$}{*} Statistics\+Window\+::guess\+Hit\+Stats\hspace{
 
 
 
-the number of correct guess of the user 
+the number of correct guess of the user Display label showing correct guesses statistic 
 
 \Hypertarget{classStatisticsWindow_aaa5c558eeba2ceebfbe3abaad9246a3a}\index{StatisticsWindow@{StatisticsWindow}!guessTotalStats@{guessTotalStats}}
 \index{guessTotalStats@{guessTotalStats}!StatisticsWindow@{StatisticsWindow}}
@@ -240,7 +240,7 @@ QLabel\texorpdfstring{$\ast$}{*} Statistics\+Window\+::guess\+Total\+Stats\hspac
 
 
 
-the number of guess total of the user 
+the number of guess total of the user Display label showing total guesses made statistic 
 
 \Hypertarget{classStatisticsWindow_a46d11cef11130c7527a6560a6e0b4c23}\index{StatisticsWindow@{StatisticsWindow}!showUserStatsButton@{showUserStatsButton}}
 \index{showUserStatsButton@{showUserStatsButton}!StatisticsWindow@{StatisticsWindow}}
@@ -250,7 +250,7 @@ QPush\+Button\texorpdfstring{$\ast$}{*} Statistics\+Window\+::show\+User\+Stats\
 
 
 
-the button to show the user stats after choosing in drop down menu 
+the button to show the user stats after choosing in drop down menu Triggers update of statistics display for selected user 
 
 \Hypertarget{classStatisticsWindow_a8a4dee68184ef0f8076cb6cd30fe874b}\index{StatisticsWindow@{StatisticsWindow}!username@{username}}
 \index{username@{username}!StatisticsWindow@{StatisticsWindow}}
@@ -260,7 +260,7 @@ QString Statistics\+Window\+::username\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
-the username of the user 
+the username of the user Stores the currently selected username 
 
 \Hypertarget{classStatisticsWindow_ab99f3b7a634ac384335897c111771804}\index{StatisticsWindow@{StatisticsWindow}!usernameComboBox@{usernameComboBox}}
 \index{usernameComboBox@{usernameComboBox}!StatisticsWindow@{StatisticsWindow}}
@@ -270,7 +270,7 @@ QCombo\+Box\texorpdfstring{$\ast$}{*} Statistics\+Window\+::username\+Combo\+Box
 
 
 
-the drop down box of usernames 
+the drop down box of usernames Selection widget for choosing which user\textquotesingle{}s statistics to display 
 
 \Hypertarget{classStatisticsWindow_a7ed8ed565c48d0c7ed604453dcb27191}\index{StatisticsWindow@{StatisticsWindow}!usernameTitle@{usernameTitle}}
 \index{usernameTitle@{usernameTitle}!StatisticsWindow@{StatisticsWindow}}
@@ -280,7 +280,7 @@ QLabel\texorpdfstring{$\ast$}{*} Statistics\+Window\+::username\+Title\hspace{0.
 
 
 
-title of username 
+title of username Display label showing selected user\textquotesingle{}s name 
 
 \Hypertarget{classStatisticsWindow_a026da9d0eec66cb4b9f9980e781e3a85}\index{StatisticsWindow@{StatisticsWindow}!users@{users}}
 \index{users@{users}!StatisticsWindow@{StatisticsWindow}}
@@ -290,7 +290,7 @@ title of username
 
 
 
-the users instance 
+the users instance Singleton reference to access user data and statistics 
 
 
 
