@@ -6,7 +6,7 @@
 <area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="60,137,88,108,126,83,177,66,229,55,322,45,323,51,230,61,178,72,128,88,92,112,64,141"/>
 <area shape="rect" id="Node000004" href="$classChatBox.html" title="A widget for the chat feature in the game." alt="" coords="338,86,410,113"/>
 <area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="68,139,101,121,164,104,229,95,289,93,337,94,337,99,289,98,230,101,165,109,103,126,71,144"/>
-<area shape="rect" id="Node000005" href="$classUser.html" title="User class to handle local log in and loading/storing json files. This is a singleton class." alt="" coords="500,198,550,225"/>
+<area shape="rect" id="Node000005" href="$classUser.html" title="User class to handle local log in and loading/storing json files. This is a singleton class to ensure..." alt="" coords="500,198,550,225"/>
 <area shape="poly" id="edge7_Node000005_Node000002" title=" " alt="" coords="93,160,181,160,283,165,363,176,442,193,500,204,499,209,441,198,362,181,282,170,181,165,93,165"/>
 <area shape="rect" id="Node000006" href="$classCreateAccountWindow.html" title="The CreateAccountWindow class provides a singleton interface for creating new user accounts This wind..." alt="" coords="127,219,282,246"/>
 <area shape="poly" id="edge9_Node000006_Node000002" title=" " alt="" coords="91,182,172,216,169,221,89,187"/>

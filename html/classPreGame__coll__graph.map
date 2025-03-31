@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="The PreGame class provides the interface for setting up a new game This includes selecting players fo..." alt="" coords="136,364,213,391"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="352,5,424,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="336,22,241,24,132,34,83,43,43,56,17,73,10,83,8,94,8,288,11,307,21,323,35,337,53,348,95,362,137,370,136,375,94,368,51,352,32,341,17,327,6,309,3,288,3,93,5,80,13,69,41,51,82,38,131,29,240,19,336,17"/>
-<area shape="rect" id="Node000003" href="$classUser.html" title="User class to handle local log in and loading/storing json files. This is a singleton class." alt="" coords="77,183,126,209"/>
+<area shape="rect" id="Node000003" href="$classUser.html" title="User class to handle local log in and loading/storing json files. This is a singleton class to ensure..." alt="" coords="77,183,126,209"/>
 <area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="336,25,268,31,192,42,124,59,100,70,83,83,77,94,74,107,76,134,85,160,96,181,91,183,80,162,71,135,68,106,72,92,79,80,97,66,123,54,191,37,267,26,336,20"/>
 <area shape="rect" id="Node000004" href="$classCreateAccountWindow.html" title="The CreateAccountWindow class provides a singleton interface for creating new user accounts This wind..." alt="" coords="93,81,248,108"/>
 <area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="338,40,209,83,207,78,336,35"/>
