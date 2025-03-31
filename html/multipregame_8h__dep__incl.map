@@ -1,0 +1,13 @@
+<map id="include/Multiplayer/multipregame.h" name="include/Multiplayer/multipregame.h">
+<area shape="rect" id="Node000001" title="Header file for the MultiPregame class, which implements the pre&#45;game lobby for multiplayer games." alt="" coords="254,5,383,48"/>
+<area shape="rect" id="Node000002" href="$multiboard_8h.html" title="Header file for the MultiBoard class, which implements a multiplayer game board." alt="" coords="254,96,383,139"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="321,64,321,96,316,96,316,64"/>
+<area shape="rect" id="Node000004" href="$multimain_8cpp.html" title=" " alt="" coords="5,187,197,213"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="282,60,118,188,115,184,279,56"/>
+<area shape="rect" id="Node000005" href="$multipregame_8cpp.html" title=" " alt="" coords="440,187,653,213"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="359,55,531,184,528,188,356,60"/>
+<area shape="rect" id="Node000003" href="$multiboard_8cpp.html" title=" " alt="" coords="221,187,416,213"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="321,155,321,186,316,186,316,155"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="249,147,136,189,134,184,247,142"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="392,142,511,183,509,189,390,147"/>
+</map>

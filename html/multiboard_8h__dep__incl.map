@@ -1,0 +1,9 @@
+<map id="include/Multiplayer/multiboard.h" name="include/Multiplayer/multiboard.h">
+<area shape="rect" id="Node000001" title="Header file for the MultiBoard class, which implements a multiplayer game board." alt="" coords="256,5,385,48"/>
+<area shape="rect" id="Node000002" href="$multiboard_8cpp.html" title=" " alt="" coords="5,96,201,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="251,56,138,98,136,93,249,51"/>
+<area shape="rect" id="Node000003" href="$multimain_8cpp.html" title=" " alt="" coords="225,96,416,123"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="323,64,323,95,318,95,318,64"/>
+<area shape="rect" id="Node000004" href="$multipregame_8cpp.html" title=" " alt="" coords="440,96,654,123"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="394,51,512,93,510,98,392,56"/>
+</map>
