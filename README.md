@@ -14,7 +14,7 @@ To build and run this application, you will need the following dependencies:
 To install the required dependencies, use the following command:
 
 ```bash
-sudo apt install qtbase5-dev qtwebsockets5-dev
+sudo apt install qtbase5-dev libqt5websockets5-dev
 ```
 
 ## Building and Running the Project
