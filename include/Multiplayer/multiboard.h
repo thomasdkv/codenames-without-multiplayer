@@ -233,6 +233,10 @@ class MultiBoard : public QWidget {
   /** @brief Number of blue team cards left */
   int blueCardsRemaining;
 
+  // Number of guesses logic
+  int currentGuesses;
+  int maxGuesses;
+
   /**
    * @brief Sets up the user interface for the game board.
    *
