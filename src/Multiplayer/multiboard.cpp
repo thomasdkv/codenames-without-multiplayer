@@ -816,11 +816,9 @@ void MultiBoard::handleTileClick()
 
 void MultiBoard::revealTile(int row, int col, bool broadcast)
 {
-    // UNCHANGED: Check if the tile is within the grid or already revealed
     if (row < 0 || row >= GRID_SIZE || col < 0 || col >= GRID_SIZE || gameGrid[row][col].revealed)
         return;
 
-    // MODIFIED: Explicitly check operative role alongside isMyTurn() for guess increment
     QString currentPhase = m_turnOrder[m_currentTurnIndex];
     QStringList parts = currentPhase.split("_");
     QString currentRole = parts[1];
@@ -829,7 +827,6 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         currentGuesses++;
     }
 
-    // UNCHANGED: Chat message logic
     if (m_isHost || !broadcast)
     {
         QString currOperativeName = (m_currentTurnIndex == 1) ? "Red Operative" : "Blue Operative";
@@ -838,19 +835,15 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         chatBox->addSystemMessage(hintMessage, (m_currentTurnIndex == RED_OP) ? ChatBox::RED_TEAM : ChatBox::BLUE_TEAM);
     }
 
-    // UNCHANGED: Mark tile as revealed and disable it
     gameGrid[row][col].revealed = true;
     QPushButton *btn = m_tiles.at(row * GRID_SIZE + col);
     btn->setText("");
     btn->setEnabled(false);
 
-    // UNCHANGED: User instance retrieval
     users = User::instance();
 
-    // MOVED: Get current turn information earlier (no functional change, just for clarity)
     QString currentTeam = parts[0];
 
-    // UNCHANGED: Broadcast logic
     if (!m_isHost && broadcast)
     {
         m_clientSocket->sendTextMessage(QString("REVEAL:%1,%2").arg(row).arg(col));
@@ -860,7 +853,6 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         sendToAll(QString("REVEAL:%1,%2").arg(row).arg(col));
     }
 
-    // UNCHANGED: Card type handling with correctCard tracking
     bool correctCard = false;
     switch (gameGrid[row][col].type)
     {
@@ -872,10 +864,6 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         {
             redCardsRemaining--;
             sendToAll(QString("RED"));
-            if (redCardsRemaining == 0)
-            {
-                endGame("Red team wins!");
-            }
         }
         break;
     case BLUE_TEAM:
@@ -886,10 +874,6 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         {
             blueCardsRemaining--;
             sendToAll(QString("BLUE"));
-            if (blueCardsRemaining == 0)
-            {
-                endGame("Blue team wins!");
-            }
         }
         break;
     case NEUTRAL:
@@ -897,20 +881,12 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
         break;
     case ASSASSIN:
         btn->setStyleSheet("background-color: #333333; color: white;");
-        if (m_isHost)
-        {
-            if (currentPhase == "red_operative")
-                endGame("Blue team wins!");
-            else
-                endGame("Red team wins!");
-        }
         break;
     }
 
-    // MODIFIED: Moved guess limit and turn advancement outside switch for clarity
     if (broadcast && isMyTurn() && currentRole == "operative")
     {
-        if (maxGuesses > 0)
+        if (maxGuesses > 0)  // Check if limited guesses
         {
             int effectiveMax = correctCard ? maxGuesses : (maxGuesses - 1);
             if (currentGuesses >= effectiveMax)
@@ -929,7 +905,7 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
             }
         }
 
-        if (!correctCard)
+        if (!correctCard)  // Advance turn on incorrect guess
         {
             qDebug() << "Incorrect guess";
             if (m_isHost)
@@ -941,6 +917,11 @@ void MultiBoard::revealTile(int row, int col, bool broadcast)
                 m_clientSocket->sendTextMessage("TURN_ADVANCE");
             }
         }
+    }
+
+    if (m_isHost)
+    {
+        checkGameEnd();
     }
 }
 
