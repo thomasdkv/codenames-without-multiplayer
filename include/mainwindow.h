@@ -16,19 +16,15 @@
 #include <QScreen>
 #include <QVBoxLayout>
 
-#include "Multiplayer/multimain.h"
 #include "createaccountwindow.h"
 #include "pregame.h"
 #include "statisticswindow.h"
 #include "tutorial.h"
-#include "user.h"
 
 class PreGame;
-class User;
 class CreateAccountWindow;
 class StatisticsWindow;
 class Tutorial;
-class MultiMain;
 
 /**
  * @class MainWindow
@@ -62,11 +58,6 @@ class MainWindow : public QMainWindow {
   void openPreGame();
 
   /**
-   * @brief Opens the online game window.
-   */
-  void openOnlineGame();
-
-  /**
    * @brief Opens the statistics window.
    */
   void openStatsWindow();
@@ -95,7 +86,6 @@ class MainWindow : public QMainWindow {
 
   PreGame* preGameWindow;  ///< Pointer to the PreGame window for local gameplay
                            ///< setup.
-  MultiMain* multiMain;    ///< Pointer to the Multiplayer main window.
   QPushButton* localPlayButton;   ///< Button for starting a local game.
   QPushButton* onlinePlayButton;  ///< Button for starting an online game.
   QPushButton* tutorialButton;    ///< Button for opening the tutorial.
@@ -103,8 +93,6 @@ class MainWindow : public QMainWindow {
   QPushButton*
       createAccountButton;  ///< Button for opening the account creation window.
 
-  User* onlineGameWindow;  ///< Pointer to the online game window where users
-                           ///< can play multiplayer.
   CreateAccountWindow*
       createAccountWindow;  ///< Pointer to the account creation window.
   StatisticsWindow*

@@ -1,10 +1,10 @@
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
-  this->setFixedSize(1000, 800); // Set fixed size for MainWindow
+  this->setFixedSize(1000, 800);  // Set fixed size for MainWindow
 
   // Center the window on the screen
-  QScreen *screen = QGuiApplication::primaryScreen();
+  QScreen* screen = QGuiApplication::primaryScreen();
   if (screen) {
     QRect screenGeometry = screen->geometry();
     int x = (screenGeometry.width() - this->width()) / 2;
@@ -48,13 +48,17 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   shadowEffectOnline->setBlurRadius(5);     // Blur radius
   shadowEffectOnline->setOffset(0, 3);      // Shadow offset
   shadowEffectOnline->setColor(Qt::black);  // Shadow color
-  onlinePlayButton->setGraphicsEffect(shadowEffectOnline);
+  QGraphicsOpacityEffect* opacityEffect = new QGraphicsOpacityEffect;
+  opacityEffect->setOpacity(0.5);  // Reduce opacity to give a grayed-out look
+  onlinePlayButton->setGraphicsEffect(opacityEffect);
+  onlinePlayButton->setDisabled(true);
 
   // Button to open tutorial
   tutorialButton = new QPushButton("Tutorial", centralWidget);
   tutorialButton->setFixedSize(200, 50);
   tutorialButton->move(400, 425);  // Position below other buttons
-  QGraphicsDropShadowEffect* shadowEffectTutorial = new QGraphicsDropShadowEffect;
+  QGraphicsDropShadowEffect* shadowEffectTutorial =
+      new QGraphicsDropShadowEffect;
   shadowEffectTutorial->setBlurRadius(5);     // Blur radius
   shadowEffectTutorial->setOffset(0, 3);      // Shadow offset
   shadowEffectTutorial->setColor(Qt::black);  // Shadow color
@@ -114,14 +118,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   // Connect signal from PreGame to show MainWindow when back button is clicked
   connect(preGameWindow, &PreGame::backToMainWindow, this,
           &MainWindow::showMainWindow);
-   multiMain = new MultiMain();
-  // Connect the Multiplayer window
-    connect(multiMain, &MultiMain::backToMainWindow, this,
-          &MainWindow::showMainWindow);
-
-  // Connect button to open Multiplayer window
-  connect(onlinePlayButton, &QPushButton::clicked, this,
-          &MainWindow::openOnlineGame);
 
   statsWindow = new StatisticsWindow();
   connect(statsButton, &QPushButton::clicked, this,
@@ -133,29 +129,20 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   connect(createAccountButton, &QPushButton::clicked, this,
           &MainWindow::openCreateAccount);
 
-  //   disconnect(createAccountWindow, &CreateAccountWindow::back, nullptr,
-  //   nullptr); connect(createAccountWindow, &CreateAccountWindow::back, this,
-  //           &MainWindow::showMainWindow);
-
-  onlineGameWindow = User::instance();
-  connect(onlineGameWindow, &User::backToMainMenu, this,
-          &MainWindow::showMainWindow);
-
   // Create the Tutorial window
   tutorialWindow = new Tutorial();
-  
+
   // Make sure these connections exist
-  connect(tutorialButton, &QPushButton::clicked, this, &MainWindow::openTutorial);
-  connect(tutorialWindow, &Tutorial::tutorialClosed, this, &MainWindow::showMainWindow);
+  connect(tutorialButton, &QPushButton::clicked, this,
+          &MainWindow::openTutorial);
+  connect(tutorialWindow, &Tutorial::tutorialClosed, this,
+          &MainWindow::showMainWindow);
 
   // Set central widget and layout
   setCentralWidget(centralWidget);
 }
 
-void MainWindow::openMultiMain() {
-    this->hide();
-    multiMain->show();
-}
+void MainWindow::openMultiMain() { this->hide(); }
 
 MainWindow::~MainWindow() {
   delete preGameWindow;
@@ -170,12 +157,6 @@ void MainWindow::openPreGame() {
 void MainWindow::showMainWindow() {
   qDebug() << "ShowMainWindow called";
   this->show();
-}
-
-void MainWindow::openOnlineGame() {
-  // Show the login/signup screen
-  this->hide();
-  multiMain->show();
 }
 
 void MainWindow::openStatsWindow() {

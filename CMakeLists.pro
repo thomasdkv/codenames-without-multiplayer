@@ -1,5 +1,6 @@
 # Qt Modules
-QT += core gui widgets websockets
+QT += core gui widgets
+# QT += websockets
 
 CONFIG += c++17
 # CONFIG += release    # Options: debug, release, console, static, shared
@@ -10,9 +11,9 @@ TEMPLATE = app
 
 
 SOURCES += $$files($$PWD/src/*.cpp, true)
-SOURCES += $$files($$PWD/src/Multiplayer/*.cpp, true)
+# SOURCES += $$files($$PWD/src/Multiplayer/*.cpp, true)
 HEADERS += $$files($$PWD/include/*.h, true)
-HEADERS += $$files($$PWD/include/Multiplayer/*.h, true)
+# HEADERS += $$files($$PWD/include/Multiplayer/*.h, true)
 
 # Remove duplicates if necessary (qmake uses += so the files won't be added twice as long as it's done correctly).
 SOURCES = $$unique(SOURCES)
