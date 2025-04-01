@@ -1,6 +1,5 @@
 var dir_68267d1309a1af8e8297ef4c3efbcdba =
 [
-    [ "Multiplayer", "dir_9ea09cda1bebc1382f326174d30b2b73.html", "dir_9ea09cda1bebc1382f326174d30b2b73" ],
     [ "chatbox.cpp", "chatbox_8cpp.html", null ],
     [ "createaccountwindow.cpp", "createaccountwindow_8cpp.html", null ],
     [ "gameboard.cpp", "gameboard_8cpp.html", null ],

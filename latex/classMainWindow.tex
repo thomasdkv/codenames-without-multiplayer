@@ -20,7 +20,8 @@ Inheritance diagram for Main\+Window\+:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for Main\+Window\+:\nopagebreak
+Collaboration diagram for Main\+Window\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -44,8 +45,6 @@ void \mbox{\hyperlink{classMainWindow_a7f8c5fb0dfd3085a970ce9fa9b5695c5}{show\+M
 \item 
 void \mbox{\hyperlink{classMainWindow_abc2611d5e7bd7b4221850b3fe09f2b6b}{open\+Pre\+Game}} ()
 \begin{DoxyCompactList}\small\item\em Opens the \doxylink{classPreGame}{Pre\+Game} window. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classMainWindow_ab37878a29660347f40d0a7bce4cea1cd}{open\+Online\+Game}} ()
-\begin{DoxyCompactList}\small\item\em Opens the online game window. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classMainWindow_a8b505a856ea1d11bf3214442cee6e696}{open\+Stats\+Window}} ()
 \begin{DoxyCompactList}\small\item\em Opens the statistics window. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classMainWindow_aeb48cf7924ec6346475cb2d10691f745}{open\+Create\+Account}} ()
@@ -65,8 +64,6 @@ QLabel \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a515c68313ee1
 \begin{DoxyCompactList}\small\item\em Label displaying the application title. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classPreGame}{Pre\+Game}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_afb3ba0c17506fc12aeb1306e2ac978b0}{pre\+Game\+Window}}
 \item 
-\mbox{\hyperlink{classMultiMain}{Multi\+Main}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a3f7a4129a70943e9c26208da947af03f}{multi\+Main}}
-\begin{DoxyCompactList}\small\item\em Pointer to the Multiplayer main window. \end{DoxyCompactList}\item 
 QPush\+Button \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_ac4fe8087690a54d0da0b2208706de7cc}{local\+Play\+Button}}
 \begin{DoxyCompactList}\small\item\em Button for starting a local game. \end{DoxyCompactList}\item 
 QPush\+Button \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a74661a53c731e62b7749ab1d34d9f541}{online\+Play\+Button}}
@@ -77,8 +74,6 @@ QPush\+Button \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a46a9c
 \begin{DoxyCompactList}\small\item\em Button for opening the statistics window. \end{DoxyCompactList}\item 
 QPush\+Button \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_aa54f889dc6bfbbbff1d8fe874080b684}{create\+Account\+Button}}
 \begin{DoxyCompactList}\small\item\em Button for opening the account creation window. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classUser}{User}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a626c22cc6509364550381ea5f214eb00}{online\+Game\+Window}}
-\item 
 \mbox{\hyperlink{classCreateAccountWindow}{Create\+Account\+Window}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a32d22fcfdef5140581a77f1429a6ef47}{create\+Account\+Window}}
 \begin{DoxyCompactList}\small\item\em Pointer to the account creation window. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classStatisticsWindow}{Statistics\+Window}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a846c3cac9f8c999a1a006b66f645477a}{stats\+Window}}
@@ -138,16 +133,6 @@ void Main\+Window\+::open\+Multi\+Main (\begin{DoxyParamCaption}{}{}\end{DoxyPar
 
 
 Opens the Multiplayer main window. 
-
-\Hypertarget{classMainWindow_ab37878a29660347f40d0a7bce4cea1cd}\index{MainWindow@{MainWindow}!openOnlineGame@{openOnlineGame}}
-\index{openOnlineGame@{openOnlineGame}!MainWindow@{MainWindow}}
-\doxysubsubsection{\texorpdfstring{openOnlineGame}{openOnlineGame}}
-{\footnotesize\ttfamily \label{classMainWindow_ab37878a29660347f40d0a7bce4cea1cd} 
-void Main\+Window\+::open\+Online\+Game (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
-
-
-
-Opens the online game window. 
 
 \Hypertarget{classMainWindow_abc2611d5e7bd7b4221850b3fe09f2b6b}\index{MainWindow@{MainWindow}!openPreGame@{openPreGame}}
 \index{openPreGame@{openPreGame}!MainWindow@{MainWindow}}
@@ -238,23 +223,7 @@ QPush\+Button\texorpdfstring{$\ast$}{*} Main\+Window\+::local\+Play\+Button\hspa
 
 Button for starting a local game. 
 
-\Hypertarget{classMainWindow_a3f7a4129a70943e9c26208da947af03f}\index{MainWindow@{MainWindow}!multiMain@{multiMain}}
-\index{multiMain@{multiMain}!MainWindow@{MainWindow}}
-\doxysubsubsection{\texorpdfstring{multiMain}{multiMain}}
-{\footnotesize\ttfamily \label{classMainWindow_a3f7a4129a70943e9c26208da947af03f} 
-\mbox{\hyperlink{classMultiMain}{Multi\+Main}}\texorpdfstring{$\ast$}{*} Main\+Window\+::multi\+Main\hspace{0.3cm}{\ttfamily [private]}}
-
-
-
-Pointer to the Multiplayer main window. 
-
-\Hypertarget{classMainWindow_a626c22cc6509364550381ea5f214eb00}\index{MainWindow@{MainWindow}!onlineGameWindow@{onlineGameWindow}}
-\index{onlineGameWindow@{onlineGameWindow}!MainWindow@{MainWindow}}
-\doxysubsubsection{\texorpdfstring{onlineGameWindow}{onlineGameWindow}}
-{\footnotesize\ttfamily \label{classMainWindow_a626c22cc6509364550381ea5f214eb00} 
-\mbox{\hyperlink{classUser}{User}}\texorpdfstring{$\ast$}{*} Main\+Window\+::online\+Game\+Window\hspace{0.3cm}{\ttfamily [private]}}
-
-Pointer to the online game window where users can play multiplayer. \Hypertarget{classMainWindow_a74661a53c731e62b7749ab1d34d9f541}\index{MainWindow@{MainWindow}!onlinePlayButton@{onlinePlayButton}}
+\Hypertarget{classMainWindow_a74661a53c731e62b7749ab1d34d9f541}\index{MainWindow@{MainWindow}!onlinePlayButton@{onlinePlayButton}}
 \index{onlinePlayButton@{onlinePlayButton}!MainWindow@{MainWindow}}
 \doxysubsubsection{\texorpdfstring{onlinePlayButton}{onlinePlayButton}}
 {\footnotesize\ttfamily \label{classMainWindow_a74661a53c731e62b7749ab1d34d9f541} 

@@ -6,10 +6,8 @@ var searchData=
   ['updategamesplayed_3',['updateGamesPlayed',['../classUser.html#acee4af06972e8447a6d3dc8c43157ead',1,'User']]],
   ['updateguesshit_4',['updateGuessHit',['../classUser.html#af741fd31360b68a8465f68c22bcca727',1,'User']]],
   ['updateguesstotal_5',['updateGuessTotal',['../classUser.html#a7f8244323a551cd7a71e29c8409c224f',1,'User']]],
-  ['updatelobbylist_6',['updateLobbyList',['../classMultiMain.html#ab115377353da904540afc0fbe11745f6',1,'MultiMain']]],
-  ['updatescores_7',['updateScores',['../classGameBoard.html#a1c8fea21d9ca6593885647b54014b291',1,'GameBoard']]],
-  ['updateteamlabels_8',['updateTeamLabels',['../classGameBoard.html#a161db400a83816fb10a44e5daaee5369',1,'GameBoard']]],
-  ['updateturndisplay_9',['updateTurnDisplay',['../classMultiBoard.html#afd198382b6034524ac9c8471743500f7',1,'MultiBoard']]],
-  ['updatewins_10',['updateWins',['../classUser.html#ac935df40802efdf0fadccbd2785e7fae',1,'User']]],
-  ['user_11',['User',['../classUser.html#a639ec66bbba4434768055c6ee80c2061',1,'User']]]
+  ['updatescores_6',['updateScores',['../classGameBoard.html#a1c8fea21d9ca6593885647b54014b291',1,'GameBoard']]],
+  ['updateteamlabels_7',['updateTeamLabels',['../classGameBoard.html#a161db400a83816fb10a44e5daaee5369',1,'GameBoard']]],
+  ['updatewins_8',['updateWins',['../classUser.html#ac935df40802efdf0fadccbd2785e7fae',1,'User']]],
+  ['user_9',['User',['../classUser.html#a639ec66bbba4434768055c6ee80c2061',1,'User']]]
 ];

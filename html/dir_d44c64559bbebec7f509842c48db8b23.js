@@ -1,6 +1,5 @@
 var dir_d44c64559bbebec7f509842c48db8b23 =
 [
-    [ "Multiplayer", "dir_0e82ac0e8553da08765d6bfbd324990e.html", "dir_0e82ac0e8553da08765d6bfbd324990e" ],
     [ "chatbox.h", "chatbox_8h.html", "chatbox_8h" ],
     [ "createaccountwindow.h", "createaccountwindow_8h.html", "createaccountwindow_8h" ],
     [ "gameboard.h", "gameboard_8h.html", "gameboard_8h" ],

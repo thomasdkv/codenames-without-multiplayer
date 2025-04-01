@@ -1,7 +1,21 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,31,112,57"/>
-<area shape="rect" id="Node000001" href="$classMainWindow.html" title="The main application window." alt="" coords="160,5,256,32"/>
-<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="126,30,159,24,160,29,127,35"/>
-<area shape="rect" id="Node000002" href="$classTutorial.html" title="The tutorial window that guides users through the game mechanics." alt="" coords="176,56,240,83"/>
-<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="127,53,175,61,175,67,126,58"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,208,78,235"/>
+<area shape="rect" id="Node000001" href="$classChatBox.html" title="A widget for the chat feature in the game." alt="" coords="167,5,240,32"/>
+<area shape="poly" id="edge3_Node000000_Node000001" title=" " alt="" coords="46,192,56,158,71,118,94,77,124,42,144,29,166,22,168,27,146,34,127,46,98,80,76,120,61,160,51,194"/>
+<area shape="rect" id="Node000002" href="$classCreateAccountWindow.html" title="The CreateAccountWindow class provides a singleton interface for creating new user accounts This wind..." alt="" coords="126,56,281,83"/>
+<area shape="poly" id="edge4_Node000000_Node000002" title=" " alt="" coords="52,193,80,142,100,115,124,93,144,81,147,85,127,97,104,119,84,145,56,195"/>
+<area shape="rect" id="Node000003" href="$classGameBoard.html" title="A class representing the game board for the Spy Master game." alt="" coords="158,107,248,133"/>
+<area shape="poly" id="edge5_Node000000_Node000003" title=" " alt="" coords="63,195,90,168,124,143,157,129,159,134,127,148,94,172,66,199"/>
+<area shape="rect" id="Node000004" href="$classOperatorGuess.html" title="A widget that provides the interface for operators to submit guesses during gameplay." alt="" coords="149,157,258,184"/>
+<area shape="poly" id="edge6_Node000000_Node000004" title=" " alt="" coords="92,203,157,182,159,187,94,208"/>
+<area shape="rect" id="Node000005" href="$classPreGame.html" title="The PreGame class provides the interface for setting up a new game This includes selecting players fo..." alt="" coords="165,208,242,235"/>
+<area shape="poly" id="edge7_Node000000_Node000005" title=" " alt="" coords="93,219,165,219,165,224,93,224"/>
+<area shape="rect" id="Node000006" href="$classSpymasterHint.html" title="A widget for the spymaster to input a hint and the number of words associated with it." alt="" coords="149,259,258,285"/>
+<area shape="poly" id="edge8_Node000000_Node000006" title=" " alt="" coords="94,235,159,256,157,261,92,240"/>
+<area shape="rect" id="Node000007" href="$classStatisticsWindow.html" title="The class that shows the Statistics screen Displays game statistics for selected users including win ..." alt="" coords="142,309,265,336"/>
+<area shape="poly" id="edge9_Node000000_Node000007" title=" " alt="" coords="66,244,94,271,127,295,151,306,149,311,124,300,90,275,63,248"/>
+<area shape="rect" id="Node000008" href="$classTransition.html" title="A widget for displaying a transition message and a button to continue." alt="" coords="164,360,242,387"/>
+<area shape="poly" id="edge10_Node000000_Node000008" title=" " alt="" coords="56,247,84,298,104,324,127,346,145,356,165,364,163,369,143,361,124,350,100,327,80,301,52,250"/>
+<area shape="rect" id="Node000009" href="$classUser.html" title="User class to handle local log in and loading/storing json files. This is a singleton class to ensure..." alt="" coords="179,411,228,437"/>
+<area shape="poly" id="edge11_Node000000_Node000009" title=" " alt="" coords="51,249,61,283,76,323,98,362,127,397,152,411,179,419,177,424,150,416,124,401,94,365,71,325,56,285,46,250"/>
 </map>
