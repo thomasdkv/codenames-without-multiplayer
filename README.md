@@ -5,12 +5,6 @@ Codenames is a multiplayer word association game where two teams compete to find
 ## Requirements
 
 
-#### Network Requirements for Online Play
-
-The network you are using must allow websocket traffic. In our testing, the uwosecure-v2 and eduroam wifi's don't have it configured, but something like a cellular hotspot allows for it.
-
-Another solution is to utilize tunnels (such as ngrok... etc) to allow external devices to connect to your server
-
 #### Dependencies
 
 To build and run this application, you will need the following dependencies:
@@ -18,7 +12,6 @@ To build and run this application, you will need the following dependencies:
 - Qt Core
 - Qt GUI
 - Qt Widgets
-- Qt WebSockets
 - g++ (GNU Compiler Collection)
 - make (Build Automation Tool)
 
@@ -49,7 +42,7 @@ brew install make
 Clone the repository or download the project files:
 
 ```bash
-git clone https://github.com/AshtonF04/codenames.git
+https://github.com/thomasdkv/codenames-without-multiplayer.git
 cd codenames
 ```
 
@@ -75,7 +68,6 @@ After successfully building the project, in the codenames directory, execute the
 
 
 ## Features
-- Real-time multiplayer gameplay with WebSockets for seamless multiplayer experience.
 - Real-time local gameplay for local play.
 - Intuitive graphical interface built using Qt's GUI and widgets.
 - Support for multiple platforms (Linux/macOS).
